@@ -105,9 +105,9 @@ class MiscEventsFragment : Fragment(), MiscEventsAdapter.OnMarkFavouriteClicked,
             }
         })
 
-        view.backBtn.setOnClickListener {
+       /* view.backBtn.setOnClickListener {
             it.findNavController().popBackStack()
-        }
+        }*/
 
         miscEventsViewViewModel.epcIsABitch.observe(this, Observer {
 

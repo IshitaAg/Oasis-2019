@@ -4,8 +4,8 @@ import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllOrdersPojo
 import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllTicketsPojo
 import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllUserShowsPojo
 import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.StallsPojo
-import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.ChecksumPojo
-import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
+import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.ChecksumPojo
+import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.Response

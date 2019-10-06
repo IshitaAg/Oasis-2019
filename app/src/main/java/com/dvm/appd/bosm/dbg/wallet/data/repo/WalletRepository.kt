@@ -786,7 +786,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         //creating paytm order object
                         val order = PaytmOrder(paraMap)
 
-                        //initialize paytm serice(for production level) pass Certificate instead null if needed
+                        //initialize paytm service(for production level) pass Certificate instead null if needed
                         val certificate = PaytmClientCertificate("password for client side certificate", "file name for client side certificate")
                         stagingPGService.initialize(order, null)
 

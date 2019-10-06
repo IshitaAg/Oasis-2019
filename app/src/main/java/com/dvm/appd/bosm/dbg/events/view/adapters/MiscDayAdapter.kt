@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.bosm.dbg.R
 import kotlinx.android.synthetic.main.adapter_misc_day.view.*
@@ -42,12 +43,13 @@ class MiscDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<
         if (miscDays[position] == daySelected){
             holder.day.setTextColor(Color.rgb(104, 81, 218))
             holder.day.setTypeface(null, Typeface.BOLD)
-            holder.underline.setBackgroundColor(Color.rgb(104, 81, 218))
+            holder.underline.isVisible = true
+            holder.underline.setBackgroundResource(R.color.white)
         }
         else{
             holder.day.setTextColor(Color.rgb(137, 134, 134))
             holder.day.setTypeface(null, Typeface.NORMAL)
-            holder.underline.setBackgroundColor(Color.WHITE)
+            holder.underline.isVisible = false
         }
 
         holder.day.setOnClickListener {

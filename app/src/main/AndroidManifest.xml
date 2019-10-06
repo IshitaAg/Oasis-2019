@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="com.dvm.appd.bosm.dbg">
+        package="com.dvm.appd.oasis.dbg">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-            android:name=".BOSMApp"
+            android:name="com.dvm.appd.oasis.dbg.OASISApp"
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -21,17 +21,17 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-        <activity android:name=".auth.views.OnboardingActivity"
+        <activity android:name="com.dvm.appd.oasis.dbg.auth.views.OnboardingActivity"
                 android:screenOrientation="portrait"/>
 
-        <meta-data
+        <!--<meta-data
                 android:name="com.google.android.geo.API_KEY"
-                android:value="@string/google_maps_key" />
+                android:value="@string/google_maps_key" />-->
 
 
-        <activity android:name=".auth.views.LoginOutsteeActivity"
+        <activity android:name="com.dvm.appd.oasis.dbg.auth.views.LoginOutsteeActivity"
                 android:screenOrientation="portrait"/>
-        <activity android:name=".splash.views.SplashActivity"
+        <activity android:name="com.dvm.appd.oasis.dbg.splash.views.SplashActivity"
                 android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,7 +51,7 @@
         </activity>
 
         <service
-                android:name=".notification.FirebaseMessagingService"
+                android:name="com.dvm.appd.oasis.dbg.notification.FirebaseMessagingService"
                 android:exported="false">
             <meta-data
                     android:name="com.google.firebase.messaging.default_notification_channel_id"
@@ -61,9 +61,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".auth.views.AuthActivity"
+        <activity android:name="com.dvm.appd.oasis.dbg.auth.views.AuthActivity"
                 android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
+        <activity android:name="com.dvm.appd.oasis.dbg.MainActivity"
                 android:windowSoftInputMode="adjustNothing"
                 android:screenOrientation="portrait">
             <intent-filter>

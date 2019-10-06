@@ -6,7 +6,7 @@
             android:id="@+id/navigation_graph"
 >
     <fragment android:id="@+id/action_events"
-              android:name="com.dvm.appd.bosm.dbg.events.view.fragments.EventsFragment"
+              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
               android:label="fra_events_fragment" tools:layout="@layout/fra_events_fragment">
         <action android:id="@+id/action_action_events_to_miscEventsFragment" app:destination="@id/miscEventsFragment"/>
         <action
@@ -26,7 +26,7 @@
 
     <fragment
             android:id="@+id/action_game"
-            android:name="com.dvm.appd.bosm.dbg.elas.view.ELASFragment"
+            android:name="com.dvm.appd.oasis.dbg.elas.view.ELASFragment"
             android:label="ELASFragment">
         <action
                 android:id="@+id/action_action_game_to_ELASQuestionFragment"
@@ -43,7 +43,7 @@
     </fragment>
 
     <fragment android:id="@+id/action_food"
-              android:name="com.dvm.appd.bosm.dbg.wallet.views.fragments.StallsFragment"
+              android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.StallsFragment"
               android:label="StallsFragment">
         <action android:id="@+id/action_action_food_to_stallItemsFragment2" app:destination="@+id/stallItemsFragment2"
                 app:popUpToInclusive="false" app:popUpTo="@+id/action_food"/>
@@ -59,7 +59,7 @@
     </fragment>
 
     <fragment android:id="@+id/action_order_history"
-              android:name="com.dvm.appd.bosm.dbg.wallet.views.fragments.OrdersFragment"
+              android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.OrdersFragment"
               android:label="fra_wallet_orders" tools:layout="@layout/fra_wallet_orders">
         <action
                 android:id="@+id/action_action_order_history_to_action_profile"
@@ -72,13 +72,13 @@
                 app:destination="@id/notificationFragment" />
     </fragment>
 
-    <fragment android:id="@+id/action_cart" android:name="com.dvm.appd.bosm.dbg.wallet.views.fragments.CartFragment"
+    <fragment android:id="@+id/action_cart" android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.CartFragment"
               android:label="CartDialog">
         <action android:id="@+id/action_action_cart_to_orders"
                 app:destination="@id/action_order_history"/>
     </fragment>
     <fragment android:id="@+id/stallItemsFragment2"
-              android:name="com.dvm.appd.bosm.dbg.wallet.views.fragments.StallItemsFragment"
+              android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.StallItemsFragment"
               android:label="StallItemsFragment">
         <argument android:name="stallId" app:argType="integer" android:defaultValue="1"/>
         <action
@@ -89,20 +89,20 @@
                 app:popUpToInclusive="false" />
     </fragment>
     <fragment android:id="@+id/miscEventsFragment"
-              android:name="com.dvm.appd.bosm.dbg.events.view.fragments.MiscEventsFragment"
+              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.MiscEventsFragment"
               android:label="fra_misc_events" tools:layout="@layout/fra_misc_events">
         <action android:id="@+id/action_action_misc_to_epc"
                 app:destination="@id/epcDialog"/>
     </fragment>
 
     <fragment android:id="@+id/sportsDataFragment"
-              android:name="com.dvm.appd.bosm.dbg.events.view.fragments.SportsDataFragment"
+              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.SportsDataFragment"
               android:label="SportsDataFragment" tools:layout="@layout/fragment_sports_data">
         <action android:id="@+id/action_action_sport_to_epc"
                 app:destination="@id/epcDialog"/>
     </fragment>
 
-    <fragment android:id="@+id/action_more" android:name="com.dvm.appd.bosm.dbg.more.MoreFragment"
+    <fragment android:id="@+id/action_more" android:name="com.dvm.appd.oasis.dbg.more.MoreFragment"
               android:label="fragment_more" tools:layout="@layout/fragment_more">
         <action android:id="@+id/action_action_more_to_fragmentWebPage" app:destination="@id/fragmentWebPage"/>
         <action android:id="@+id/action_action_more_to_fragmentRecyclerView"
@@ -120,9 +120,9 @@
                 android:id="@+id/action_action_more_to_mapFragment"
                 app:destination="@id/mapFragment" />
     </fragment>
-    <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.bosm.dbg.more.FragmentWebPage"
+    <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.oasis.dbg.more.FragmentWebPage"
               android:label="FragmentWebPage"/>
-    <fragment android:id="@+id/action_profile" android:name="com.dvm.appd.bosm.dbg.profile.views.fragments.ProfileFragment"
+    <fragment android:id="@+id/action_profile" android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment"
               android:label="ProfileFragment">
         <action android:id="@+id/action_action_profile_to_addMoneyDialog" app:destination="@id/addMoneyDialog"/>
         <action
@@ -135,49 +135,49 @@
                 app:popUpTo="@+id/action_profile" />
     </fragment>
     <activity android:id="@+id/loginOutsteeActivity"
-              android:name="com.dvm.appd.bosm.dbg.auth.views.LoginOutsteeActivity"
+              android:name="com.dvm.appd.oasis.dbg.auth.views.LoginOutsteeActivity"
               android:label="LoginOutsteeFragment"/>
-    <activity android:id="@+id/authActivity" android:name="com.dvm.appd.bosm.dbg.auth.views.AuthActivity"
+    <activity android:id="@+id/authActivity" android:name="com.dvm.appd.oasis.dbg.auth.views.AuthActivity"
               android:label="fra_auth" tools:layout="@layout/activity_auth"/>
-    <fragment android:id="@+id/fragmentRecyclerView" android:name="com.dvm.appd.bosm.dbg.more.FragmentRecyclerView"
+    <fragment android:id="@+id/fragmentRecyclerView" android:name="com.dvm.appd.oasis.dbg.more.FragmentRecyclerView"
               android:label="FragmentRecyclerView"/>
 
-    <fragment android:id="@+id/ELASQuestionFragment" android:name="com.dvm.appd.bosm.dbg.elas.view.ELASQuestionFragment"
+    <fragment android:id="@+id/ELASQuestionFragment" android:name="com.dvm.appd.oasis.dbg.elas.view.ELASQuestionFragment"
               android:label="ELASQuestionFragment"/>
 
     <dialog android:id="@+id/addMoneyDialog"
-            android:name="com.dvm.appd.bosm.dbg.profile.views.fragments.AddMoneyDialog"
+            android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.AddMoneyDialog"
             android:label="AddMoneyDialog"/>
     <dialog
             android:id="@+id/sendMoneyDialog"
-            android:name="com.dvm.appd.bosm.dbg.profile.views.fragments.SendMoneyDialog"
+            android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.SendMoneyDialog"
             android:label="SendMoneyDialog" />
     <dialog android:id="@+id/buyTicketDialog"
-            android:name="com.dvm.appd.bosm.dbg.profile.views.fragments.TicketDialog"
+            android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.TicketDialog"
             android:label="BuyTicketsDialog"/>
     <dialog android:id="@+id/epcDialog"
-            android:name="com.dvm.appd.bosm.dbg.events.view.fragments.EPCDialog"
+            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EPCDialog"
             android:label="EPCDialog" />
 
     <fragment
             android:id="@+id/notificationFragment"
-            android:name="com.dvm.appd.bosm.dbg.notification.NotificationFragment"
+            android:name="com.dvm.appd.oasis.dbg.notification.NotificationFragment"
             android:label="fragment_notification"
             tools:layout="@layout/fragment_notification" />
     <activity
             android:id="@+id/onboardingActivity"
-            android:name="com.dvm.appd.bosm.dbg.auth.views.OnboardingActivity"
+            android:name="com.dvm.appd.oasis.dbg.auth.views.OnboardingActivity"
             android:label="activity_onboarding"
             tools:layout="@layout/activity_onboarding" />
 
     <fragment
             android:id="@+id/mapFragment"
-            android:name="com.dvm.appd.bosm.dbg.more.MapFragment"
+            android:name="com.dvm.appd.oasis.dbg.more.MapFragment"
             android:label="fragment_map"
             tools:layout="@layout/fragment_map" />
     <dialog
             android:id="@+id/qrDialog"
-            android:name="com.dvm.appd.bosm.dbg.profile.views.fragments.QrDialog"
+            android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.QrDialog"
             android:label="QrDialog" />
 
 

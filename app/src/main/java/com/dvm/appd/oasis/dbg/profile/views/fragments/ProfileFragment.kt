@@ -1,6 +1,7 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -24,6 +25,8 @@ import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.paytm.pgsdk.PaytmPGService
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -32,11 +35,15 @@ import kotlinx.android.synthetic.main.fra_auth_outstee.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.username
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
     private val profileViewModel by lazy {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
     }
+
+    //use prodPgService when production level
+    private val stagingPgService = PaytmPGService.getStagingService()
+    private val prodPgService = PaytmPGService.getProductionService()
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -48,7 +55,6 @@ class ProfileFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_profile)
-
 
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
@@ -69,12 +75,15 @@ class ProfileFragment : Fragment() {
         rootView.addBtn.setOnClickListener {
             AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
+
         rootView.AddBtn.setOnClickListener {
             AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
+
         rootView.SendBtn.setOnClickListener {
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
         }
+
         rootView.sendBtn.setOnClickListener {
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
         }
@@ -143,11 +152,44 @@ class ProfileFragment : Fragment() {
             profileViewModel.refreshUserShows()
         }
 
+        //Add some button for paytm
+//        rootView.addBtn.setOnClickListener {
+//            profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000")
+//        }
+
         return rootView
     }
 
     fun String.generateQr(): Bitmap {
         val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400)
         return BarcodeEncoder().createBitmap(bitMatrix)
+    }
+
+    override fun onTransactionResponse(p0: Bundle?) {
+        Log.d("PaytmTrans", p0.toString())
+    }
+
+    override fun clientAuthenticationFailed(p0: String?) {
+        Log.d("PaytmAuthFailed", "Network Error")
+    }
+
+    override fun someUIErrorOccurred(p0: String?) {
+        Log.d("PaytmUIError", p0)
+    }
+
+    override fun onTransactionCancel(p0: String?, p1: Bundle?) {
+        Log.d("PaytmTransCanceled", "$p0 , $p1")
+    }
+
+    override fun networkNotAvailable() {
+        Log.d("PaytmNoNetwork", "No Network")
+    }
+
+    override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
+        Log.d("PaytmLoadingError", "$p0, $p1, $p2")
+    }
+
+    override fun onBackPressedCancelTransaction() {
+        Log.d("PaytmBackCancel", "Back Pressed")
     }
 }

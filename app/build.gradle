@@ -106,4 +106,9 @@ dependencies {
     implementation 'com.google.android.play:core:1.6.3'
 
     implementation 'com.etebarian:meow-bottom-navigation:1.0.0'
+    implementation files('PGSDK_V2.1.jar')
+
+    implementation ('com.paytm:pgplussdk:1.3.3'){
+        transitive = true
+    }
 }

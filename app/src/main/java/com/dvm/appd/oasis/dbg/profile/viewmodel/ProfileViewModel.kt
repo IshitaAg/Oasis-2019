@@ -1,15 +1,19 @@
 package com.dvm.appd.oasis.dbg.profile.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.auth.data.User
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
+import com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment
 import com.dvm.appd.oasis.dbg.profile.views.fragments.UiState
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.UserShows
+import com.paytm.pgsdk.PaytmPGService
+
 
 @SuppressLint("CheckResult")
 class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: WalletRepository) :ViewModel() {
@@ -83,5 +87,15 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
         },{
             (error as MutableLiveData).postValue(it.message)
         })
+    }
+
+    //use prodPGService for production level
+    fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String){
+        walletRepository.getCheckSum(stagingPGService, prodPGService, fragment, txnAmount)
+            .subscribe({
+
+            },{
+
+            })
     }
 }

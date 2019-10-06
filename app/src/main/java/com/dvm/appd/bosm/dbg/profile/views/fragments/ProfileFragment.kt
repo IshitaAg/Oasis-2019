@@ -42,6 +42,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
     }
 
+    //use prodPgService when production level
     private val stagingPgService = PaytmPGService.getStagingService()
     private val prodPgService = PaytmPGService.getProductionService()
 

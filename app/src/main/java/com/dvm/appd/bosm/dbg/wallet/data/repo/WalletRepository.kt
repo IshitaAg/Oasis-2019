@@ -16,6 +16,7 @@ import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.gson.JsonObject
+import com.paytm.pgsdk.PaytmClientCertificate
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import io.reactivex.Completable
@@ -759,6 +760,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
     //Paytm
 
+    //use prodPGService instead of staging when production level
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
         return walletService.getCheckSum(
             PaytmPojo(
@@ -785,6 +787,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         val order = PaytmOrder(paraMap)
 
                         //initialize paytm serice(for production level) pass Certificate instead null if needed
+                        val certificate = PaytmClientCertificate("password for client side certificate", "file name for client side certificate")
                         stagingPGService.initialize(order, null)
 
                         //needs activity context for callback

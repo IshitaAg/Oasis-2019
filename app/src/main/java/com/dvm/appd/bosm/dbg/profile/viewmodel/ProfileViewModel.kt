@@ -88,6 +88,7 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
         })
     }
 
+    //use prodPGService for production level
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String){
         walletRepository.getCheckSum(stagingPGService, prodPGService, fragment, txnAmount)
             .subscribe({

@@ -11,7 +11,7 @@
     <View
             android:id="@+id/miscView"
             android:layout_width="0dp"
-            android:layout_height="136dp"
+            android:layout_height="152dp"
             android:background="@drawable/events_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,13 +22,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="@string/action_events"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/miscView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/miscView" />
 
@@ -46,7 +46,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dayRecycler" />
+            app:layout_constraintTop_toBottomOf="@+id/dayRecycler"
+            tools:listitem="@layout/adapter_misc_events" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dayRecycler"
@@ -62,6 +63,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/miscView" />
+            app:layout_constraintTop_toBottomOf="@+id/miscView"
+            tools:listitem="@layout/adapter_misc_day" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

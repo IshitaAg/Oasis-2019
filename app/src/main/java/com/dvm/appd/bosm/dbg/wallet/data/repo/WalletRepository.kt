@@ -2,6 +2,7 @@ package com.dvm.appd.bosm.dbg.wallet.data.repo
 
 import android.util.Log
 import com.dvm.appd.bosm.dbg.auth.data.repo.AuthRepository
+import com.dvm.appd.bosm.dbg.profile.views.fragments.ProfileFragment
 import com.dvm.appd.bosm.dbg.profile.views.fragments.TransactionResult
 import com.dvm.appd.bosm.dbg.shared.MoneyTracker
 import com.dvm.appd.bosm.dbg.shared.NetworkChecker
@@ -11,9 +12,12 @@ import com.dvm.appd.bosm.dbg.wallet.data.room.WalletDao
 import com.dvm.appd.bosm.dbg.wallet.data.room.dataclasses.StallData
 import com.dvm.appd.bosm.dbg.wallet.data.room.dataclasses.StallItemsData
 import com.dvm.appd.bosm.dbg.wallet.data.room.dataclasses.*
+import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.gson.JsonObject
+import com.paytm.pgsdk.PaytmOrder
+import com.paytm.pgsdk.PaytmPGService
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -751,5 +755,44 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     fun disposeListener(){
         l1.remove()
         l2.remove()
+    }
+
+    //Paytm
+
+    fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
+        return walletService.getCheckSum(
+            PaytmPojo(
+                "Merchant Id from paytm", "generate random UUID", "generate random UUID", "Channel Id from paytm",
+                txnAmount, "", "", "Industry type from paytm"
+            )
+        ).subscribeOn(Schedulers.io())
+            .doOnSuccess {response ->
+
+                when(response.code()){
+                    200 ->{
+                        val paraMap = HashMap<String, String>()
+                        paraMap["MID"] = "same as before"
+                        paraMap["ORDER_ID"] = "same as before"
+                        paraMap["CUST_ID"] = "same as before"
+                        paraMap["CHANNEL_ID"] = "same as before"
+                        paraMap["TXN_AMOUNT"] = "same as before"
+                        paraMap["WEBSITE"] = "same as before"
+                        paraMap["CALLBACK_URL"] = "same as before"
+                        paraMap["CHECKSUMHASH"] = response.body()!!.checksumHash
+                        paraMap["INDUSTRY_TYPE_ID"] = "same as before"
+
+                        //creating paytm order object
+                        val order = PaytmOrder(paraMap)
+
+                        //initialize paytm serice(for production level) pass Certificate instead null if needed
+                        stagingPGService.initialize(order, null)
+
+                        //needs activity context for callback
+                        stagingPGService.startPaymentTransaction(fragment.context, true, true, fragment)
+                    }
+                    else -> {}
+                }
+            }
+            .ignoreElement()
     }
 }

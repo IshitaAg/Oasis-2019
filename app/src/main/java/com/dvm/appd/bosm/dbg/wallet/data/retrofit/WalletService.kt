@@ -4,8 +4,9 @@ import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.AllOrdersPojo
 import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.AllTicketsPojo
 import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.AllUserShowsPojo
 import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.StallsPojo
+import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.ChecksumPojo
+import com.dvm.appd.bosm.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
 import com.google.gson.JsonObject
-import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.*
@@ -41,4 +42,8 @@ interface WalletService {
 
     @POST("tickets-manager/signup")
     fun buyTickets(@Header("Authorization")jwt:String,@Body body: JsonObject): Single<Response<Void>>
+
+    //Paytm
+    @POST("/backendlink to generate checksum")
+    fun getCheckSum(paytmPojo: PaytmPojo): Single<Response<ChecksumPojo>>
 }

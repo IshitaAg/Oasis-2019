@@ -119,6 +119,9 @@
         <action
                 android:id="@+id/action_action_more_to_mapFragment"
                 app:destination="@id/mapFragment" />
+        <action
+                android:id="@+id/action_action_more_to_votingFragment"
+                app:destination="@id/votingFragment" />
     </fragment>
     <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.oasis.dbg.more.FragmentWebPage"
               android:label="FragmentWebPage"/>
@@ -179,6 +182,10 @@
             android:id="@+id/qrDialog"
             android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.QrDialog"
             android:label="QrDialog" />
+    <fragment
+            android:id="@+id/votingFragment"
+            android:name="com.dvm.appd.oasis.dbg.more.VotingFragment"
+            android:label="VotingFragment" />
 
 
 </navigation>

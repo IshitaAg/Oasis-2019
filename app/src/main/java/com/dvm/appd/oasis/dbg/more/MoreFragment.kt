@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
 
-    var moreItems = listOf("Contact Us", "Developers", "Map", "EPC Blog", "HPC Blog", "Sponsors")
+    var moreItems = listOf("Contact Us", "Developers", "Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -61,14 +61,17 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
                 view!!.findNavController().navigate(R.id.action_action_more_to_mapFragment)
             }
             3 -> {
+                view!!.findNavController().navigate(R.id.action_action_more_to_votingFragment)
+            }
+            4 -> {
                 val bundle = bundleOf("link" to view!!.resources.getString(R.string.link_EPC), "title" to "EPC Blog")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }
-            4 -> {
+            5 -> {
                 val bundle = bundleOf("link" to view!!.resources.getString(R.string.link_HPC), "title" to "HPC Blog")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }
-            5 -> {
+            6 -> {
                 val bundle = bundleOf("link" to view!!.resources.getString(R.string.link_Sponsors), "title" to "Sponsors")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }

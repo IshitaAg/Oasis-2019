@@ -29,7 +29,7 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
     override fun onBindViewHolder(holder: StallsViewHolder, position: Int) {
         holder.stallName.text = stalls[position].stallName
 
-            Glide.with(holder.itemView.context!!).load(stallImgs[position]).placeholder(R.drawable.placeholder_stalls).apply(RequestOptions.bitmapTransform(RoundedCorners(16))).into(holder.stallImg)
+            Glide.with(holder.itemView.context!!).load(stallImgs[position]).circleCrop().placeholder(R.color.colorWhite).apply(RequestOptions.bitmapTransform(RoundedCorners(16))).into(holder.stallImg)
 
         holder.stallImg.setOnClickListener {
             listener.stallSelected(stalls[position])
@@ -37,7 +37,7 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
     }
     inner class StallsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val stallName = view.quantity
-        val stallImg = view.stallImage
+        val stallImg = view.sImg
     }
 
     interface OnStallSelectedListener{

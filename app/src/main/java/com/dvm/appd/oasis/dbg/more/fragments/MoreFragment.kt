@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.fragments
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.more.adapters.MoreAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 

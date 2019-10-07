@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,6 +15,9 @@ class VotingFragment:Fragment(){
     ): View? {
         val rootView = inflater.inflate(R.layout.fra_voting,container,false)
 
+
         return rootView
     }
 }
+
+

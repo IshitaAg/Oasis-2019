@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +10,8 @@ import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.more.adapters.ContactUsAdapter
+import com.dvm.appd.oasis.dbg.more.adapters.DevelopersAdapter
 import com.dvm.appd.oasis.dbg.more.dataClasses.Developer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_fragment_recycler_view.*
@@ -64,14 +66,16 @@ class FragmentRecyclerView : Fragment() {
     private fun setAdapter() {
         when(title) {
             "Contact Us" -> {
-                recycler_commonRecyclerView.adapter = ContactUsAdapter()
+                recycler_commonRecyclerView.adapter =
+                    ContactUsAdapter()
                 (recycler_commonRecyclerView.adapter as ContactUsAdapter).notifyDataSetChanged()
             }
             "Developers" -> {
                 var devs = emptyList<Developer>()
                 devs = devs.plus(developers.subList(0,4).shuffled())
                 devs = devs.plus(developers.subList(4, (developers.size)))
-                recycler_commonRecyclerView.adapter = DevelopersAdapter()
+                recycler_commonRecyclerView.adapter =
+                    DevelopersAdapter()
                 (recycler_commonRecyclerView.adapter as DevelopersAdapter).developers = devs
                 (recycler_commonRecyclerView.adapter as DevelopersAdapter).notifyDataSetChanged()
             }

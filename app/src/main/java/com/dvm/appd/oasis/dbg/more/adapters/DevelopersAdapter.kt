@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +21,13 @@ class DevelopersAdapter : RecyclerView.Adapter<DevelopersAdapter.DeveloperVHolde
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeveloperVHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return DeveloperVHolder(inflater.inflate(R.layout.row_developer, parent, false))
+        return DeveloperVHolder(
+            inflater.inflate(
+                R.layout.row_developer,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: DeveloperVHolder, position: Int) {

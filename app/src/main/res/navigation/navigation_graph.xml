@@ -102,7 +102,7 @@
                 app:destination="@id/epcDialog"/>
     </fragment>
 
-    <fragment android:id="@+id/action_more" android:name="com.dvm.appd.oasis.dbg.more.MoreFragment"
+    <fragment android:id="@+id/action_more" android:name="com.dvm.appd.oasis.dbg.more.fragments.MoreFragment"
               android:label="fragment_more" tools:layout="@layout/fragment_more">
         <action android:id="@+id/action_action_more_to_fragmentWebPage" app:destination="@id/fragmentWebPage"/>
         <action android:id="@+id/action_action_more_to_fragmentRecyclerView"
@@ -123,7 +123,7 @@
                 android:id="@+id/action_action_more_to_votingFragment"
                 app:destination="@id/votingFragment" />
     </fragment>
-    <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.oasis.dbg.more.FragmentWebPage"
+    <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.oasis.dbg.more.fragments.FragmentWebPage"
               android:label="FragmentWebPage"/>
     <fragment android:id="@+id/action_profile" android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment"
               android:label="ProfileFragment">
@@ -142,7 +142,7 @@
               android:label="LoginOutsteeFragment"/>
     <activity android:id="@+id/authActivity" android:name="com.dvm.appd.oasis.dbg.auth.views.AuthActivity"
               android:label="fra_auth" tools:layout="@layout/activity_auth"/>
-    <fragment android:id="@+id/fragmentRecyclerView" android:name="com.dvm.appd.oasis.dbg.more.FragmentRecyclerView"
+    <fragment android:id="@+id/fragmentRecyclerView" android:name="com.dvm.appd.oasis.dbg.more.fragments.FragmentRecyclerView"
               android:label="FragmentRecyclerView"/>
 
     <fragment android:id="@+id/ELASQuestionFragment" android:name="com.dvm.appd.oasis.dbg.elas.view.ELASQuestionFragment"
@@ -175,7 +175,7 @@
 
     <fragment
             android:id="@+id/mapFragment"
-            android:name="com.dvm.appd.oasis.dbg.more.MapFragment"
+            android:name="com.dvm.appd.oasis.dbg.more.fragments.MapFragment"
             android:label="fragment_map"
             tools:layout="@layout/fragment_map" />
     <dialog
@@ -184,7 +184,7 @@
             android:label="QrDialog" />
     <fragment
             android:id="@+id/votingFragment"
-            android:name="com.dvm.appd.oasis.dbg.more.VotingFragment"
+            android:name="com.dvm.appd.oasis.dbg.more.fragments.VotingFragment"
             android:label="VotingFragment" />
 
 

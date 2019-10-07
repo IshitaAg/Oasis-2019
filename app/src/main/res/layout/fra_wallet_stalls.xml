@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:background="#EAF2FF"
+        android:background="#242947"
         android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
@@ -30,7 +30,7 @@
             android:layout_marginEnd="8dp"
             android:paddingBottom="60dp"
             android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:itemCount="12"
             app:spanCount="2"

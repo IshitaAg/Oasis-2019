@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.adapters
 
 import android.view.LayoutInflater
 import android.view.View

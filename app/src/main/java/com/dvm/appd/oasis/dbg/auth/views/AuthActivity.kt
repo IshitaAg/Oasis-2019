@@ -33,7 +33,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(R.layout.activity_auth)
         val gso = GoogleSignIn.getClient(
             this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("790932626616-3efj5a0tgun95bfv7gj0niis2d5ve5ll.apps.googleusercontent.com")
+                .requestIdToken("1005380465971-dku54t11d22mnk06pkcs6jjilnjfe2sd.apps.googleusercontent.com")
                 .requestEmail()
                 .requestProfile()
                 .build()
@@ -92,7 +92,7 @@ class AuthActivity : AppCompatActivity() {
                 authViewModel.login(profile.idToken!!)
             } catch (e: ApiException) {
                 Log.d("checke", e.toString())
-                Toast.makeText(this, "Sign in Failure!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "{${e.statusCode}: Sign in Failure!", Toast.LENGTH_LONG).show()
             }
         }
     }

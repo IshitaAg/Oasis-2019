@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +35,13 @@ class ContactUsAdapter : RecyclerView.Adapter<ContactUsAdapter.ContactVHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactVHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ContactVHolder(inflater.inflate(R.layout.row_contact_us, parent, false))
+        return ContactVHolder(
+            inflater.inflate(
+                R.layout.row_contact_us,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ContactVHolder, position: Int) {

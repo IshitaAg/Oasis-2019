@@ -5,26 +5,36 @@
         android:id="@+id/stallView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_margin="8dp"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
-        android:background="@drawable/shape_rectangle_rounded_16dp"
-        android:backgroundTint="#EAF2FF"
         android:orientation="vertical">
 
 
-    <ImageView
+    <View
             android:id="@+id/stallImage"
-            android:layout_width="183dp"
-            android:layout_height="160dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/placeholder_stalls"
-            android:backgroundTint="#EAF2FF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1.33"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/placeholder_stalls" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+            android:id="@+id/sImg"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="@+id/stallImage"
+            app:layout_constraintEnd_toStartOf="@+id/quantity"
+            app:layout_constraintStart_toStartOf="@+id/stallImage"
+            app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
     <TextView
             android:id="@+id/quantity"
@@ -35,11 +45,21 @@
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
 
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/stallImage"
             app:layout_constraintStart_toStartOf="@+id/stallImage"
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
+
+    <ImageView
+            android:id="@+id/goBtn"
+            android:layout_width="18dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/quantity"
+            app:layout_constraintEnd_toEndOf="@+id/stallImage"
+            app:layout_constraintTop_toTopOf="@+id/quantity"
+            app:srcCompat="@drawable/ic_next" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

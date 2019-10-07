@@ -1,4 +1,4 @@
-package com.dvm.appd.oasis.dbg.more
+package com.dvm.appd.oasis.dbg.more.fragments
 
 import android.os.Bundle
 import android.util.Log

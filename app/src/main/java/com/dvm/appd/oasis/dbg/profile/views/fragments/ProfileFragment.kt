@@ -55,7 +55,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-        (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
+        //(activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_profile)
 
         rootView.logout.setOnClickListener {
@@ -63,7 +63,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         }
 
         profileViewModel.balance.observe(this, Observer {
-            rootView.balance.text = "Rs ${it!!}"
+            rootView.balance.text = context!!.resources.getString(R.string.rupee)+it!!
         })
 
         rootView.qrCode.setOnClickListener {

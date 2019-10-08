@@ -25,11 +25,11 @@
 
 
     <item
-            android:id="@+id/action_game"
+            android:id="@+id/action_profile"
             android:enabled="true"
-            android:icon="@drawable/ic_quiz"
+            android:icon="@drawable/ic_outline_profile_identity_24px"
             android:iconTint="@color/nav_quiz_color"
-            android:title="@string/action_game"
+            android:title="Profile"
             app:showAsAction="ifRoom" />
 
     <item

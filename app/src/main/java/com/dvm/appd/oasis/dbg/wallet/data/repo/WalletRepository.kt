@@ -788,9 +788,11 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     // TODO Change Callback URL
     // TODO add appropriate certificate to the Paytm Service
     // TODO change authrization to the actual jwt key of the user
-    val mID = "xjlVFi39646739224729"
+        val mID = "xjlVFi39646739224729"
     val website = "WEBSTAGING"
     val industryTypeId = "Retail"
+    // https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp
+    // https://securegw-stage.paytm.in/theia/paytmCallback
     val callBackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order"
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
         val body = JsonObject().apply {

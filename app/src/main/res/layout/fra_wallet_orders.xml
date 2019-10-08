@@ -88,80 +88,55 @@
             app:layout_constraintStart_toStartOf="@+id/textView22"
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
-    <androidx.core.widget.NestedScrollView
+<!--    <TextView-->
+<!--            android:id="@+id/cartPrice"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:fontFamily="@font/shellypalmer_circular_std_book"-->
+<!--            android:text="500"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:textColor="#50A2F4"-->
+<!--            android:textSize="24sp"-->
+<!--            tools:layout_editor_absoluteX="16dp"-->
+<!--            tools:layout_editor_absoluteY="478dp" />-->
+
+<!--    <TextView-->
+<!--            android:id="@+id/order"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/gradient_shape_rectangle_rounded_24dp"-->
+<!--            android:fontFamily="@font/shellypalmer_circular_std_book"-->
+<!--            android:paddingStart="8dp"-->
+<!--            android:paddingTop="4dp"-->
+<!--            android:paddingEnd="8dp"-->
+<!--            android:paddingBottom="4dp"-->
+<!--            android:text="Order"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="18sp"-->
+<!--            android:textStyle="bold"-->
+<!--            tools:layout_editor_absoluteX="16dp"-->
+<!--            tools:layout_editor_absoluteY="478dp" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/cartRecycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/shape_rectangle_rounded_8dp"
+            android:paddingBottom="60dp"
+            android:clipToPadding="false"
+            android:background="@drawable/shape_rectangle_hafl_round_16dp"
             android:backgroundTint="#31365E"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23">
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            tools:itemCount="2"
+            tools:listitem="@layout/adapter_cart_item">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_rectangle_rounded_8dp"
-                android:backgroundTint="#31365E"
-                android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/cartRecycler"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="24dp"
-                    app:layout_constraintBottom_toTopOf="@id/order"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/adapter_cart_item">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                    android:id="@+id/cartPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/shellypalmer_circular_std_book"
-                    android:text="500"
-                    android:textAlignment="textStart"
-                    android:textColor="#50A2F4"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/order" />
-
-            <TextView
-                    android:id="@+id/order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/gradient_shape_rectangle_rounded_24dp"
-                    android:fontFamily="@font/shellypalmer_circular_std_book"
-                    android:paddingStart="8dp"
-                    android:paddingTop="4dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="4dp"
-                    android:text="Order"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <View
             android:id="@+id/divider"

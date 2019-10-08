@@ -42,20 +42,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
 
         val view = inflater.inflate(R.layout.fra_wallet_orders, container, false)
 
-        activity!!.mainView.setBackgroundResource(R.drawable.orders_title)
-
-        activity!!.cart.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_action_cart)
-        }
-
-        activity!!.profile.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_notificationFragment)
-        }
-
         view.orderRecycler.adapter = OrdersAdapter(this)
         ordersViewModel.orders.observe(this, Observer {
 
@@ -70,11 +56,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
             if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
-                view.order.isVisible = false
+                view.order.isVisible = true
                 view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
             }
             else{
-                view.order.isVisible = true
+                view.order.isVisible = false
                 view.cartPrice.text = ""
             }
             })
@@ -105,11 +91,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
         })
 
-        activity!!.refresh.setOnClickListener {
-            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
-            ordersViewModel.getAllOrders()
-        }
-
         return view
     }
 
@@ -134,13 +115,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_orders)
-        activity!!.fragmentName.text = "Orders"
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = true
-        activity!!.textView7.text = "\"Don't forget to add ratings\""
-        activity!!.textView7.setTextColor(Color.rgb(28, 140, 204))
-        activity!!.linearElasRecycler.isVisible = false
-        activity!!.refresh.isVisible = true
         super.onResume()
     }
 }

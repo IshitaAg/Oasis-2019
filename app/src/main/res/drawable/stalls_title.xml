@@ -10,7 +10,7 @@
         </shape>
     </item>
     <item
-            android:bottom="150dp"
+            android:bottom="180dp"
             android:left="180dp"
             android:right="70dp"
             android:top="-100dp">
@@ -21,7 +21,7 @@
         </shape>
     </item>
     <item
-            android:bottom="120dp"
+            android:bottom="150dp"
             android:left="290dp"
             android:right="-90dp"
             android:top="-90dp">

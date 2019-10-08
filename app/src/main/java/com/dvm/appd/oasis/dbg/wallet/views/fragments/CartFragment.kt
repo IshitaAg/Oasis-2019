@@ -33,9 +33,6 @@ class CartFragment: Fragment(), CartChildAdapter.OnButtonClicked {
 
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_cart)
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.refresh.isVisible = false
 
         cartViewModel = ViewModelProviders.of(this, CartViewModelFactory())[CartViewModel::class.java]
 

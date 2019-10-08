@@ -33,8 +33,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
 
     }
 

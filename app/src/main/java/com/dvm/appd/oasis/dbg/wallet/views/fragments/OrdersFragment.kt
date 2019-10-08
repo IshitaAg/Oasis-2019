@@ -55,14 +55,14 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             (view.cartRecycler.adapter as CartAdapter).cartItems = it
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
-            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
-                view.order.isVisible = true
-                view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
-            }
-            else{
-                view.order.isVisible = false
-                view.cartPrice.text = ""
-            }
+//            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
+//                view.order.isVisible = true
+//                view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
+//            }
+//            else{
+//                view.order.isVisible = false
+//                view.cartPrice.text = ""
+//            }
             })
 
         view.order.setOnClickListener {

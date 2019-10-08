@@ -11,32 +11,35 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="128dp"
+            android:layout_marginTop="48dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/shape_rectangle_rounded_24dp"
             android:backgroundTint="#31365E"
             android:elevation="1dp"
+            app:layout_constraintBottom_toTopOf="@id/AddBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView8"
+            app:layout_constraintVertical_chainStyle="spread" />
 
     <ImageView
             android:id="@+id/qrCode"
             android:layout_width="92dp"
             android:layout_height="92dp"
-            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:elevation="1dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@+id/view8"
             app:layout_constraintEnd_toEndOf="@+id/view8"
             app:layout_constraintTop_toTopOf="@+id/view8"
-            app:srcCompat="#31365E" />
+            app:srcCompat="@color/colour_profile_card" />
 
     <View
             android:id="@+id/view7"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="100dp"
-            android:background="#F3F3F3"
+            android:background="#242947"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -49,14 +52,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:elevation="2dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="UserName"
             android:textColor="@color/colorWhite"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/view8"
-            app:layout_constraintTop_toTopOf="@+id/qrCode" />
+            app:layout_constraintTop_toTopOf="@+id/view8" />
 
     <TextView
             android:id="@+id/userId"
@@ -76,7 +80,7 @@
             android:id="@+id/logout"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:padding="12dp"
             android:src="@drawable/ic_logout"
@@ -87,49 +91,75 @@
             android:id="@+id/AddBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/add_button"
             android:elevation="1dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:padding="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="Add money"
-            android:textColor="#4F32D7"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="80dp"
-            tools:layout_editor_absoluteY="299dp" />
+            app:layout_constraintBottom_toTopOf="@id/view9"
+            app:layout_constraintEnd_toStartOf="@+id/sendBtn"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="@+id/view8"
+            app:layout_constraintTop_toBottomOf="@+id/view8" />
 
     <TextView
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/add_button"
             android:elevation="1dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:padding="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="Send money"
-            android:textColor="#4F32D7"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="253dp"
-            tools:layout_editor_absoluteY="299dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/AddBtn"
+            app:layout_constraintEnd_toEndOf="@+id/view8"
+            app:layout_constraintStart_toEndOf="@id/AddBtn"
+            app:layout_constraintTop_toTopOf="@+id/AddBtn" />
 
     <TextView
             android:id="@+id/buyTicket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/add_button"
+            android:elevation="2dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:padding="8dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
             android:text="Buy Tickets"
-            android:textColor="#4F32D7"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            tools:layout_editor_absoluteX="80dp"
-            tools:layout_editor_absoluteY="356dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/view9"
+            app:layout_constraintEnd_toEndOf="@+id/view9"
+            app:layout_constraintStart_toStartOf="@+id/view9"
+            app:layout_constraintTop_toBottomOf="@+id/userTickets"
+            tools:elevation="2dp" />
 
     <View
             android:id="@+id/view9"
-            android:layout_width="379dp"
-            android:layout_height="286dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="24dp"
             android:background="@drawable/shape_rectangle_rounded_24dp"
+            android:backgroundTint="#31365E"
             android:elevation="1dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="422dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/view8"
+            app:layout_constraintStart_toStartOf="@+id/view8"
+            app:layout_constraintTop_toBottomOf="@+id/AddBtn" />
 
     <TextView
             android:id="@+id/textView11"
@@ -139,7 +169,7 @@
             android:elevation="1dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="Tickets"
-            android:textColor="#3B3B3B"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/view9"
@@ -153,13 +183,14 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:elevation="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@+id/view9"
+            app:layout_constraintBottom_toTopOf="@+id/buyTicket"
             app:layout_constraintEnd_toEndOf="@+id/view9"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/view9"
-            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
 
     <TextView
             android:id="@+id/textView15"
@@ -170,7 +201,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="Unused"
             android:textAlignment="textEnd"
-            android:textColor="#6C58B9"
+            android:textColor="#61B4FE"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView16"
@@ -187,7 +218,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="Total"
             android:textAlignment="textEnd"
-            android:textColor="#6C58B9"
+            android:textColor="#61B4FE"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/view9"
@@ -203,7 +234,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="@string/action_events"
             android:textAlignment="textStart"
-            android:textColor="#6C58B9"
+            android:textColor="#61B4FE"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/view9"
@@ -216,10 +247,96 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="@string/action_profile"
             android:textColor="@color/colorWhite"
-            android:textSize="24sp"
+            android:textSize="30sp"
             android:textStyle="bold"
-            tools:layout_editor_absoluteX="28dp"
-            tools:layout_editor_absoluteY="36dp" />
+            app:layout_constraintBottom_toBottomOf="@+id/logout"
+            app:layout_constraintStart_toStartOf="@+id/username"
+            app:layout_constraintTop_toTopOf="@+id/logout" />
+
+    <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Order food using wallet"
+            android:textColor="#e8eaf6"
+            app:layout_constraintEnd_toEndOf="@+id/textView6"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+            android:id="@+id/balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:elevation="2dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Rs 0"
+            android:textColor="#67D5DE"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/userId"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/userId"
+            app:layout_constraintTop_toBottomOf="@+id/userId" />
+
+    <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:elevation="2dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Wallet(Stalls)"
+            android:textColor="#eeeeee"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/balance"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/balance"
+            app:layout_constraintTop_toBottomOf="@+id/balance" />
+
+    <TextView
+            android:id="@+id/tokens"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:elevation="2dp"
+            android:text="0"
+            android:textColor="#67D5DE"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/balance"
+            app:layout_constraintEnd_toStartOf="@+id/qrCode"
+            app:layout_constraintStart_toEndOf="@+id/balance"
+            app:layout_constraintTop_toTopOf="@+id/balance" />
+
+    <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/logout"
+            app:layout_constraintEnd_toStartOf="@+id/logout"
+            app:layout_constraintTop_toTopOf="@+id/logout"
+            app:srcCompat="@drawable/ic_refer" />
+
+    <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:elevation="2dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Tokens"
+            android:textColor="#eeeeee"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/tokens"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tokens"
+            app:layout_constraintTop_toBottomOf="@+id/tokens" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,8 +31,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dia_wallet_send_money.view.*
 import kotlinx.android.synthetic.main.fra_auth_outstee.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
+import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
@@ -72,24 +74,14 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             QrDialog().show(childFragmentManager,"QR_DIALOG")
         }
 
-        rootView.addBtn.setOnClickListener {
-            AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
-        }
 
         rootView.AddBtn.setOnClickListener {
             AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
 
-        rootView.SendBtn.setOnClickListener {
-            SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
-        }
 
         rootView.sendBtn.setOnClickListener {
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
-        }
-
-        rootView.backBtn.setOnClickListener {
-            it.findNavController().popBackStack()
         }
 
         rootView.buyTicket.setOnClickListener {
@@ -97,9 +89,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
         }
 
-        rootView.buyBtn.setOnClickListener {
-            TicketDialog().show(childFragmentManager,"TICKETS_DIALOG")
-        }
 
         profileViewModel.order.observe(this, Observer {
             when (it!!) {
@@ -142,15 +131,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             }
         })
 
-        rootView.refreshBtn.setOnClickListener {
-            profileViewModel.refreshTicketsData()
-            profileViewModel.refreshUserShows()
-        }
-
-        rootView.textView10.setOnClickListener {
-            profileViewModel.refreshTicketsData()
-            profileViewModel.refreshUserShows()
-        }
 
         //Add some button for paytm
 //        rootView.addBtn.setOnClickListener {

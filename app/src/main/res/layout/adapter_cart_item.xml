@@ -1,127 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:orientation="vertical"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content">
-
-    <TextView
-            android:id="@+id/itemName"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cartParentItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <View
+            android:id="@+id/view10"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textColor="#242424"
-            android:textSize="17sp"
-            app:layout_constraintEnd_toStartOf="@+id/minus"
-            app:layout_constraintStart_toEndOf="@+id/isVeg"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/shape_rectangle_rounded_8dp"
+            android:backgroundTint="#31365E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
             android:id="@+id/vendor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textColor="#7E242424"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/minus"
-            app:layout_constraintStart_toEndOf="@+id/isVeg"
-            app:layout_constraintTop_toBottomOf="@+id/itemName" />
+            android:text="Chaayos"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/view10"
+            app:layout_constraintStart_toStartOf="@id/view10"
+            app:layout_constraintTop_toTopOf="@id/view10" />
 
-    <Button
-            android:id="@+id/plus"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/item_plus_button"
-            android:text="+"
-            android:textColor="@color/colorBlue"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-            android:id="@+id/minus"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/item_minus_button"
-            android:text="-"
-            android:textAlignment="center"
-            android:textColor="@color/colorBlue"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/quantity"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-            android:id="@+id/quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:background="@color/colorBlue"
-            android:text="0"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/plus"
-            app:layout_constraintEnd_toStartOf="@+id/plus"
-            app:layout_constraintTop_toTopOf="@+id/plus" />
-
-    <TextView
-            android:id="@+id/price"
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/items"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="TextView"
-            android:textAlignment="textStart"
-            android:textColor="#242424"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/minus"
-            app:layout_constraintStart_toEndOf="@+id/isVeg"
-            app:layout_constraintTop_toBottomOf="@+id/vendor"
-            app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-            android:id="@+id/isVeg"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="2dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/itemName"
-            app:srcCompat="@drawable/ic_veg" />
-
-    <View
-            android:id="@+id/view6"
-            android:layout_width="0dp"
-            android:layout_height=".5dp"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:background="#707070"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/price" />
-
+            android:layout_marginEnd="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="@id/view10"
+            app:layout_constraintEnd_toEndOf="@id/view10"
+            app:layout_constraintStart_toStartOf="@id/view10"
+            app:layout_constraintTop_toBottomOf="@+id/vendor"
+            tools:itemCount="2"
+            tools:listitem="@layout/adapter_cart_item_child" />
 </androidx.constraintlayout.widget.ConstraintLayout>

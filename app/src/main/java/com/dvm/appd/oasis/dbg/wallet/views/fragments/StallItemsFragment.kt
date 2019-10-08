@@ -52,11 +52,11 @@ class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListen
 
         stallItemsViewModel.cartItems.observe(this, Observer {
 
-            if (it.sumBy {it1 -> it1.quantity * it1.price } != 0){
+            if (it.sumBy {it1 -> it1.second.sumBy {it2 -> it2.quantity * it2.price}} != 0){
                 rootView.stallOrderView.isVisible = true
                 rootView.viewCart.text = "View Cart"
-                rootView.totalPrice.text = "₹ ${it.sumBy {it2 ->  it2.quantity * it2.price }}"
-                rootView.itemCount.text = "${it.sumBy { it3 -> it3.quantity }} items"
+                rootView.totalPrice.text = "₹ ${it.sumBy {it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price}}}"
+                rootView.itemCount.text = "${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity }}} items"
             }
             else{
                 rootView.totalPrice.text = ""

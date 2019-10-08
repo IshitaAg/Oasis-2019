@@ -49,30 +49,31 @@ class OrderItemsDialog: DialogFragment() {
 
             Log.d("OrderDetailsView", order.toString())
 
-            when(order.status){
+//            when(order.status){
+//
+//                0 -> {
+//                    view.status.setBackgroundResource(R.drawable.pending_status)
+//                    view.status.text = "Pending"
+//                }
+//                1 -> {
+//                    view.status.setBackgroundResource(R.drawable.accept_status)
+//                    view.status.text = "Accepted"
+//                }
+//                2 -> {
+//                    view.status.setBackgroundResource(R.drawable.ready_status)
+//                    view.status.text = "Ready"
+//                }
+//                3 -> {
+//                    view.status.setBackgroundResource(R.drawable.finish_status)
+//                    view.status.text = "Finished"
+//                }
+//                4 -> {
+//                    view.status.setBackgroundResource(R.drawable.decline_status)
+//                    view.status.text = "Declined"
+//                }
+//            }
 
-                0 -> {
-                    view.status.setBackgroundResource(R.drawable.pending_status)
-                    view.status.text = "Pending"
-                }
-                1 -> {
-                    view.status.setBackgroundResource(R.drawable.accept_status)
-                    view.status.text = "Accepted"
-                }
-                2 -> {
-                    view.status.setBackgroundResource(R.drawable.ready_status)
-                    view.status.text = "Ready"
-                }
-                3 -> {
-                    view.status.setBackgroundResource(R.drawable.finish_status)
-                    view.status.text = "Finished"
-                }
-                4 -> {
-                    view.status.setBackgroundResource(R.drawable.decline_status)
-                    view.status.text = "Declined"
-                }
-            }
-
+            view.otp.text = order.otp.toString()
             view.stallName.text = order.vendor
             view.orderId.text = "${order.orderId}"
             view.price.text = "₹${order.totalPrice}"

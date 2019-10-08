@@ -36,7 +36,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         holder.itemName.text = stallItems[position].itemName
         holder.price.text = "₹ ${stallItems[position].price}"
         holder.quantity.text = stallItems[position].quantity.toString()
-        
+
         if (stallItems[position].isVeg){
             holder.isVeg.setImageResource(R.drawable.ic_veg)
         }

@@ -12,7 +12,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedStallItemsDat
 class StallItemsViewModel(val walletRepository: WalletRepository, val stallId: Int) : ViewModel() {
 
     var items:LiveData<List<Pair<String, List<ModifiedStallItemsData>>>> = MutableLiveData()
-    var cartItems: LiveData<List<ModifiedCartData>> = MutableLiveData()
+    var cartItems: LiveData<List<Pair<String, List<ModifiedCartData>>>> = MutableLiveData()
     var error: LiveData<String> = MutableLiveData(null)
 
     init {

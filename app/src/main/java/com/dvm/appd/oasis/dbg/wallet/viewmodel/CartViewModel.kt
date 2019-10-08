@@ -10,10 +10,10 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
 
 class CartViewModel(val walletRepository: WalletRepository): ViewModel(){
 
-    var cartItems: LiveData<List<ModifiedCartData>> = MutableLiveData()
+    var cartItems: LiveData<List<Pair<String, List<ModifiedCartData>>>> = MutableLiveData()
     var progressBarMark: LiveData<Int> = MutableLiveData(1)
     var error: LiveData<String> = MutableLiveData(null)
-    var redirect: LiveData<Boolean> = MutableLiveData(false)
+    //var redirect: LiveData<Boolean> = MutableLiveData(false)
 
     init {
 
@@ -32,7 +32,7 @@ class CartViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.placeOrder().subscribe({
             (progressBarMark as MutableLiveData).postValue(1)
             (error as MutableLiveData).postValue("Order successful")
-            (redirect as MutableLiveData).postValue(true)
+            //(redirect as MutableLiveData).postValue(true)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
             (error as MutableLiveData).postValue(it.message)

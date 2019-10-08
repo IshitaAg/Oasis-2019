@@ -16,24 +16,33 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
+import com.dvm.appd.oasis.dbg.wallet.viewmodel.CartViewModel
+import com.dvm.appd.oasis.dbg.wallet.viewmodel.CartViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrdersViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrdersViewModelFactory
+import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartAdapter
+import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartChildAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrdersAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fra_cart.view.*
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
+import kotlinx.android.synthetic.main.fra_wallet_orders.view.cartRecycler
+import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
 
-class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick {
+class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked {
 
     private lateinit var ordersViewModel: OrdersViewModel
+    private lateinit var cartViewModel: CartViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         ordersViewModel = ViewModelProviders.of(this, OrdersViewModelFactory())[OrdersViewModel::class.java]
+        cartViewModel = ViewModelProviders.of(this, CartViewModelFactory())[CartViewModel::class.java]
 
         val view = inflater.inflate(R.layout.fra_wallet_orders, container, false)
 
         activity!!.mainView.setBackgroundResource(R.drawable.orders_title)
-
 
         activity!!.cart.setOnClickListener {
             this.findNavController().navigate(R.id.action_action_order_history_to_action_cart)
@@ -46,13 +55,34 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick {
         activity!!.notifications.setOnClickListener {
             this.findNavController().navigate(R.id.action_action_order_history_to_notificationFragment)
         }
-        view.orderRecycler.adapter = OrdersAdapter(this)
 
+        view.orderRecycler.adapter = OrdersAdapter(this)
         ordersViewModel.orders.observe(this, Observer {
 
             (view.orderRecycler.adapter as OrdersAdapter).orderItems = it
             (view.orderRecycler.adapter as OrdersAdapter).notifyDataSetChanged()
         })
+
+        view.cartRecycler.adapter = CartAdapter(this)
+        cartViewModel.cartItems.observe(this, Observer {
+
+            (view.cartRecycler.adapter as CartAdapter).cartItems = it
+            (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
+
+            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
+                view.order.isVisible = false
+                view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
+            }
+            else{
+                view.order.isVisible = true
+                view.cartPrice.text = ""
+            }
+            })
+
+        view.order.setOnClickListener {
+            (cartViewModel.progressBarMark as MutableLiveData).postValue(0)
+            cartViewModel.placeOrder()
+        }
 
         ordersViewModel.progressBarMark.observe(this, Observer {
 
@@ -93,6 +123,14 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick {
         OrderItemsDialog().apply { arguments = bundle }.show(childFragmentManager, "OrderItemDialog")
     }
 
+    override fun plusButtonClicked(item: ModifiedCartData, quantity: Int) {
+        cartViewModel.updateCartItems(item.itemId, quantity)
+    }
+
+    override fun deleteCartItemClicked(itemId: Int) {
+        cartViewModel.deleteCartItem(itemId)
+    }
+
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_orders)
@@ -105,5 +143,4 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick {
         activity!!.refresh.isVisible = true
         super.onResume()
     }
-
 }

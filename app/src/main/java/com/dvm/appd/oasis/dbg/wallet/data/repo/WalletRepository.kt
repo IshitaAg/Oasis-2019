@@ -411,8 +411,29 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
             }
     }
 
-    fun getAllModifiedCartItems(): Flowable<List<ModifiedCartData>> {
+    fun getAllModifiedCartItems(): Flowable<MutableList<Pair<String, List<ModifiedCartData>>>> {
         return walletDao.getAllModifiedCartItems().subscribeOn(Schedulers.io())
+            .flatMap {
+
+                var cartItems: MutableList<Pair<String, List<ModifiedCartData>>> = arrayListOf()
+                var vendorItems: MutableList<ModifiedCartData> = arrayListOf()
+
+                for ((index, item) in it.listIterator().withIndex()){
+
+                    vendorItems.add(item)
+
+                    if (index != it.lastIndex && it[index].vendorId != it[index+1].vendorId){
+                        cartItems.add(Pair(item.vendorName, vendorItems))
+                        vendorItems = arrayListOf()
+                    }
+                    else if (index == it.lastIndex){
+                        cartItems.add(Pair(item.vendorName, vendorItems))
+                        vendorItems = arrayListOf()
+                    }
+                }
+
+                return@flatMap Flowable.just(cartItems)
+            }
     }
 
     fun updateCartItems(itemId: Int, quantity: Int): Completable {

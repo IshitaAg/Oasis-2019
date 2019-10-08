@@ -57,7 +57,6 @@
             android:layout_marginEnd="8dp"
             android:background="@drawable/ic_plus"
             android:backgroundTint="#FFFFFF"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/itemName" />
@@ -68,8 +67,6 @@
             android:layout_height="24dp"
             android:background="@drawable/ic_minus"
             android:backgroundTint="#FFFFFF"
-            android:textAlignment="center"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/price"
             app:layout_constraintEnd_toStartOf="@+id/quantity"
             app:layout_constraintTop_toTopOf="@+id/itemName" />
@@ -77,10 +74,9 @@
     <TextView
             android:id="@+id/quantity"
             android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_height="0dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:paddingLeft="4dp"
-            android:paddingTop="2dp"
             android:paddingRight="4dp"
             android:text="0"
             android:textAlignment="center"

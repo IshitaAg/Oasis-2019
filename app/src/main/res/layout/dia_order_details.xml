@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:minWidth="320dp"
-        android:background="@drawable/shape_rectangle_rounded_8dp"
+        android:background="@drawable/order_background"
         android:orientation="vertical">
 
     <TextView
@@ -17,9 +17,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="TextView"
+            android:text="Chayoos"
             android:textAlignment="center"
-            android:textColor="@color/colorBlack"
+            android:textColor="#FFFFFF"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/orderDialog"
@@ -27,19 +27,15 @@
             app:layout_constraintTop_toTopOf="@id/orderDialog" />
 
     <TextView
-            android:id="@+id/status"
+            android:id="@+id/otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="4dp"
-            android:text="TextView"
+            android:text="2341"
             android:textAlignment="textStart"
-            android:textColor="@color/colorWhite"
-            android:textSize="12sp"
+            android:textColor="#67D5DE"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -52,9 +48,9 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="orderid"
+            android:text="1234"
             android:textAlignment="viewEnd"
-            android:textColor="#4293FF"
+            android:textColor="#67D5DE"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/orderDialog"
@@ -68,42 +64,14 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="TextView"
+            android:text="400"
             android:textAlignment="textStart"
-            android:textColor="@color/colorBlack"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/orderDialog"
             app:layout_constraintTop_toBottomOf="@+id/view13" />
-
-    <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Items"
-            android:textColor="#4293FF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/orderDialog"
-            app:layout_constraintTop_toBottomOf="@+id/rating3" />
-
-    <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Sub Total"
-            android:textColor="#4293FF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/orderDialog"
-            app:layout_constraintTop_toBottomOf="@+id/rating3" />
 
     <TextView
             android:id="@+id/text"
@@ -113,11 +81,11 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="How would you rate the food?"
             android:textAlignment="center"
-            android:textColor="@color/colorBlack"
+            android:textColor="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@id/orderDialog"
             app:layout_constraintStart_toStartOf="@id/orderDialog"
-            app:layout_constraintTop_toBottomOf="@+id/status" />
+            app:layout_constraintTop_toBottomOf="@+id/otp" />
 
     <ImageView
             android:id="@+id/rating3"
@@ -176,12 +144,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="@id/orderDialog"
             app:layout_constraintStart_toStartOf="@id/orderDialog"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            tools:layout_editor_absoluteY="251dp" />
 
     <TextView
             android:id="@+id/textView9"
@@ -192,9 +159,9 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:text="Status:"
+            android:text="OTP:"
             android:textAlignment="textStart"
-            android:textColor="@color/colorBlack"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/orderDialog"
@@ -209,7 +176,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="Order Id.:"
             android:textAlignment="textEnd"
-            android:textColor="@color/colorBlack"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/orderId"
@@ -219,18 +186,16 @@
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Total"
+            android:text="Total:"
             android:textAlignment="textStart"
-            android:textColor="#4293FF"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/orderDialog"
-            app:layout_constraintTop_toBottomOf="@+id/view13" />
+            app:layout_constraintBottom_toBottomOf="@+id/price"
+            app:layout_constraintEnd_toStartOf="@+id/price"
+            app:layout_constraintTop_toTopOf="@+id/price" />
 
     <View
             android:id="@+id/view13"

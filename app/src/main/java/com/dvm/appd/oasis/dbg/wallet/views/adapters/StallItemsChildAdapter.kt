@@ -37,10 +37,6 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         holder.price.text = "₹ ${stallItems[position].price}"
         holder.quantity.text = stallItems[position].quantity.toString()
 
-        if (position == stallItems.lastIndex){
-            holder.view.isVisible = false
-        }
-
         if (stallItems[position].isVeg){
             holder.isVeg.setImageResource(R.drawable.ic_veg)
         }
@@ -105,7 +101,5 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         val minus: Button = view.minus
         val quantity: TextView = view.quantity
         val isVeg: ImageView = view.isVeg
-        val view: View = view.view11
-
     }
 }

@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.cartRecycler
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
 
-class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked {
+class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked, CartAdapter.OrderButtonClicked {
 
     private lateinit var ordersViewModel: OrdersViewModel
 
@@ -48,11 +48,12 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             (view.orderRecycler.adapter as OrdersAdapter).notifyDataSetChanged()
         })
 
-        view.cartRecycler.adapter = CartAdapter(this)
+        view.cartRecycler.adapter = CartAdapter(this, this)
         ordersViewModel.cartItems.observe(this, Observer {
 
             Log.d("Cart", it.toString())
             (view.cartRecycler.adapter as CartAdapter).cartItems = it
+            (view.cartRecycler.adapter as CartAdapter).price = it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
 //            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
@@ -65,10 +66,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
 //            }
             })
 
-        view.order.setOnClickListener {
-            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
-            ordersViewModel.placeOrder()
-        }
+//        view.order.setOnClickListener {
+//            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+//            ordersViewModel.placeOrder()
+//        }
 
         ordersViewModel.progressBarMark.observe(this, Observer {
 
@@ -110,6 +111,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
 
     override fun deleteCartItemClicked(itemId: Int) {
         ordersViewModel.deleteCartItem(itemId)
+    }
+
+    override fun placeOrder() {
+        (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+        ordersViewModel.placeOrder()
     }
 
     override fun onResume() {

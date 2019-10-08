@@ -1,83 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".auth.views.AuthActivity"
-        android:background="@drawable/gradient_login">
+        android:background="@drawable/gradient_login"
+        tools:context=".auth.views.AuthActivity">
 
     <ProgressBar
+            android:id="@+id/loadingPbr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:indeterminateTint="@color/colorBlack"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:elevation="2dp"
-            android:id="@+id/loadingPbr"
-            android:indeterminateTint="@color/colorBlack"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
     <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="128dp"
-            android:background="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            android:layout_height="368dp"
+            android:background="#242947"
+            tools:layout_editor_absoluteY="363dp" />
 
     <TextView
             android:id="@+id/bitsianLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginBottom="32dp"
             android:background="@drawable/gradient_login_btn"
+            android:backgroundTint="@color/colorWhite"
             android:elevation="2dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="16dp"
-            android:paddingStart="48dp"
+            android:padding="8dp"
+            android:paddingStart="32dp"
             android:paddingTop="64dp"
             android:paddingEnd="48dp"
             android:paddingBottom="64dp"
             android:text="Login using BITS mail"
             android:textAlignment="center"
-            android:textColor="@color/colorWhite"
+            android:textColor="#31365E"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/view2" />
+            app:layout_constraintBottom_toBottomOf="@+id/view6"
+            app:layout_constraintEnd_toEndOf="@+id/view6"
+            app:layout_constraintStart_toStartOf="@+id/view6" />
 
     <TextView
             android:id="@+id/outsteeLogin"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/login_border"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/add_button"
             android:elevation="2dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="16dp"
-            android:paddingTop="64dp"
-            android:paddingBottom="64dp"
-            android:text="Outstation Participant"
+            android:padding="8dp"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:text="Login"
             android:textAlignment="center"
-            android:textColor="#4B53DE"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/bitsianLogin"
-            app:layout_constraintStart_toStartOf="@+id/bitsianLogin"
-            app:layout_constraintTop_toBottomOf="@+id/bitsianLogin" />
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
+
     <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Halla to Hoga Hi!"
-            android:textColor="#C5C5C5"
+            android:text="Official Android App"
+            android:textColor="#FFFFFF"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
             app:layout_constraintHorizontal_bias="0.466"
@@ -88,40 +85,16 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="72dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="BOSM 2019"
+            android:text="OASIS '19"
             android:textColor="@color/colorWhite"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-    <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="182dp"
-            android:layout_height="157dp"
-            android:layout_marginTop="24dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/bosm_logo"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="80dp"
-            app:layout_constraintBottom_toTopOf="@+id/bitsianLogin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/login_back" />
 
     <ImageView
             android:id="@+id/imageView"
@@ -135,6 +108,98 @@
             app:layout_constraintEnd_toEndOf="@+id/bitsianLogin"
             app:layout_constraintTop_toTopOf="@+id/bitsianLogin"
             app:srcCompat="@drawable/googleg_standard_color_18" />
+
+    <View
+            android:id="@+id/view6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/shape_rectangle_rounded_16dp"
+            android:backgroundTint="#31365E"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="32dp"
+            android:background="#34000000"
+            android:drawableStart="@drawable/ic_outline_profile_identity_24px"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:hint="Username"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/view6"
+            app:layout_constraintStart_toStartOf="@+id/view6"
+            app:layout_constraintTop_toTopOf="@+id/view6" />
+
+    <EditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#34000000"
+            android:drawableStart="@drawable/ic_password"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/username"
+            app:layout_constraintStart_toStartOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="OR"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/bitsianLogin"
+            app:layout_constraintEnd_toEndOf="@+id/view6"
+            app:layout_constraintStart_toStartOf="@+id/view6"
+            app:layout_constraintTop_toBottomOf="@+id/outsteeLogin" />
+
+    <View
+            android:id="@+id/view11"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="#61887E7E"
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toStartOf="@+id/textView7"
+            app:layout_constraintStart_toStartOf="@+id/view6"
+            app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+    <View
+            android:id="@+id/view12"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="32dp"
+            android:background="#61887E7E"
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="@+id/view6"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/textView7" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

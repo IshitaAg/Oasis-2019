@@ -788,22 +788,25 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     // TODO Change Callback URL
     // TODO add appropriate certificate to the Paytm Service
     // TODO change authrization to the actual jwt key of the user
-        val mID = "xjlVFi39646739224729"
+    val mID = "xjlVFi39646739224729"
     val website = "WEBSTAGING"
     val industryTypeId = "Retail"
     // https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp
     // https://securegw-stage.paytm.in/theia/paytmCallback
     val callBackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order"
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
-        val body = JsonObject().apply {
+        /*val body = JsonObject().apply {
             this.addProperty("MID", mID)
             this.addProperty("CHANNEL_ID", "WAP")
             this.addProperty("TXN_AMOUNT", txnAmount)
             this.addProperty("WEBSITE", website)
             this.addProperty("CALLBACK_URL", callBackUrl)
             this.addProperty("INDUSTRY_TYPE_ID", industryTypeId)
-            /*this.addProperty("MOBILE_NO", "7777777777")
-            this.addProperty("EMAIL", "username@emailprovider.com")*/
+            this.addProperty("MOBILE_NO", "7777777777")
+            // this.addProperty("EMAIL", "username@emailprovider.com")
+        }*/
+        val body = JsonObject().apply {
+            this.addProperty("TXN_AMOUNT", txnAmount)
         }
         return walletService.getCheckSum(
             "Basic dXNlcjE6bG9sbWFvMTIzNDU=",
@@ -824,20 +827,27 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         paraMap["CALLBACK_URL"] = response.body()!!.callBackUrl
                         paraMap["CHECKSUMHASH"] = response.body()!!.checksumHash
                         paraMap["INDUSTRY_TYPE_ID"] = response.body()!!.industryTypeId
-                        /*paraMap["MOBILE_NO"] = "7777777777"
-                        paraMap["EMAIL"] = "username@emailprovider.com"*/
+                        // paraMap["MOBILE_NO"] = "7777777777"
+                        // paraMap["EMAIL"] = "username@emailprovider.com"
 
                         Log.d("PayTm", "Generated map = ${paraMap.toString()}")
 
                         //creating paytm order object
                         val order = PaytmOrder(paraMap)
 
+                        Log.d("PayTm", "Sent Paytm order = ${order.requestParamMap.toString()}")
+
                         //initialize paytm service(for production level) pass Certificate instead null if needed
                         val certificate = PaytmClientCertificate("password for client side certificate", "file name for client side certificate")
-                        stagingPGService.initialize(order, null)
+                        /**WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                         * WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                         * Donot remove this variable x. Paytm sdk will break.
+                         * Just let it be here*/
+                        val x = PaytmPGService.getStagingService()
+                        x.initialize(order, null)
 
                         //needs activity context for callback
-                        stagingPGService.startPaymentTransaction(fragment.context, true, true, fragment)
+                        x.startPaymentTransaction(fragment.context, true, true, fragment)
                     }
                     else -> {
                         Log.e("PayTm", "Something went wrong while reciveing checkSum\n${response.code()}\n${response.body()}\n${response.errorBody()}")

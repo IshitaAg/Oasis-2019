@@ -91,11 +91,12 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
 
     //use prodPGService for production level
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String){
+        Log.d("Paytm", "Entered View Model for request")
         walletRepository.getCheckSum(stagingPGService, prodPGService, fragment, txnAmount)
             .subscribe({
-
+                Log.d("PayTm", "Entered onNext")
             },{
-
+                Log.e("PayTm", "Entered onError with ${it.toString()}")
             })
     }
 }

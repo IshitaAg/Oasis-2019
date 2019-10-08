@@ -760,28 +760,51 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
     //Paytm
 
-    //use prodPGService instead of staging when production level
+    //TODO Use prodPGService instead of staging when production level
+    // TODO change merchent id to actual id after account activation
+    // TODO Change Website to production level
+    // TODO Change industry type after accoount activation
+    // TODO Change Callback URL
+    // TODO add appropriate certificate to the Paytm Service
+    // TODO change authrization to the actual jwt key of the user
+    val mID = "xjlVFi39646739224729"
+    val website = "WEBSTAGING"
+    val industryTypeId = "Retail"
+    val callBackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order"
     fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
+        val body = JsonObject().apply {
+            this.addProperty("MID", mID)
+            this.addProperty("CHANNEL_ID", "WAP")
+            this.addProperty("TXN_AMOUNT", txnAmount)
+            this.addProperty("WEBSITE", website)
+            this.addProperty("CALLBACK_URL", callBackUrl)
+            this.addProperty("INDUSTRY_TYPE_ID", industryTypeId)
+            /*this.addProperty("MOBILE_NO", "7777777777")
+            this.addProperty("EMAIL", "username@emailprovider.com")*/
+        }
         return walletService.getCheckSum(
-            PaytmPojo(
-                "Merchant Id from paytm", "generate random UUID", "generate random UUID", "Channel Id from paytm",
-                txnAmount, "", "", "Industry type from paytm"
-            )
+            "Basic dXNlcjE6bG9sbWFvMTIzNDU=",
+            body
         ).subscribeOn(Schedulers.io())
             .doOnSuccess {response ->
-
+                Log.d("PayTm", "Received Response code = ${response.code()}")
+                Log.d("PayTm", "Received Respponse body = ${response.body()}")
                 when(response.code()){
                     200 ->{
                         val paraMap = HashMap<String, String>()
-                        paraMap["MID"] = "same as before"
-                        paraMap["ORDER_ID"] = "same as before"
-                        paraMap["CUST_ID"] = "same as before"
-                        paraMap["CHANNEL_ID"] = "same as before"
-                        paraMap["TXN_AMOUNT"] = "same as before"
-                        paraMap["WEBSITE"] = "same as before"
-                        paraMap["CALLBACK_URL"] = "same as before"
+                        paraMap["MID"] = response.body()!!.mid
+                        paraMap["ORDER_ID"] = response.body()!!.orderId
+                        paraMap["CUST_ID"] = response.body()!!.customerId
+                        paraMap["CHANNEL_ID"] = response.body()!!.channelId
+                        paraMap["TXN_AMOUNT"] = response.body()!!.amount
+                        paraMap["WEBSITE"] = response.body()!!.website
+                        paraMap["CALLBACK_URL"] = response.body()!!.callBackUrl
                         paraMap["CHECKSUMHASH"] = response.body()!!.checksumHash
-                        paraMap["INDUSTRY_TYPE_ID"] = "same as before"
+                        paraMap["INDUSTRY_TYPE_ID"] = response.body()!!.industryTypeId
+                        /*paraMap["MOBILE_NO"] = "7777777777"
+                        paraMap["EMAIL"] = "username@emailprovider.com"*/
+
+                        Log.d("PayTm", "Generated map = ${paraMap.toString()}")
 
                         //creating paytm order object
                         val order = PaytmOrder(paraMap)
@@ -793,7 +816,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         //needs activity context for callback
                         stagingPGService.startPaymentTransaction(fragment.context, true, true, fragment)
                     }
-                    else -> {}
+                    else -> {
+                        Log.e("PayTm", "Something went wrong while reciveing checkSum\n${response.code()}\n${response.body()}\n${response.errorBody()}")
+                    }
                 }
             }
             .ignoreElement()

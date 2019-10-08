@@ -152,6 +152,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             profileViewModel.refreshUserShows()
         }
 
+        profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000.00")
+
         //Add some button for paytm
 //        rootView.addBtn.setOnClickListener {
 //            profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000")
@@ -166,30 +168,30 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     override fun onTransactionResponse(p0: Bundle?) {
-        Log.d("PaytmTrans", p0.toString())
+        Log.d("PayTm", "on Transaction Response ${p0.toString()}")
     }
 
     override fun clientAuthenticationFailed(p0: String?) {
-        Log.d("PaytmAuthFailed", "Network Error")
+        Log.d("PayTm", "Client authentication failed ${p0}")
     }
 
     override fun someUIErrorOccurred(p0: String?) {
-        Log.d("PaytmUIError", p0)
+        Log.d("PayTm", "Some UI error occoured $p0")
     }
 
     override fun onTransactionCancel(p0: String?, p1: Bundle?) {
-        Log.d("PaytmTransCanceled", "$p0 , $p1")
+        Log.d("PayTm", "Transaction cancled $p0 \n $p1")
     }
 
     override fun networkNotAvailable() {
-        Log.d("PaytmNoNetwork", "No Network")
+        Log.d("PayTm", "Network not available")
     }
 
     override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
-        Log.d("PaytmLoadingError", "$p0, $p1, $p2")
+        Log.d("PayTm", "Error in loading the webpage $p0\n $p1\n $p2")
     }
 
     override fun onBackPressedCancelTransaction() {
-        Log.d("PaytmBackCancel", "Back Pressed")
+        Log.d("PayTm", "Transaction was cancelled because of back pressed")
     }
 }

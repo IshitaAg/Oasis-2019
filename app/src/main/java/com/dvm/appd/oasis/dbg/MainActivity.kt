@@ -1,10 +1,12 @@
 package com.dvm.appd.oasis.dbg
 
+import android.Manifest
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.*
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
@@ -17,6 +19,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
@@ -55,6 +58,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     private var receiver: NetworkChangeReciver? = null
     private val REQUEST_CODE_UPDATE_IMMIDIATE = 101
     private val REQUEST_CODE_UPDATE_FLEXIBLE = 102
+    private val REQUEST_CODE_SMS_PERMISSIONS = 103
     private lateinit var remoteConfig: FirebaseRemoteConfig
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -80,6 +84,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
         setupNotificationChannel()
+        checkSMSREadPermissions()
         checkForInvitation()
         checkNotificationPermissions()
         checkForUpdates()
@@ -181,6 +186,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             } catch (e: Exception) {
                 Log.e("AutoStart Execute", "Error in opening AutoStart = ${e.toString()}")
             }
+        }
+    }
+
+    private fun checkSMSREadPermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+	        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS), REQUEST_CODE_SMS_PERMISSIONS)
         }
     }
 

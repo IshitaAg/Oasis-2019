@@ -38,7 +38,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         holder.quantity.text = stallItems[position].quantity.toString()
 
         if (position == stallItems.lastIndex){
-            holder.view.isVisible = false
+            // holder.view.isVisible = false
         }
 
         if (stallItems[position].isVeg){
@@ -105,7 +105,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         val minus: Button = view.minus
         val quantity: TextView = view.quantity
         val isVeg: ImageView = view.isVeg
-        val view: View = view.view11
+        // val view: View = view.view11
 
     }
 }

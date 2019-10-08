@@ -22,6 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_auth.*
+import kotlinx.android.synthetic.main.activity_auth.password
+import kotlinx.android.synthetic.main.activity_auth.username
+import kotlinx.android.synthetic.main.fra_auth_outstee.*
 
 
 class AuthActivity : AppCompatActivity() {
@@ -42,7 +45,14 @@ class AuthActivity : AppCompatActivity() {
             ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
 
         outsteeLogin.setOnClickListener {
-            startActivity(Intent(this, LoginOutsteeActivity::class.java))
+            when {
+                username.text.toString().isBlank() || password.text.toString().isBlank() ->
+                    Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
+                else -> {
+                    loading.visibility = View.VISIBLE
+                    authViewModel.login(username.text.toString(),password.text.toString())
+                }
+            }
         }
 
         bitsianLogin.setOnClickListener {
@@ -50,6 +60,7 @@ class AuthActivity : AppCompatActivity() {
                 startActivityForResult(gso.signInIntent, 108)
             }
         }
+
 
         authViewModel.state.observe(this, Observer {
             when (it!!) {
@@ -70,6 +81,8 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         })
+
+
     }
 
     override fun onResume() {
@@ -89,7 +102,7 @@ class AuthActivity : AppCompatActivity() {
                     .getResult(ApiException::class.java)
                 Toast.makeText(this, profile!!.displayName, Toast.LENGTH_SHORT).show()
                 loadingPbr.visibility = View.VISIBLE
-                authViewModel.login(profile.idToken!!)
+                authViewModel.Blogin(profile.idToken!!)
             } catch (e: ApiException) {
                 Log.d("checke", e.toString())
                 Toast.makeText(this, "{${e.statusCode}: Sign in Failure!", Toast.LENGTH_LONG).show()

@@ -15,6 +15,7 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
 
     var stalls: List<StallData> = emptyList()
     var stallImgs:List<String> = emptyList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StallsAdapter.StallsViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_wallet_stalls, parent, false)

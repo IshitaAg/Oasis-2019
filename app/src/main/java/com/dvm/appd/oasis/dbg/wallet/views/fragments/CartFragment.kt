@@ -15,10 +15,11 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.CartViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.CartViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartAdapter
+import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartChildAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_cart.view.*
 
-class CartFragment: Fragment(), CartAdapter.OnButtonClicked {
+class CartFragment: Fragment(), CartChildAdapter.OnButtonClicked {
 
     private lateinit var cartViewModel: CartViewModel
 
@@ -45,10 +46,10 @@ class CartFragment: Fragment(), CartAdapter.OnButtonClicked {
             (view.cartRecycler.adapter as CartAdapter).cartItems = it
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
-            if (it.sumBy { it1 -> it1.quantity * it1.price } != 0) {
+            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
                 view.cartOrderView.isVisible = true
-                view.totalPrice.text = "Total: ₹ ${it.sumBy { it2 -> it2.quantity * it2.price }}"
-                view.itemCount.text = "${it.sumBy { it3 -> it3.quantity }} items"
+                view.totalPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
+                view.itemCount.text = "${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity} }} items"
             } else {
                 view.totalPrice.text = ""
                 view.itemCount.text = ""
@@ -81,12 +82,12 @@ class CartFragment: Fragment(), CartAdapter.OnButtonClicked {
             }
         })
 
-        cartViewModel.redirect.observe(this, Observer {
-
-            if(it)
-                view.findNavController().navigate(R.id.action_action_cart_to_orders)
-
-        })
+//        cartViewModel.redirect.observe(this, Observer {
+//
+//            if(it)
+//                view.findNavController().navigate(R.id.action_action_cart_to_orders)
+//
+//        })
 
         view.backBtn.setOnClickListener {
             it.findNavController().popBackStack()

@@ -152,7 +152,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             profileViewModel.refreshUserShows()
         }
 
-        profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000.00")
+        profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000.00ZZ")
 
         //Add some button for paytm
 //        rootView.addBtn.setOnClickListener {

@@ -71,5 +71,6 @@
     <string name="link_Sponsors">https://www.bits-bosm.org/sponsers.html</string>
     <string name="link_HPC">http://hpconline-bits.weebly.com/</string>
     <string name="miscellaneous">Miscellaneous</string>
+    <string name="rupee">\u20B9</string>
     <string name="title_activity_map_fragment">Map</string>
 </resources>

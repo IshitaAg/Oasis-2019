@@ -412,25 +412,11 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun showCustomToolbar() {
-        mainView.isVisible = true
-        fragmentName.isVisible = true
-        cart.isVisible = true
-        profile.isVisible = true
-        notifications.isVisible = true
         bottom_navigation_bar.isVisible = true
-        textView7.isVisible = true
     }
 
     fun hideCustomToolbarForLevel2Fragments() {
-        fragmentName.isVisible = false
-        cart.isVisible = false
-        profile.isVisible = false
-        search.isVisible = false
-        linearElasRecycler.isVisible = false
-        notifications.isVisible = false
         bottom_navigation_bar.isVisible = false
-        mainView.visibility = View.GONE
-        textView7.isVisible = false
     }
 
     fun setStatusBarColor(color: Int) {

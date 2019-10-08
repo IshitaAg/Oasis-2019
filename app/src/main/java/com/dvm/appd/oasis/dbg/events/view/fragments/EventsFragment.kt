@@ -57,29 +57,13 @@ class EventsFragment : Fragment(), EventsAdapter.OnIconClicked{
 
         val view = inflater.inflate(R.layout.fra_events_fragment, container, false)
 
-        activity!!.mainView.setBackgroundResource(R.drawable.events_title)
-        activity!!.fragmentName.text = "Events"
         view.progress_event.visibility = View.VISIBLE
-
-
-        activity!!.cart.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_events_to_action_cart)
-        }
-
-        activity!!.profile.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_events_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_events_to_notificationFragment)
-        }
 
         view.eventsRecycler.adapter = EventsAdapter(icons, this)
 
         eventsViewViewModel.sportsName.observe(this, Observer {
             view.progress_event.visibility = View.INVISIBLE
             Log.d("EventsFrag", "Observed $it")
-            activity!!.search.setAdapter(ArrayAdapter<String>(this.context!!, R.layout.search_dialog, R.id.suggestion, it.map {item -> item.event }))
             (view.eventsRecycler.adapter as EventsAdapter).sportsName = it
             (view.eventsRecycler.adapter as EventsAdapter).notifyDataSetChanged()
         })
@@ -90,14 +74,6 @@ class EventsFragment : Fragment(), EventsAdapter.OnIconClicked{
                 (eventsViewViewModel.error as MutableLiveData).postValue(null)
             }
         })
-
-        activity!!.search.threshold = 1
-        activity!!.search.setOnItemClickListener { parent, searchView, position, id ->
-            val name = parent.adapter.getItem(position) as String
-            Log.d("Search", name)
-            val bundle = bundleOf("name" to name)
-            view.findNavController().navigate(R.id.sportsDataFragment, bundle)
-        }
 
         view.miscEvents.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_action_events_to_miscEventsFragment, null))
         view.next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_action_events_to_miscEventsFragment, null))
@@ -121,10 +97,6 @@ class EventsFragment : Fragment(), EventsAdapter.OnIconClicked{
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_events)
-        activity!!.search.isVisible = true
-        activity!!.textView7.isVisible = false
-        activity!!.linearElasRecycler.isVisible = false
-        activity!!.refresh.isVisible = false
         super.onResume()
     }
 }

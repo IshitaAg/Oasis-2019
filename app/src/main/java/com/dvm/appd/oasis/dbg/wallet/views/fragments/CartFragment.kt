@@ -19,7 +19,10 @@ import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartChildAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_cart.view.*
 
-class CartFragment: Fragment(), CartChildAdapter.OnButtonClicked {
+class CartFragment: Fragment(), CartChildAdapter.OnButtonClicked, CartAdapter.OrderButtonClicked{
+    override fun placeOrder() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private lateinit var cartViewModel: CartViewModel
 
@@ -33,13 +36,10 @@ class CartFragment: Fragment(), CartChildAdapter.OnButtonClicked {
 
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_cart)
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.refresh.isVisible = false
 
         cartViewModel = ViewModelProviders.of(this, CartViewModelFactory())[CartViewModel::class.java]
 
-        view.cartRecycler.adapter = CartAdapter(this)
+        view.cartRecycler.adapter = CartAdapter(this, this)
 
         cartViewModel.cartItems.observe(this, Observer {
 

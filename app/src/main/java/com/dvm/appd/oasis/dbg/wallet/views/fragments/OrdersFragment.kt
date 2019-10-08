@@ -2,6 +2,7 @@ package com.dvm.appd.oasis.dbg.wallet.views.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,31 +31,15 @@ import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.cartRecycler
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
 
-class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked {
+class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked, CartAdapter.OrderButtonClicked {
 
     private lateinit var ordersViewModel: OrdersViewModel
-    private lateinit var cartViewModel: CartViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         ordersViewModel = ViewModelProviders.of(this, OrdersViewModelFactory())[OrdersViewModel::class.java]
-        cartViewModel = ViewModelProviders.of(this, CartViewModelFactory())[CartViewModel::class.java]
 
         val view = inflater.inflate(R.layout.fra_wallet_orders, container, false)
-
-        activity!!.mainView.setBackgroundResource(R.drawable.orders_title)
-
-        activity!!.cart.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_action_cart)
-        }
-
-        activity!!.profile.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_order_history_to_notificationFragment)
-        }
 
         view.orderRecycler.adapter = OrdersAdapter(this)
         ordersViewModel.orders.observe(this, Observer {
@@ -63,26 +48,28 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             (view.orderRecycler.adapter as OrdersAdapter).notifyDataSetChanged()
         })
 
-        view.cartRecycler.adapter = CartAdapter(this)
-        cartViewModel.cartItems.observe(this, Observer {
+        view.cartRecycler.adapter = CartAdapter(this, this)
+        ordersViewModel.cartItems.observe(this, Observer {
 
+            Log.d("Cart", it.toString())
             (view.cartRecycler.adapter as CartAdapter).cartItems = it
+            (view.cartRecycler.adapter as CartAdapter).price = it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
-            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
-                view.order.isVisible = false
-                view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
-            }
-            else{
-                view.order.isVisible = true
-                view.cartPrice.text = ""
-            }
+//            if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price  }} != 0) {
+//                view.order.isVisible = true
+//                view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.price }}}"
+//            }
+//            else{
+//                view.order.isVisible = false
+//                view.cartPrice.text = ""
+//            }
             })
 
-        view.order.setOnClickListener {
-            (cartViewModel.progressBarMark as MutableLiveData).postValue(0)
-            cartViewModel.placeOrder()
-        }
+//        view.order.setOnClickListener {
+//            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+//            ordersViewModel.placeOrder()
+//        }
 
         ordersViewModel.progressBarMark.observe(this, Observer {
 
@@ -105,11 +92,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
         })
 
-        activity!!.refresh.setOnClickListener {
-            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
-            ordersViewModel.getAllOrders()
-        }
-
         return view
     }
 
@@ -124,23 +106,21 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
     }
 
     override fun plusButtonClicked(item: ModifiedCartData, quantity: Int) {
-        cartViewModel.updateCartItems(item.itemId, quantity)
+        ordersViewModel.updateCartItems(item.itemId, quantity)
     }
 
     override fun deleteCartItemClicked(itemId: Int) {
-        cartViewModel.deleteCartItem(itemId)
+        ordersViewModel.deleteCartItem(itemId)
+    }
+
+    override fun placeOrder() {
+        (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+        ordersViewModel.placeOrder()
     }
 
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_orders)
-        activity!!.fragmentName.text = "Orders"
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = true
-        activity!!.textView7.text = "\"Don't forget to add ratings\""
-        activity!!.textView7.setTextColor(Color.rgb(28, 140, 204))
-        activity!!.linearElasRecycler.isVisible = false
-        activity!!.refresh.isVisible = true
         super.onResume()
     }
 }

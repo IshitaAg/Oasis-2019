@@ -61,10 +61,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
         }
-        activity!!.mainView.visibility = View.GONE
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.refresh.isVisible = false
 
         profileViewModel.balance.observe(this, Observer {
             rootView.balance.text = "Rs ${it!!}"

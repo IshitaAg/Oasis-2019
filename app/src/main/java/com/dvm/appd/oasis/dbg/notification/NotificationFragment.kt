@@ -38,8 +38,6 @@ class NotificationFragment : Fragment() {
 
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_notifications)
-        activity!!.refresh.isVisible = false
-
 
         notificationViewModel.error.observe(this, Observer {
             if (it != null) {

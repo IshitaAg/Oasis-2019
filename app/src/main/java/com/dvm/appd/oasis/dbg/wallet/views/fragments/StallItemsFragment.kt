@@ -33,9 +33,6 @@ class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListen
         val stallName = arguments?.getString("stallName")
 
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.refresh.isVisible = false
 
         val rootView = inflater.inflate(R.layout.fra_wallet_stall_items, container, false)
 

@@ -41,7 +41,6 @@ class ELASFragment : Fragment(), ElasQuestionsAdapter.onQuestionButtonClicked {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        activity!!.mainView.setBackgroundResource(R.drawable.quiz_title)
         selectQuestions()
         return inflater.inflate(R.layout.fra_elas_fragment, container, false)
     }
@@ -50,16 +49,6 @@ class ELASFragment : Fragment(), ElasQuestionsAdapter.onQuestionButtonClicked {
         super.onViewCreated(view, savedInstanceState)
 
         initializeView()
-
-        activity!!.bttn_Questions_elas.setOnClickListener {
-            Log.d("ElasFragment", "Questions Selected")
-            selectQuestions()
-        }
-
-        activity!!.bttn_Leaderboard_elas.setOnClickListener {
-            Log.d("ElasFragment", "Options Selected")
-            selectLeaderboard()
-        }
 
         elasViewModel.uiState.observe(this, Observer {
             when(it!!) {
@@ -99,22 +88,10 @@ class ELASFragment : Fragment(), ElasQuestionsAdapter.onQuestionButtonClicked {
         val recycler = view!!.findViewById<RecyclerView>(R.id.recycler_elasFrag_questions)
         recycler.adapter = ElasQuestionsAdapter(this)
 
-        activity!!.cart.setOnClickListener{
-            this.findNavController().navigate(R.id.action_action_game_to_action_cart)
-        }
 
-        activity!!.profile.setOnClickListener{
-            this.findNavController().navigate(R.id.action_action_game_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_game_to_notificationFragment)
-        }
     }
 
     private fun selectQuestions() {
-        activity!!.bttn_Questions_elas.setTextColor(resources.getColor(R.color.text_color))
-        activity!!.bttn_Leaderboard_elas.setTextColor(resources.getColor(R.color.colorGrey))
         try {
             recycler_elasFrag_questions.adapter = ElasQuestionsAdapter(this)
             (recycler_elasFrag_questions.adapter as ElasQuestionsAdapter).questionsList = currentQuestionsList.toSortedMap(reverseOrder())
@@ -125,8 +102,7 @@ class ELASFragment : Fragment(), ElasQuestionsAdapter.onQuestionButtonClicked {
     }
 
     private fun selectLeaderboard() {
-        activity!!.bttn_Leaderboard_elas.setTextColor(resources.getColor(R.color.text_color))
-        activity!!.bttn_Questions_elas.setTextColor(resources.getColor(R.color.colorGrey))
+
         try {
             recycler_elasFrag_questions.adapter = ELasLeaderoardAdapter(context!!)
             (recycler_elasFrag_questions.adapter as ELasLeaderoardAdapter).leaderboardList = currentLeaderboardList.sortedBy { it.Rank }
@@ -140,11 +116,6 @@ class ELASFragment : Fragment(), ElasQuestionsAdapter.onQuestionButtonClicked {
         Log.d("ElasFragment", "OnREsume Called")
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_elas)
-        activity!!.linearElasRecycler.isVisible = true
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.fragmentName.text = "Quiz"
-        activity!!.refresh.isVisible = false
         super.onResume()
     }
 

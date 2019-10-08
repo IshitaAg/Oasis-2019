@@ -53,9 +53,6 @@ class SportsDataFragment : Fragment(),GenderDataAdapter.OnGenderClicked, SportsD
         Log.d("Time", currentTime)
         val view = inflater.inflate(R.layout.fragment_sports_data, container, false)
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-        activity!!.refresh.isVisible = false
 
         view.filter.adapter = ArrayAdapter<String>(this.context!!, R.layout.filter_dialog, R.id.filterName, filters)
         view.filter.onItemSelectedListener = this

@@ -41,9 +41,6 @@ class FragmentRecyclerView : Fragment() {
             title = it.getString("title")!!
         }
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = false
-
     }
 
     override fun onCreateView(

@@ -46,21 +46,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
 
         val rootview = inflater.inflate(R.layout.fra_wallet_stalls, container, false)
         //activity!!.my_toolbar.setBackgroundResource(R.drawable.gradient_stalls_toolbar)
-        activity!!.mainView.setBackgroundResource(R.drawable.stalls_title)
-        activity!!.fragmentName.text = "Stalls"
         rootview.stalls_recycler.adapter = StallsAdapter(this)
-
-        activity!!.cart.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_food_to_action_cart)
-        }
-
-        activity!!.profile.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_food_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_food_to_notificationFragment)
-        }
 
         stallsViewModel.stalls.observe(this, Observer {
             (rootview.stalls_recycler.adapter as StallsAdapter).stalls = it
@@ -87,11 +73,6 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             }
         })
 
-        activity!!.refresh.setOnClickListener {
-            (stallsViewModel.result as MutableLiveData).postValue(StallResult.Failure)
-            stallsViewModel.refreshData()
-        }
-
         return rootview
     }
 
@@ -104,12 +85,6 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_stalls)
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = true
-        activity!!.linearElasRecycler.isVisible = false
-        activity!!.textView7.text = "\"To flavor your taste buds\""
-        activity!!.textView7.setTextColor(Color.rgb(5, 197, 109))
-        activity!!.refresh.isVisible = true
         super.onResume()
     }
 }

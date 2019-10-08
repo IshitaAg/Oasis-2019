@@ -23,7 +23,6 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        activity!!.mainView.setBackgroundResource(R.drawable.more_title)
         return inflater.inflate(R.layout.fragment_more, container, false)
     }
 
@@ -34,17 +33,6 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         (recycler_card_more.adapter as MoreAdapter).moreItems = moreItems
         (recycler_card_more.adapter as MoreAdapter).notifyDataSetChanged()
 
-        activity!!.cart.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_more_to_action_cart)
-        }
-
-        activity!!.profile.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_more_to_action_profile)
-        }
-
-        activity!!.notifications.setOnClickListener {
-            this.findNavController().navigate(R.id.action_action_more_to_notificationFragment)
-        }
     }
 
     override fun moreButtonClicked(item: Int) {
@@ -82,13 +70,6 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_more)
-        activity!!.fragmentName.text = resources.getString(R.string.action_more)
-        activity!!.search.isVisible = false
-        activity!!.textView7.isVisible = true
-        activity!!.textView7.text = "\"Praise the developers\""
-        activity!!.textView7.setTextColor(Color.rgb(86,33,150))
-        activity!!.linearElasRecycler.isVisible = false
-        activity!!.refresh.isVisible = false
 
         super.onResume()
     }

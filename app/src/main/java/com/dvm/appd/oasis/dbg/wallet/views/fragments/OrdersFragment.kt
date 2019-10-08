@@ -2,6 +2,7 @@ package com.dvm.appd.oasis.dbg.wallet.views.fragments
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -33,12 +34,10 @@ import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
 class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked {
 
     private lateinit var ordersViewModel: OrdersViewModel
-    private lateinit var cartViewModel: CartViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         ordersViewModel = ViewModelProviders.of(this, OrdersViewModelFactory())[OrdersViewModel::class.java]
-        cartViewModel = ViewModelProviders.of(this, CartViewModelFactory())[CartViewModel::class.java]
 
         val view = inflater.inflate(R.layout.fra_wallet_orders, container, false)
 
@@ -50,8 +49,9 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         })
 
         view.cartRecycler.adapter = CartAdapter(this)
-        cartViewModel.cartItems.observe(this, Observer {
+        ordersViewModel.cartItems.observe(this, Observer {
 
+            Log.d("Cart", it.toString())
             (view.cartRecycler.adapter as CartAdapter).cartItems = it
             (view.cartRecycler.adapter as CartAdapter).notifyDataSetChanged()
 
@@ -66,8 +66,8 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             })
 
         view.order.setOnClickListener {
-            (cartViewModel.progressBarMark as MutableLiveData).postValue(0)
-            cartViewModel.placeOrder()
+            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+            ordersViewModel.placeOrder()
         }
 
         ordersViewModel.progressBarMark.observe(this, Observer {
@@ -105,11 +105,11 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
     }
 
     override fun plusButtonClicked(item: ModifiedCartData, quantity: Int) {
-        cartViewModel.updateCartItems(item.itemId, quantity)
+        ordersViewModel.updateCartItems(item.itemId, quantity)
     }
 
     override fun deleteCartItemClicked(itemId: Int) {
-        cartViewModel.deleteCartItem(itemId)
+        ordersViewModel.deleteCartItem(itemId)
     }
 
     override fun onResume() {

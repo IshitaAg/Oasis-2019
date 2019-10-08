@@ -25,4 +25,5 @@
     <color name="status_bar_profile">#3720CC</color>
     <color name="status_bar_auth">#5F86F0</color>
     <color name="text_color">#9B15C2</color>
+    <color name="colour_profile_card">#31365E</color>
 </resources>

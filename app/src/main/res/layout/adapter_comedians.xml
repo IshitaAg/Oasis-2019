@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/shape_rectangle_rounded_16dp"
+        android:backgroundTint="#31365E"
+        android:padding="16dp">
+
+    <RadioGroup
+            android:id="@+id/checkBtn"
+            android:layout_width="49dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="32dp"
+            android:background="@color/active_state_submit_button"
+            app:layout_constraintBottom_toBottomOf="@+id/comedianName"
+            app:layout_constraintEnd_toStartOf="@+id/comedianName"
+            app:layout_constraintHorizontal_bias="0.12"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/comedianName" />
+
+    <TextView
+            android:id="@+id/comedianName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Contestant Name"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/checkBtn"
+            app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

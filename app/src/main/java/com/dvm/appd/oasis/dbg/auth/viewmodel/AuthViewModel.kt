@@ -13,7 +13,6 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     var state: LiveData<LoginState> = MutableLiveData()
 
-
     init {
         listenRegToken()
     }
@@ -33,7 +32,7 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun login(id: String) {
+    fun Blogin(id: String) {
         authRepository.loginBitsian(id).subscribe({
             authRepository.subscribeToTopics()
             when (it!!) {
@@ -56,5 +55,27 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
         })
     }
 
+    fun login(username: String, password: String) {
 
+        authRepository.loginOutstee(username, password).doOnSuccess {
+            authRepository.subscribeToTopics()
+            when(it!!){
+                LoginState.Success -> {
+                    authRepository.getUser().subscribe {
+                        if(it.firstLogin==true) {
+                            authRepository.disableOnBoardingForUser()
+                            (state as MutableLiveData).postValue(LoginState.MoveToOnBoarding)
+                        }
+                        else
+                            (state as MutableLiveData).postValue(LoginState.MoveToMainApp)
+                    }
+                }
+                is LoginState.Failure -> {(state as MutableLiveData).postValue(it)}
+            }
+
+        }.doOnError {
+            Log.d("checkve", it.toString())
+        }.subscribe()
+
+    }
 }

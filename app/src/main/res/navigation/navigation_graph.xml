@@ -137,9 +137,6 @@
                 app:destination="@id/qrDialog"
                 app:popUpTo="@+id/action_profile" />
     </fragment>
-    <activity android:id="@+id/loginOutsteeActivity"
-              android:name="com.dvm.appd.oasis.dbg.auth.views.LoginOutsteeActivity"
-              android:label="LoginOutsteeFragment"/>
     <activity android:id="@+id/authActivity" android:name="com.dvm.appd.oasis.dbg.auth.views.AuthActivity"
               android:label="fra_auth" tools:layout="@layout/activity_auth"/>
     <fragment android:id="@+id/fragmentRecyclerView" android:name="com.dvm.appd.oasis.dbg.more.fragments.FragmentRecyclerView"

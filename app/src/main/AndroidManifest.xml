@@ -31,8 +31,6 @@
                 android:value="@string/google_maps_key" />-->
 
 
-        <activity android:name="com.dvm.appd.oasis.dbg.auth.views.LoginOutsteeActivity"
-                android:screenOrientation="portrait"/>
         <activity android:name="com.dvm.appd.oasis.dbg.splash.views.SplashActivity"
                 android:screenOrientation="portrait">
             <intent-filter>

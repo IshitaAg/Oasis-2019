@@ -64,6 +64,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         val firstLogin = sharedPreferences.getBoolean(Keys.first_login,false)
         Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin).toString())
         if (listOf(name, email, contact, jwt, qr).contains(null)) {
+            setUser(null)
             return Maybe.empty()
         }
         return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin))

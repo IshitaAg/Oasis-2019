@@ -32,7 +32,8 @@
 
 
         <activity android:name="com.dvm.appd.oasis.dbg.splash.views.SplashActivity"
-                android:screenOrientation="portrait">
+                android:screenOrientation="portrait"
+                android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

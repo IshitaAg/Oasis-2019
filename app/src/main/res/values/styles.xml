@@ -8,5 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">@font/shellypalmer_circular_std_book</item>
     </style>
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_theme</item>
+    </style>
 
 </resources>

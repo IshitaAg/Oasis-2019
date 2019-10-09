@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -143,8 +144,30 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 
-    override fun onTransactionResponse(p0: Bundle?) {
-        Log.d("PayTm", "on Transaction Response ${p0.toString()}")
+    override fun onTransactionResponse(bundle: Bundle?) {
+        Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
+        if (!(bundle!!.isEmpty)) {
+            if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
+                val body = JsonObject().apply {
+                    this.addProperty("STATUS", bundle["STATUS"].toString())
+                    this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
+                    this.addProperty("BANKNAME", bundle["BANKNAME"].toString())
+                    this.addProperty("ORDERID", bundle["ORDERID"].toString())
+                    this.addProperty("TXNAMOUNT", bundle["TXNAMOUNT"].toString())
+                    this.addProperty("TXNDATE", bundle["TXNDATE"].toString())
+                    this.addProperty("MID", bundle["MID"].toString())
+                    this.addProperty("TXNID", bundle["TXNID"].toString())
+                    this.addProperty("RESPCODE", bundle["RESPCODE"].toString())
+                    this.addProperty("PAYMENTMODE", bundle["PAYMENTMODE"].toString())
+                    this.addProperty("BANKTXNID", bundle["BANKTXNID"].toString())
+                    this.addProperty("CURRENCY", bundle["CURRENCY"].toString())
+                    this.addProperty("GATEWAYNAME", bundle["GATEWAYNAME"].toString())
+                    this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
+                    Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
+                }
+                profileViewModel.onPaytmTransactionSucessful(body)
+            }
+        }
     }
 
     override fun clientAuthenticationFailed(p0: String?) {

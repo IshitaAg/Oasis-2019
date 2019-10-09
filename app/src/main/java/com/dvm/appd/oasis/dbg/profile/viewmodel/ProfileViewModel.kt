@@ -12,6 +12,7 @@ import com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment
 import com.dvm.appd.oasis.dbg.profile.views.fragments.UiState
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.UserShows
+import com.google.gson.JsonObject
 import com.paytm.pgsdk.PaytmPGService
 
 
@@ -98,5 +99,21 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
             },{
                 Log.e("PayTm", "Entered onError with ${it.toString()}")
             })
+    }
+
+    fun onPaytmTransactionSucessful(body: JsonObject) {
+        Log.d("PayTm", "Entered on Sucess in View Model")
+        walletRepository.sendTransactionDetails(body).subscribe({
+            Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
+            Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
+
+            when(it.code()) {
+                200 -> {
+
+                }
+            }
+        },{
+            Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
+        })
     }
 }

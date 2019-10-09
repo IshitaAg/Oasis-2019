@@ -25,6 +25,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONObject
+import retrofit2.Response
 import java.lang.Exception
 
 class WalletRepository(val walletService: WalletService, val walletDao: WalletDao, val authRepository: AuthRepository, val moneyTracker: MoneyTracker, val networkChecker: NetworkChecker) {
@@ -855,5 +856,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                 }
             }
             .ignoreElement()
+    }
+
+    fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
+        return walletService.confirmPaytmPayment("Basic dXNlcjE6bG9sbWFvMTIzNDU=", body).subscribeOn(Schedulers.io())
     }
 }

@@ -45,6 +45,9 @@ interface WalletService {
 
     //Paytm
     // TODO change the checkSum url when moving to production if necessary
-    @POST("/wallet/monetary/get_paytm_checksum")
+    @POST("wallet/monetary/get_paytm_checksum")
     fun getCheckSum(@Header("Authorization")jwt:String,@Body body: JsonObject): Single<Response<ChecksumPojo>>
+
+    @POST("wallet/monetary/confirm_paytm_payment")
+    fun confirmPaytmPayment(@Header("Authorization")jwt: String, @Body body: JsonObject): Single<Response<Void>>
 }

@@ -121,7 +121,8 @@
                 app:destination="@id/mapFragment" />
         <action
                 android:id="@+id/action_action_more_to_votingFragment"
-                app:destination="@id/votingFragment" />
+                app:destination="@id/votingFragment"
+                app:popUpTo="@+id/action_more" />
     </fragment>
     <fragment android:id="@+id/fragmentWebPage" android:name="com.dvm.appd.oasis.dbg.more.fragments.FragmentWebPage"
               android:label="FragmentWebPage"/>

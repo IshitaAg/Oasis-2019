@@ -7,4 +7,5 @@ sealed class LoginState {
     object MoveToMainApp:LoginState()
     object Idle:LoginState()
     object Loading:LoginState()
+    object MoveToPic :LoginState()
 }

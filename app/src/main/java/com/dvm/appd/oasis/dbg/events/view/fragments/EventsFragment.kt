@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
@@ -33,33 +32,31 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
         val view = inflater.inflate(R.layout.fra_misc_events, container, false)
 
-        // (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-
         val sdf = SimpleDateFormat("dd MM yyyy")
         val c = Calendar.getInstance()
 
         when(sdf.format(c.time)){
-            "13 09 2019" -> {
+            "19 10 2019" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("Day 0")
                 eventsViewModel.getMiscEventsData("Day 0")
             }
 
-            "14 09 2019" -> {
+            "20 10 2019" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("Day 1")
                 eventsViewModel.getMiscEventsData("Day 1")
             }
 
-            "15 09 2019" -> {
+            "21 10 2019" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("Day 2")
                 eventsViewModel.getMiscEventsData("Day 2")
             }
 
-            "16 09 2019" -> {
+            "22 10 2019" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("Day 3")
                 eventsViewModel.getMiscEventsData("Day 3")
             }
 
-            "17 09 2019" -> {
+            "23 10 2019" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("Day 4")
                 eventsViewModel.getMiscEventsData("Day 4")
             }
@@ -127,7 +124,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
-        eventsViewModel.currentSubsciption.dispose()
+        eventsViewModel.currentSubscription.dispose()
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
         eventsViewModel.getMiscEventsData(day)
         view!!.dayRecycler.smoothScrollToPosition(position)

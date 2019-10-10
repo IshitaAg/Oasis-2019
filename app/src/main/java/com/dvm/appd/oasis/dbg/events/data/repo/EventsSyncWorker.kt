@@ -15,7 +15,7 @@ class EventsSyncWorker(appContext: Context, workerParams: WorkerParameters): RxW
     override fun createWork(): Single<Result> {
 
         Log.d("WorkManager", "It works")
-        return eventsRepository.getEventsData()
+        return eventsRepository.updateEventsData()
     }
 
 }

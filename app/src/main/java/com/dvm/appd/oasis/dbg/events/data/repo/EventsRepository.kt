@@ -29,7 +29,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
     init {
 
-        //getEventsData().subscribe()
+        updateEventsData().subscribe()
 
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(2, TimeUnit.HOURS).setConstraints(constraints).build()
@@ -186,10 +186,12 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.getDayMiscEvents(day).subscribeOn(Schedulers.io())
     }
 
-    fun getEventsData(): Single<ListenableWorker.Result>{
+    fun updateEventsData(): Single<ListenableWorker.Result>{
         return eventsService.getAllEvents().subscribeOn(Schedulers.io())
             .flatMap {response ->
 
+                Log.d("NewEvents", "${response.code()}")
+                Log.d("NewEvents", "${response.body()}")
                 val workerResult: ListenableWorker.Result
 
                 when(response.code()){
@@ -220,6 +222,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                     }
 
                     else -> {
+                        Log.d("NewEvents", "error")
                         workerResult = ListenableWorker.Result.retry()
                     }
 
@@ -258,6 +261,24 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     fun updateMiscFavourite(eventId: String, favouriteMark: Int): Completable {
         return eventsDao.updateMiscFavourite(id = eventId, mark = favouriteMark)
             .subscribeOn(Schedulers.io())
+    }
+
+    fun updateFavourite(eventId: Int, favMark: Int): Completable{
+
+        return if (favMark == 1){
+            eventsDao.insertFavEvent(FavEvents(eventId, 1))
+                .subscribeOn(Schedulers.io())
+        } else{
+            eventsDao.deleteFavEvent(eventId).subscribeOn(Schedulers.io())
+        }
+    }
+
+    fun getEventsData(): Flowable<List<ModifiedEventsData>>{
+
+        return eventsDao.getAllEvents().subscribeOn(Schedulers.io())
+            .flatMap {
+               return@flatMap Flowable.just(it)
+            }
     }
 }
 

@@ -49,29 +49,54 @@ class OrderItemsDialog: DialogFragment() {
 
             Log.d("OrderDetailsView", order.toString())
 
-//            when(order.status){
-//
-//                0 -> {
+            when(order.status){
+
+                0 -> {
+                    view.accepted.setImageResource(R.drawable.ic_circle_fade)
+                    view.ready.setImageResource(R.drawable.ic_circle_fade)
+                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accToRed.setBackgroundResource(R.color.line_faded)
+                    view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.pending_status)
 //                    view.status.text = "Pending"
-//                }
-//                1 -> {
+                }
+                1 -> {
+                    view.accepted.setImageResource(R.drawable.ic_circle)
+                    view.ready.setImageResource(R.drawable.ic_circle_fade)
+                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accToRed.setBackgroundResource(R.color.line_faded)
+                    view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.accept_status)
 //                    view.status.text = "Accepted"
-//                }
-//                2 -> {
+                }
+                2 -> {
+                    view.accepted.setImageResource(R.drawable.ic_circle)
+                    view.ready.setImageResource(R.drawable.ic_circle)
+                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accToRed.setBackgroundResource(R.color.line_filled)
+                    view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.ready_status)
 //                    view.status.text = "Ready"
-//                }
-//                3 -> {
+                }
+                3 -> {
+                    view.accepted.setImageResource(R.drawable.ic_circle)
+                    view.ready.setImageResource(R.drawable.ic_circle)
+                    view.finished.setImageResource(R.drawable.ic_circle)
+                    view.accToRed.setBackgroundResource(R.color.line_filled)
+                    view.redToFin.setBackgroundResource(R.color.line_filled)
 //                    view.status.setBackgroundResource(R.drawable.finish_status)
 //                    view.status.text = "Finished"
-//                }
-//                4 -> {
+                }
+                4 -> {
+                    view.accepted.setImageResource(R.drawable.ic_circle_fade)
+                    view.ready.setImageResource(R.drawable.ic_circle_fade)
+                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accToRed.setBackgroundResource(R.color.line_faded)
+                    view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.decline_status)
 //                    view.status.text = "Declined"
-//                }
-//            }
+                }
+            }
 
             view.otp.text = order.otp.toString()
             view.stallName.text = order.vendor

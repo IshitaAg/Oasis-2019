@@ -3,44 +3,44 @@
     <item>
         <shape android:shape="rectangle">
             <gradient
-                    android:startColor="#6754BF"
-                    android:endColor="#4556E4"
-                    android:angle="180"
+                    android:endColor="#6754BF"
+                    android:startColor="#4556E4"
+                    android:angle="315"
                     />
         </shape>
     </item>
-    <item
-            android:bottom="180dp"
-            android:left="180dp"
-            android:right="70dp"
-            android:top="-100dp">
-        <shape android:shape="oval">
-            <solid
-                    android:color="#AD7849F7"
-                    />
-        </shape>
-    </item>
-    <item
-            android:bottom="150dp"
-            android:left="290dp"
-            android:right="-90dp"
-            android:top="-90dp">
-        <shape android:shape="oval">
-            <solid
-                    android:color="#C25152FA"
-                    />
-        </shape>
-    </item>
-    <item
-            android:bottom="90dp"
-            android:left="-80dp"
-            android:right="390dp"
-            android:top="10dp">
-        <shape android:shape="oval">
-            <solid
-                    android:color="#AD7849F7"
-                    />
-        </shape>
-    </item>
+<!--    <item-->
+<!--            android:bottom="180dp"-->
+<!--            android:left="180dp"-->
+<!--            android:right="70dp"-->
+<!--            android:top="-100dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid-->
+<!--                    android:color="#AD7849F7"-->
+<!--                    />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item-->
+<!--            android:bottom="150dp"-->
+<!--            android:left="290dp"-->
+<!--            android:right="-90dp"-->
+<!--            android:top="-90dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid-->
+<!--                    android:color="#C25152FA"-->
+<!--                    />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item-->
+<!--            android:bottom="90dp"-->
+<!--            android:left="-80dp"-->
+<!--            android:right="390dp"-->
+<!--            android:top="10dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid-->
+<!--                    android:color="#AD7849F7"-->
+<!--                    />-->
+<!--        </shape>-->
+<!--    </item>-->
 
 </layer-list>

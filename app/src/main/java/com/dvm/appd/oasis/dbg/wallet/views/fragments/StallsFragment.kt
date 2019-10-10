@@ -73,6 +73,11 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             }
         })
 
+        rootview.swipeStall.setOnRefreshListener {
+            (stallsViewModel.result as MutableLiveData).postValue(StallResult.Failure)
+            stallsViewModel.refreshData()
+        }
+
         return rootview
     }
 

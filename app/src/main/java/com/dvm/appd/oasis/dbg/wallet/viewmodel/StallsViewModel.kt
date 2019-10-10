@@ -18,6 +18,7 @@ class StallsViewModel(val walletRepository: WalletRepository):ViewModel() {
       (result as MutableLiveData).postValue(StallResult.Failure)
 
       refreshData()
+
       walletRepository.getAllStalls().subscribe({
           Log.d("check", it.toString())
           (stalls as MutableLiveData).postValue(it)

@@ -105,16 +105,20 @@ class MiscEventsFragment : Fragment(), MiscEventsAdapter.OnMarkFavouriteClicked,
             it.findNavController().popBackStack()
         }*/
 
-        miscEventsViewViewModel.epcIsABitch.observe(this, Observer {
+//        miscEventsViewViewModel.epcIsABitch.observe(this, Observer {
+//
+//            if (it != null) {
+//                Log.d("Epc", it.toString())
+//                val bundle = bundleOf("description" to it.first, "link" to it.second)
+//                view.findNavController().navigate(R.id.action_action_misc_to_epc, bundle)
+//                (miscEventsViewViewModel.epcIsABitch as MutableLiveData).postValue(null)
+//
+//            }
+//        })
 
-            if (it != null) {
-                Log.d("Epc", it.toString())
-                val bundle = bundleOf("description" to it.first, "link" to it.second)
-                view.findNavController().navigate(R.id.action_action_misc_to_epc, bundle)
-                (miscEventsViewViewModel.epcIsABitch as MutableLiveData).postValue(null)
-
-            }
-        })
+        view.swipeEvents.setOnRefreshListener {
+            miscEventsViewViewModel.refreshData()
+        }
 
         return view
     }

@@ -20,8 +20,6 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
 
         walletRepository.addOrderListener()
 
-        getAllOrders()
-
         walletRepository.getAllOrders()
             .subscribe({
                 Log.d("OrdersVM",it.toString())
@@ -43,7 +41,7 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
 
     }
 
-    fun getAllOrders(){
+    fun fetchAllOrders(){
         walletRepository.updateOrders().subscribe({
             (progressBarMark as MutableLiveData).postValue(1)
             (error as MutableLiveData).postValue(null)
@@ -89,5 +87,9 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
         },{
             (error as MutableLiveData).postValue(it.message)
         })
+    }
+
+    fun refreshData(){
+        fetchAllOrders()
     }
 }

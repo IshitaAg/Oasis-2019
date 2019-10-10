@@ -6,12 +6,8 @@
             android:id="@+id/navigation_graph"
 >
     <fragment android:id="@+id/action_events"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
-              android:label="fra_events_fragment" tools:layout="@layout/fra_events_fragment">
-        <action android:id="@+id/action_action_events_to_miscEventsFragment" app:destination="@id/miscEventsFragment"/>
-        <action
-                android:id="@+id/action_action_events_to_sportsDataFragment"
-                app:destination="@id/sportsDataFragment" />
+              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.MiscEventsFragment"
+              android:label="fra_events_fragment" tools:layout="@layout/fra_misc_events">
         <action
                 android:id="@+id/action_action_events_to_action_profile"
                 app:destination="@id/action_profile" />
@@ -88,19 +84,6 @@
                 app:popUpTo="@+id/action_food"
                 app:popUpToInclusive="false" />
     </fragment>
-    <fragment android:id="@+id/miscEventsFragment"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.MiscEventsFragment"
-              android:label="fra_misc_events" tools:layout="@layout/fra_misc_events">
-        <action android:id="@+id/action_action_misc_to_epc"
-                app:destination="@id/epcDialog"/>
-    </fragment>
-
-    <fragment android:id="@+id/sportsDataFragment"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.SportsDataFragment"
-              android:label="SportsDataFragment" tools:layout="@layout/fragment_sports_data">
-        <action android:id="@+id/action_action_sport_to_epc"
-                app:destination="@id/epcDialog"/>
-    </fragment>
 
     <fragment android:id="@+id/action_more" android:name="com.dvm.appd.oasis.dbg.more.fragments.MoreFragment"
               android:label="fragment_more" tools:layout="@layout/fragment_more">
@@ -155,9 +138,6 @@
     <dialog android:id="@+id/buyTicketDialog"
             android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.TicketDialog"
             android:label="BuyTicketsDialog"/>
-    <dialog android:id="@+id/epcDialog"
-            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EPCDialog"
-            android:label="EPCDialog" />
 
     <fragment
             android:id="@+id/notificationFragment"

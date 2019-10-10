@@ -7,6 +7,6 @@ import retrofit2.http.Path
 
 interface EventsService {
 
-    @GET("registration/events")
+    @GET("registrations/events")
     fun getAllEvents(): Single<Response<AllEventsPojo>>
 }

@@ -31,9 +31,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         eventsViewModel = ViewModelProviders.of(this, EventsViewModelFactory())[EventsViewModel::class.java]
 
         val view = inflater.inflate(R.layout.fra_misc_events, container, false)
-
-        //(activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-
+        
         val sdf = SimpleDateFormat("dd MM yyyy")
         val c = Calendar.getInstance()
 

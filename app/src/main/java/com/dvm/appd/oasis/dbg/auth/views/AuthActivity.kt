@@ -49,7 +49,8 @@ class AuthActivity : AppCompatActivity() {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
-                    loadingPbr.visibility = View.VISIBLE
+                    // loadingPbr.visibility = View.VISIBLE
+                    CircularLoadingButton.startAnimation()
                     authViewModel.login(username.text.toString(),password.text.toString())
                 }
             }

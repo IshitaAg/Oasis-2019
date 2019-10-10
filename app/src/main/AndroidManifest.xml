@@ -12,6 +12,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"
+            android:required="false" />
 
     <application
             android:name="com.dvm.appd.oasis.dbg.OASISApp"
@@ -30,7 +33,8 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="@string/google_maps_key" />-->
 
-
+        <activity android:name=".auth.views.PictureActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name="com.dvm.appd.oasis.dbg.splash.views.SplashActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/SplashTheme">

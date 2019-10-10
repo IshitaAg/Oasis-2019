@@ -24,12 +24,12 @@ import com.google.android.gms.common.api.ApiException
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.password
 import kotlinx.android.synthetic.main.activity_auth.username
-import kotlinx.android.synthetic.main.fra_auth_outstee.*
 
 
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var authViewModel: AuthViewModel
+
     private var doubleBackToExitPressedOnce = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +49,8 @@ class AuthActivity : AppCompatActivity() {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
-                    loadingPbr.visibility = View.VISIBLE
-                    authViewModel.login(username.text.toString(),password.text.toString())
+                    progress.visibility = View.VISIBLE
+                    authViewModel.login(username.text.toString(), password.text.toString())
                 }
             }
         }
@@ -65,26 +65,28 @@ class AuthActivity : AppCompatActivity() {
         authViewModel.state.observe(this, Observer {
             when (it!!) {
                 LoginState.MoveToMainApp -> {
-                    loadingPbr.visibility = View.GONE
+                    progress.visibility = View.GONE
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
                 LoginState.MoveToOnBoarding -> {
-                    loadingPbr.visibility = View.GONE
+                    progress.visibility = View.GONE
                     startActivity(Intent(this, OnboardingActivity::class.java))
                     finish()
                 }
                 is LoginState.Failure -> {
-                    loadingPbr.visibility = View.GONE
+                    progress.visibility = View.GONE
                     Toast.makeText(this, (it as LoginState.Failure).message, Toast.LENGTH_LONG)
                         .show()
                 }
+                LoginState.MoveToPic -> {
+                    progress.visibility = View.GONE
+                    startActivity(Intent(this,PictureActivity::class.java))
+
+                }
             }
         })
-
-
     }
-
     override fun onResume() {
         super.onResume()
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
@@ -101,7 +103,7 @@ class AuthActivity : AppCompatActivity() {
                 val profile = GoogleSignIn.getSignedInAccountFromIntent(data)
                     .getResult(ApiException::class.java)
                 Toast.makeText(this, profile!!.displayName, Toast.LENGTH_SHORT).show()
-                loadingPbr.visibility = View.VISIBLE
+                progress.visibility = View.VISIBLE
                 authViewModel.Blogin(profile.idToken!!)
             } catch (e: ApiException) {
                 Log.d("checke", e.toString())

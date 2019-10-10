@@ -13,6 +13,7 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     var state: LiveData<LoginState> = MutableLiveData()
 
+
     init {
         listenRegToken()
     }
@@ -64,7 +65,7 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
                     authRepository.getUser().subscribe {
                         if(it.firstLogin==true) {
                             authRepository.disableOnBoardingForUser()
-                            (state as MutableLiveData).postValue(LoginState.MoveToOnBoarding)
+                            (state as MutableLiveData).postValue(LoginState.MoveToPic)
                         }
                         else
                             (state as MutableLiveData).postValue(LoginState.MoveToMainApp)
@@ -75,6 +76,7 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
         }.doOnError {
             Log.d("checkve", it.toString())
+            (state as MutableLiveData).postValue(LoginState.Failure(it.message.toString()))
         }.subscribe()
 
     }

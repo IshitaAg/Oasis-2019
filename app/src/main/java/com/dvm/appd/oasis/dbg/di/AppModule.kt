@@ -9,6 +9,9 @@ import com.dvm.appd.oasis.dbg.auth.data.retrofit.AuthService
 import com.dvm.appd.oasis.dbg.elas.model.repo.ElasRepository
 import com.dvm.appd.oasis.dbg.elas.model.retrofit.ElasService
 import com.dvm.appd.oasis.dbg.elas.model.room.ElasDao
+import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
+import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
+import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
 import com.dvm.appd.oasis.dbg.shared.AppDatabase
 import com.dvm.appd.oasis.dbg.shared.BaseInterceptor
 import com.dvm.appd.oasis.dbg.shared.MoneyTracker
@@ -91,7 +94,7 @@ class AppModule(private val application: Application) {
     @Singleton
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://testapp.bits-dvm.org:9090/")
+            .baseUrl("https://test1.bits-oasis.org/")
             .client(OkHttpClient().newBuilder().addInterceptor(BaseInterceptor()).build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -114,5 +117,23 @@ class AppModule(private val application: Application) {
     @Singleton
     fun providesElasService(retrofit: Retrofit): ElasService {
         return retrofit.create(ElasService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventsRepository(eventsDao: EventsDao, eventsService: EventsService, application: Application): EventsRepository {
+        return EventsRepository(eventsDao = eventsDao, eventsService = eventsService, application = application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventsDao(appDatabase: AppDatabase): EventsDao {
+        return appDatabase.eventsDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventsService(retrofit: Retrofit): EventsService {
+        return retrofit.create(EventsService::class.java)
     }
 }

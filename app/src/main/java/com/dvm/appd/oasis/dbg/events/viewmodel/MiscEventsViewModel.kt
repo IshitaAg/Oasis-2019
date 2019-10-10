@@ -4,9 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
 import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 class MiscEventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
@@ -59,6 +63,14 @@ class MiscEventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
             (epcIsABitch as MutableLiveData).postValue(it)
         },{
             (error as MutableLiveData).postValue(it.message)
+        })
+    }
+
+    fun refreshData(){
+        eventsRepository.getEventsData().subscribe({
+
+        },{
+
         })
     }
 }

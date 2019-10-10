@@ -15,9 +15,9 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
 
 @Database(entities = [StallData::class,StallItemsData::class, MiscEventsData::class,
     OrderItemsData::class, OrderData::class, CartData::class, QuestionData::class,
-    OptionData::class,  Notification::class, EventsData::class, FavNamesData::class,
-    TicketsData::class, UserShows::class, TicketsCart::class, PlayerRankingResponse::class,
-    EventData::class, CategoryData::class, VenueData::class],version = 2)
+    OptionData::class,  Notification::class, FavEvents::class, TicketsData::class,
+    UserShows::class, TicketsCart::class, PlayerRankingResponse::class, EventData::class,
+    CategoryData::class, VenueData::class],version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun walletDao(): WalletDao

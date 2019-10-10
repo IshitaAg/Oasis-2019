@@ -36,7 +36,7 @@ interface EventsDao {
     @Query("SELECT DISTINCT event_day FROM misc_table WHERE event_day != 'Day 6' ORDER BY event_day")
     fun getMiscDays(): Flowable<List<String>>
 
-    @Query("SELECT event FROM events WHERE is_fav = 1 UNION SELECT event_name FROM misc_table WHERE favourite = 1")
+    @Query("SELECT name FROM events_data WHERE event_id = 1 UNION SELECT event_name FROM misc_table WHERE favourite = 1")
     fun getAllFavourites(): Single<List<String>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -74,4 +74,13 @@ interface EventsDao {
         deleteVenues()
         insertVenues(venues)
     }
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFavEvent(event: FavEvents): Completable
+
+    @Query("DELETE FROM fav_data WHERE event_id = :eventId")
+    fun deleteFavEvent(eventId: Int): Completable
+
+    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date_time AS dateTime, events_data.duration AS duration, events_data.image_url AS imageUrl, events_data.details AS details, event_venues.venue AS venue, event_categories.category AS category, COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_venues ON events_data.event_id = event_venues.event_id LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id ORDER BY events_data.event_id")
+    fun getAllEvents(): Flowable<List<ModifiedEventsData>>
 }

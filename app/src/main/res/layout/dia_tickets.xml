@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,17 +18,27 @@
             android:background="@drawable/shape_rectangle_rounded_24dp"
             android:backgroundTint="#6C58B9"
             android:elevation="2dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Buy"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true"
+            app:mrl_rippleRoundedCorners="24dp" >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:text="Buy"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ticketsList"

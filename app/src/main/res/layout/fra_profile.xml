@@ -87,66 +87,94 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/AddBtn"
             android:layout_width="wrap_content"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/add_button"
-            android:elevation="1dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="Add money"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/view9"
             app:layout_constraintEnd_toStartOf="@+id/sendBtn"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="@+id/view8"
-            app:layout_constraintTop_toBottomOf="@+id/view8" />
+            app:layout_constraintTop_toBottomOf="@+id/view8"
+            android:layout_marginEnd="8dp">
 
-    <TextView
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:background="@drawable/add_button"
+                android:elevation="1dp"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Add money"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                 />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/add_button"
-            android:elevation="1dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="Send money"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true"
             app:layout_constraintBottom_toBottomOf="@+id/AddBtn"
             app:layout_constraintEnd_toEndOf="@+id/view8"
             app:layout_constraintStart_toEndOf="@id/AddBtn"
-            app:layout_constraintTop_toTopOf="@+id/AddBtn" />
+            app:layout_constraintTop_toTopOf="@+id/AddBtn"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/add_button"
+            android:elevation="1dp">
 
-    <TextView
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Send money"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/buyTicket"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="80dp"
-            android:background="@drawable/add_button"
-            android:elevation="2dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="Buy Tickets"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/view9"
             app:layout_constraintEnd_toEndOf="@+id/view9"
             app:layout_constraintStart_toStartOf="@+id/view9"
             app:layout_constraintTop_toBottomOf="@+id/userTickets"
-            tools:elevation="2dp" />
+            android:background="@drawable/add_button"
+            android:elevation="2dp">
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="Buy Tickets"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                tools:elevation="2dp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
 
     <View
             android:id="@+id/view9"

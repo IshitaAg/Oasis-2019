@@ -46,24 +46,33 @@
             app:layout_constraintStart_toStartOf="@+id/userId"
             app:layout_constraintTop_toBottomOf="@+id/userId" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/SendBtn"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/shape_rectangle_rounded_24dp"
             android:backgroundTint="#6C58B9"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="Proceed"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/Amount"
             app:layout_constraintStart_toStartOf="@+id/Amount"
-            app:layout_constraintTop_toBottomOf="@+id/Amount" />
+            app:layout_constraintTop_toBottomOf="@+id/Amount"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Proceed"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

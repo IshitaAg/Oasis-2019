@@ -1,6 +1,7 @@
 package com.dvm.appd.oasis.dbg.auth.views
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -50,6 +51,7 @@ class AuthActivity : AppCompatActivity() {
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
                     // loadingPbr.visibility = View.VISIBLE
+                    outsteeLogin.setBackgroundColor(Color.parseColor("#00000000"))
                     CircularLoadingButton.startAnimation()
                     authViewModel.login(username.text.toString(),password.text.toString())
                 }
@@ -76,7 +78,9 @@ class AuthActivity : AppCompatActivity() {
                     finish()
                 }
                 is LoginState.Failure -> {
-                    loadingPbr.visibility = View.GONE
+                    // loadingPbr.visibility = View.GONE
+                    outsteeLogin.background = resources.getDrawable(R.drawable.add_button_profile)
+                    CircularLoadingButton.revertAnimation()
                     Toast.makeText(this, (it as LoginState.Failure).message, Toast.LENGTH_LONG)
                         .show()
                 }

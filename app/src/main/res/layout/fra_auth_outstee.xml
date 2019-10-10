@@ -34,25 +34,35 @@
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/submitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="64dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/gradient_login_btn"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="16dp"
-            android:paddingStart="64dp"
-            android:paddingEnd="64dp"
-            android:text="Login"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/password"
             app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="16dp"
+                android:paddingStart="64dp"
+                android:paddingEnd="64dp"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
 
     <EditText
             android:id="@+id/username"

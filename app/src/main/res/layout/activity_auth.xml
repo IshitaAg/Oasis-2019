@@ -30,46 +30,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/bitsianLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/gradient_login_btn"
             android:backgroundTint="@color/colorWhite"
             android:elevation="2dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="32dp"
-            android:paddingTop="64dp"
-            android:paddingEnd="48dp"
-            android:paddingBottom="64dp"
-            android:text="Login using BITS mail"
-            android:textAlignment="center"
-            android:textColor="#31365E"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/view6"
             app:layout_constraintEnd_toEndOf="@+id/view6"
             app:layout_constraintStart_toStartOf="@+id/view6"
-            app:layout_constraintTop_toBottomOf="@id/textView7" />
+            app:layout_constraintTop_toBottomOf="@id/textView7"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
 
-    <TextView
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="32dp"
+                android:paddingTop="64dp"
+                android:paddingEnd="48dp"
+                android:paddingBottom="64dp"
+                android:text="Login using BITS mail"
+                android:textAlignment="center"
+                android:textColor="#31365E"
+                android:textSize="18sp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/outsteeLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/add_button"
             android:elevation="2dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="48dp"
-            android:paddingEnd="48dp"
-            android:text="Login"
-            android:textAlignment="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/textView7"
             app:layout_constraintEnd_toEndOf="@+id/password"
             app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="48dp"
+                android:paddingEnd="48dp"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <TextView
             android:id="@+id/textView"

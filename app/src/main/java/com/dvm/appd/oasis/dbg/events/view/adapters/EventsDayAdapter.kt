@@ -2,9 +2,7 @@
 package com.dvm.appd.oasis.dbg.events.view.adapters
 
 
-import android.content.res.ColorStateList
 import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import kotlinx.android.synthetic.main.adapter_misc_day.view.*
 
-class MiscDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<MiscDayAdapter.MiscDayViewHolder>(){
+class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<EventsDayAdapter.EventsDayViewHolder>(){
 
     var miscDays: List<String> = emptyList()
     var daySelected: String = ""
@@ -24,21 +22,21 @@ class MiscDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<
         fun daySelected(day: String, position: Int)
     }
 
-    inner class MiscDayViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class EventsDayViewHolder(view: View): RecyclerView.ViewHolder(view){
         val day: TextView = view.day
         val underline: View = view.underline
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiscDayViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsDayViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_misc_day, parent, false)
 
-        return MiscDayViewHolder(view)
+        return EventsDayViewHolder(view)
     }
 
     override fun getItemCount(): Int = miscDays.size
 
-    override fun onBindViewHolder(holder: MiscDayViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EventsDayViewHolder, position: Int) {
 
         holder.day.text = miscDays[position]
 

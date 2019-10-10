@@ -7,11 +7,7 @@
 >
     <fragment android:id="@+id/action_events"
               android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
-              android:label="fra_events_fragment" tools:layout="@layout/fra_events_fragment">
-        <action android:id="@+id/action_action_events_to_miscEventsFragment" app:destination="@id/miscEventsFragment"/>
-        <action
-                android:id="@+id/action_action_events_to_sportsDataFragment"
-                app:destination="@id/sportsDataFragment" />
+              android:label="fra_events_fragment" tools:layout="@layout/fra_misc_events">
         <action
                 android:id="@+id/action_action_events_to_action_profile"
                 app:destination="@id/action_profile" />
@@ -71,12 +67,6 @@
                 android:id="@+id/action_action_order_history_to_notificationFragment"
                 app:destination="@id/notificationFragment" />
     </fragment>
-
-    <fragment android:id="@+id/action_cart" android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.CartFragment"
-              android:label="CartDialog">
-        <action android:id="@+id/action_action_cart_to_orders"
-                app:destination="@id/action_order_history"/>
-    </fragment>
     <fragment android:id="@+id/stallItemsFragment2"
               android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.StallItemsFragment"
               android:label="StallItemsFragment">
@@ -87,19 +77,6 @@
                 app:launchSingleTop="true"
                 app:popUpTo="@+id/action_food"
                 app:popUpToInclusive="false" />
-    </fragment>
-    <fragment android:id="@+id/miscEventsFragment"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.MiscEventsFragment"
-              android:label="fra_misc_events" tools:layout="@layout/fra_misc_events">
-        <action android:id="@+id/action_action_misc_to_epc"
-                app:destination="@id/epcDialog"/>
-    </fragment>
-
-    <fragment android:id="@+id/sportsDataFragment"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.SportsDataFragment"
-              android:label="SportsDataFragment" tools:layout="@layout/fragment_sports_data">
-        <action android:id="@+id/action_action_sport_to_epc"
-                app:destination="@id/epcDialog"/>
     </fragment>
 
     <fragment android:id="@+id/action_more" android:name="com.dvm.appd.oasis.dbg.more.fragments.MoreFragment"
@@ -156,9 +133,6 @@
     <dialog android:id="@+id/buyTicketDialog"
             android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.TicketDialog"
             android:label="BuyTicketsDialog"/>
-    <dialog android:id="@+id/epcDialog"
-            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EPCDialog"
-            android:label="EPCDialog" />
 
     <fragment
             android:id="@+id/notificationFragment"

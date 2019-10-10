@@ -58,6 +58,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             when (it!!) {
                 StallResult.Success -> {
                     rootview.progressBar.visibility = View.GONE
+                    rootview.swipeStall.isRefreshing = false
                 }
                 StallResult.Failure -> {
                     rootview.progressBar.visibility = View.VISIBLE
@@ -72,6 +73,11 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
                 (stallsViewModel.error as MutableLiveData).postValue(null)
             }
         })
+
+        rootview.swipeStall.setOnRefreshListener {
+            (stallsViewModel.result as MutableLiveData).postValue(StallResult.Failure)
+            stallsViewModel.refreshData()
+        }
 
         return rootview
     }

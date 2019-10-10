@@ -1,41 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:id="@+id/linear_card_more_parent"
-        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:padding="8dp"
-        android:background="@drawable/shape_rectangle_rounded_8dp"
-        android:layout_height="wrap_content">
+        android:padding="4dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_outline_profile_identity_24px"
-        android:id="@+id/img_card_more_thumbnail"
-        android:layout_height="wrap_content"/>
+    <com.balysv.materialripple.MaterialRippleLayout
 
-    <TextView
-            android:id="@+id/text_card_more_title"
-            android:layout_width="0dp"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:elevation="2dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="More"
-            android:textColor="#3B3B3B"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_width="match_parent"
+            android:id="@+id/linear_card_more_parent">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:background="#FFFFFF"
-        android:layout_marginRight="16dp"
-        android:padding="8dp"
-        android:layout_gravity="center"
-        android:src="@drawable/img_next_arrow"
-        android:id="@+id/imgBttn_card_more_next"
-        android:layout_height="wrap_content"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:padding="4dp"
+                android:background="@drawable/shape_rectangle_rounded_8dp"
+                android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_outline_profile_identity_24px"
+                    android:id="@+id/img_card_more_thumbnail"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/text_card_more_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:elevation="2dp"
+                    android:fontFamily="@font/shellypalmer_circular_std_book"
+                    android:text="More"
+                    android:textColor="#3B3B3B"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:background="#FFFFFF"
+                    android:layout_marginRight="16dp"
+                    android:padding="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_next_arrow"
+                    android:id="@+id/imgBttn_card_more_next"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
 </LinearLayout>
+

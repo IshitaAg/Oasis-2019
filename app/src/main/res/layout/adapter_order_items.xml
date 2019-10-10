@@ -10,11 +10,10 @@
             android:id="@+id/view"
             android:layout_width="218dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/orders_title"
+            android:background="@drawable/ic_order_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +80,7 @@
             android:paddingTop="4dp"
             android:paddingEnd="8dp"
             android:paddingBottom="4dp"
-            android:text="TextView"
+            android:text="Accepted"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"
@@ -121,5 +120,35 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/orderId"
             app:layout_constraintTop_toBottomOf="@+id/orderId" />
+
+    <ImageView
+            android:id="@+id/finishedMark"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toTopOf="@+id/status"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:srcCompat="@drawable/ic_circle_fade" />
+
+    <ImageView
+            android:id="@+id/readyMark"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/finishedMark"
+            app:layout_constraintEnd_toStartOf="@+id/finishedMark"
+            app:layout_constraintTop_toTopOf="@+id/finishedMark"
+            app:srcCompat="@drawable/ic_circle_fade" />
+
+    <ImageView
+            android:id="@+id/acceptedMark"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/readyMark"
+            app:layout_constraintEnd_toStartOf="@+id/readyMark"
+            app:layout_constraintTop_toTopOf="@+id/readyMark"
+            app:srcCompat="@drawable/ic_circle_fade" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

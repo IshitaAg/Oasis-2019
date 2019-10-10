@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
 
+        Log.d("CartRecycler", "$cartChildItems")
         holder.itemName.text = cartChildItems[position].itemName
         holder.quantityPrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].price}"
         holder.quantity.text = cartChildItems[position].quantity.toString()

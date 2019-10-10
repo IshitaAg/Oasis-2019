@@ -38,7 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,18 +46,27 @@
             android:background="@drawable/shape_rectangle_rounded_8dp"
             android:backgroundTint="#6C58B9"
             android:elevation="2dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="Add money(SWD)"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/textView24"
             app:layout_constraintEnd_toEndOf="@+id/amount"
             app:layout_constraintStart_toStartOf="@+id/amount"
-            app:layout_constraintTop_toBottomOf="@+id/amount" />
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Add money(SWD)"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <TextView
             android:id="@+id/textView10"
@@ -113,22 +122,32 @@
             app:layout_constraintStart_toEndOf="@+id/textView24"
             app:layout_constraintTop_toTopOf="@+id/textView24" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/textView26"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:background="@drawable/shape_rectangle_rounded_8dp"
-            android:drawableStart="@drawable/ic_paytm"
-            android:drawablePadding="8dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:padding="8dp"
-            android:text="Add via Paytm"
-            android:textAlignment="center"
-            android:textColor="#31365e"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/addBtn"
             app:layout_constraintStart_toStartOf="@+id/addBtn"
-            app:layout_constraintTop_toBottomOf="@id/textView24" />
+            app:layout_constraintTop_toBottomOf="@id/textView24"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:padding="8dp"
+                android:text="Add via Paytm"
+                android:textAlignment="center"
+                android:textColor="#31365e"
+                android:textSize="18sp"
+                android:drawableStart="@drawable/ic_paytm"
+                android:drawablePadding="8dp"/>
+
+    </com.balysv.materialripple.MaterialRippleLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

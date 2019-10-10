@@ -1,102 +1,135 @@
 package com.dvm.appd.oasis.dbg.events.view.fragments
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.annotation.RequiresApi
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fra_events_fragment.view.*
+import kotlinx.android.synthetic.main.fra_misc_events.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
-class EventsFragment : Fragment(), EventsAdapter.OnIconClicked{
+class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsDayAdapter.OnDaySelected {
 
-    private lateinit var eventsViewViewModel: EventsViewModel
-    private val icons = mapOf(
-        "Football" to R.drawable.ic_football,
-        "Basketball" to R.drawable.ic_basketball,
-        "Tennis" to R.drawable.ic_tennis,
-        "Hockey" to R.drawable.ic_hockey,
-        "Squash" to R.drawable.ic_squash,
-        "Volleyball" to R.drawable.ic_volleyball,
-        "Cricket" to R.drawable.ic_cricket,
-        "Athletics" to R.drawable.ic_racing,
-        "Chess" to R.drawable.ic_chess,
-        "Carrom" to R.drawable.ic_carrom,
-        "Snooker" to R.drawable.ic_pool,
-        "Pool" to R.drawable.ic_pool,
-        "Powerlifting" to R.drawable.ic_weightlifting,
-        "Body Building" to R.drawable.ic_body_building,
-        "Taekwondo" to R.drawable.ic_karate,
-        "Table Tennis" to R.drawable.ic_ping_pong,
-        "Badminton" to R.drawable.ic_shuttlecock,
-        "Frisbee" to R.drawable.ic_frisbee,
-        "Swimming" to R.drawable.ic_swimsuit
-    )
+    private lateinit var eventsViewModel: EventsViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        eventsViewViewModel = ViewModelProviders.of(this, EventsViewModelFactory())[EventsViewModel::class.java]
+        eventsViewModel = ViewModelProviders.of(this, EventsViewModelFactory())[EventsViewModel::class.java]
 
-        val view = inflater.inflate(R.layout.fra_events_fragment, container, false)
+        val view = inflater.inflate(R.layout.fra_misc_events, container, false)
 
-        view.progress_event.visibility = View.VISIBLE
+        (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
 
-        view.eventsRecycler.adapter = EventsAdapter(icons, this)
+        val sdf = SimpleDateFormat("dd MM yyyy")
+        val c = Calendar.getInstance()
 
-        eventsViewViewModel.sportsName.observe(this, Observer {
-            view.progress_event.visibility = View.INVISIBLE
-            Log.d("EventsFrag", "Observed $it")
-            (view.eventsRecycler.adapter as EventsAdapter).sportsName = it
-            (view.eventsRecycler.adapter as EventsAdapter).notifyDataSetChanged()
+        when(sdf.format(c.time)){
+            "13 09 2019" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 0")
+                eventsViewModel.getMiscEventsData("Day 0")
+            }
+
+            "14 09 2019" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 1")
+                eventsViewModel.getMiscEventsData("Day 1")
+            }
+
+            "15 09 2019" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 2")
+                eventsViewModel.getMiscEventsData("Day 2")
+            }
+
+            "16 09 2019" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 3")
+                eventsViewModel.getMiscEventsData("Day 3")
+            }
+
+            "17 09 2019" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 4")
+                eventsViewModel.getMiscEventsData("Day 4")
+            }
+
+            else -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 0")
+                eventsViewModel.getMiscEventsData("Day 0")
+            }
+        }
+
+
+        view.dayRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        view.dayRecycler.adapter = EventsDayAdapter(this)
+        eventsViewModel.eventDays.observe(this, Observer {
+            Log.d("MiscEventsFrag", "Observed")
+            (view.dayRecycler.adapter as EventsDayAdapter).miscDays = it
+            (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
         })
 
-        eventsViewViewModel.error.observe(this, Observer {
+        view.miscEventRecycler.adapter = EventsAdapter(this)
+        eventsViewModel.miscEvents.observe(this, Observer {
+            Log.d("MiscEventsFrag", "Observed")
+            (view.miscEventRecycler.adapter as EventsAdapter).miscEvents = it
+            (view.miscEventRecycler.adapter as EventsAdapter).notifyDataSetChanged()
+        })
+
+        eventsViewModel.daySelected.observe(this, Observer {
+
+            (view.dayRecycler.adapter as EventsDayAdapter).daySelected = it
+            (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
+        })
+
+        eventsViewModel.error.observe(this, Observer {
             if (it != null){
                 Toast.makeText(context!!, it, Toast.LENGTH_SHORT).show()
-                (eventsViewViewModel.error as MutableLiveData).postValue(null)
+                (eventsViewModel.error as MutableLiveData).postValue(null)
             }
         })
 
-        view.miscEvents.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_action_events_to_miscEventsFragment, null))
-        view.next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_action_events_to_miscEventsFragment, null))
+        eventsViewModel.progressBarMark.observe(this, Observer {
+            if (it == 0){
+                view.eventProgress.isVisible = true
+                activity!!.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
-     return view
-     }
+            }
+            else if (it == 1){
+                view.eventProgress.isVisible = false
+                view.swipeEvents.isRefreshing = false
+                activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            }
+        })
 
-    override fun openSportsFragment(name: String) {
-        val bundle = bundleOf("name" to name)
-        view!!.findNavController().navigate(R.id.sportsDataFragment, bundle)
+        view.swipeEvents.setOnRefreshListener {
+            (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+            eventsViewModel.refreshData()
+        }
 
-
-        //put navigation code here with name passed in openSportsFragment
+        return view
     }
 
-    override fun onHeartClick(sports: String, favMark: Int) {
-        eventsViewViewModel.markFavourite(sports, favMark)
+    override fun updateIsFavourite(eventId: String, favouriteMark: Int) {
+        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+        eventsViewModel.markEventFavourite(eventId, favouriteMark)
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onResume() {
-        (activity!! as MainActivity).showCustomToolbar()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_events)
-        super.onResume()
+    override fun daySelected(day: String, position: Int) {
+        (eventsViewModel.daySelected as MutableLiveData).postValue(day)
+        eventsViewModel.currentSubsciption.dispose()
+        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+        eventsViewModel.getMiscEventsData(day)
+        view!!.dayRecycler.smoothScrollToPosition(position)
     }
 }

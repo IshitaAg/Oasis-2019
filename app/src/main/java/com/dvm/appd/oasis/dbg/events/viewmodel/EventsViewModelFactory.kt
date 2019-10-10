@@ -13,7 +13,7 @@ class EventsViewModelFactory: ViewModelProvider.Factory {
     lateinit var eventsRepository: EventsRepository
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        OASISApp.appComponent.newEventsComponent(EventsModule()).injectEvents(this)
+        OASISApp.appComponent.newEventsComponent(EventsModule()).injectMiscEvents(this)
         @Suppress("UNCHECKED_CAST")
         return EventsViewModel(eventsRepository) as T
     }

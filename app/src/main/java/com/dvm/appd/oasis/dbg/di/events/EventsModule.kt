@@ -11,18 +11,18 @@ import retrofit2.Retrofit
 @Module
 class EventsModule {
 
-    @Provides
-    fun provideEventsRepository(eventsDao: EventsDao, eventsService: EventsService): EventsRepository {
-        return EventsRepository(eventsDao = eventsDao, eventsService = eventsService)
-    }
-
-    @Provides
-    fun provideEventsDao(appDatabase: AppDatabase): EventsDao{
-        return appDatabase.eventsDao()
-    }
-
-    @Provides
-    fun provideEventsService(retrofit: Retrofit): EventsService{
-        return retrofit.create(EventsService::class.java)
-    }
+//    @Provides
+//    fun provideEventsRepository(eventsDao: EventsDao, eventsService: EventsService): EventsRepository {
+//        return EventsRepository(eventsDao = eventsDao, eventsService = eventsService)
+//    }
+//
+//    @Provides
+//    fun provideEventsDao(appDatabase: AppDatabase): EventsDao{
+//        return appDatabase.eventsDao()
+//    }
+//
+//    @Provides
+//    fun provideEventsService(retrofit: Retrofit): EventsService{
+//        return retrofit.create(EventsService::class.java)
+//    }
 }

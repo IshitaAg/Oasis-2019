@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -128,6 +129,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         })
 
 
+        profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "2.00")
+
         //Add some button for paytm
 //        rootView.addBtn.setOnClickListener {
 //            profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000")
@@ -141,31 +144,53 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 
-    override fun onTransactionResponse(p0: Bundle?) {
-        Log.d("PaytmTrans", p0.toString())
+    override fun onTransactionResponse(bundle: Bundle?) {
+        Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
+        if (!(bundle!!.isEmpty)) {
+            if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
+                val body = JsonObject().apply {
+                    this.addProperty("STATUS", bundle["STATUS"].toString())
+                    this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
+                    this.addProperty("BANKNAME", bundle["BANKNAME"].toString())
+                    this.addProperty("ORDERID", bundle["ORDERID"].toString())
+                    this.addProperty("TXNAMOUNT", bundle["TXNAMOUNT"].toString())
+                    this.addProperty("TXNDATE", bundle["TXNDATE"].toString())
+                    this.addProperty("MID", bundle["MID"].toString())
+                    this.addProperty("TXNID", bundle["TXNID"].toString())
+                    this.addProperty("RESPCODE", bundle["RESPCODE"].toString())
+                    this.addProperty("PAYMENTMODE", bundle["PAYMENTMODE"].toString())
+                    this.addProperty("BANKTXNID", bundle["BANKTXNID"].toString())
+                    this.addProperty("CURRENCY", bundle["CURRENCY"].toString())
+                    this.addProperty("GATEWAYNAME", bundle["GATEWAYNAME"].toString())
+                    this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
+                    Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
+                }
+                profileViewModel.onPaytmTransactionSucessful(body)
+            }
+        }
     }
 
     override fun clientAuthenticationFailed(p0: String?) {
-        Log.d("PaytmAuthFailed", "Network Error")
+        Log.d("PayTm", "Client authentication failed ${p0}")
     }
 
     override fun someUIErrorOccurred(p0: String?) {
-        Log.d("PaytmUIError", p0)
+        Log.d("PayTm", "Some UI error occoured $p0")
     }
 
     override fun onTransactionCancel(p0: String?, p1: Bundle?) {
-        Log.d("PaytmTransCanceled", "$p0 , $p1")
+        Log.d("PayTm", "Transaction cancled $p0 \n $p1")
     }
 
     override fun networkNotAvailable() {
-        Log.d("PaytmNoNetwork", "No Network")
+        Log.d("PayTm", "Network not available")
     }
 
     override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
-        Log.d("PaytmLoadingError", "$p0, $p1, $p2")
+        Log.d("PayTm", "Error in loading the webpage $p0\n $p1\n $p2")
     }
 
     override fun onBackPressedCancelTransaction() {
-        Log.d("PaytmBackCancel", "Back Pressed")
+        Log.d("PayTm", "Transaction was cancelled because of back pressed")
     }
 }

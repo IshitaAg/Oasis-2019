@@ -1,12 +1,18 @@
 package com.dvm.appd.oasis.dbg.events.data.repo
 
 import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
 import android.util.Log
+import androidx.work.*
+import com.dvm.appd.oasis.dbg.OASISApp
+import com.dvm.appd.oasis.dbg.events.data.retrofit.AllEventsPojo
+import com.dvm.appd.oasis.dbg.events.data.retrofit.EventItemPojo
+import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsPojo
 import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
-import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.EventsData
-import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
-import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.SportsData
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
+import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.*
+import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
@@ -14,15 +20,21 @@ import com.google.firebase.firestore.DocumentChange
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import java.util.concurrent.TimeUnit
 
 
-class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService) {
+class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService, val application: Application) {
 
     val db = FirebaseFirestore.getInstance()
 
     init {
 
-        getSportsDataFromFirestore()
+        //getEventsData().subscribe()
+
+        val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+        val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(2, TimeUnit.HOURS).setConstraints(constraints).build()
+
+        WorkManager.getInstance(application.applicationContext).enqueue(request)
 
         db.collection("events").document("misc").collection("eventdata")
             .addSnapshotListener { snapshot, exception ->
@@ -166,11 +178,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
     }
 
-    fun getSportsName(): Flowable<List<EventsData>> {
-        return eventsDao.getSportsName().subscribeOn(Schedulers.io())
-
-    }
-
     fun miscEventDays(): Flowable<List<String>> {
         return eventsDao.getMiscDays().subscribeOn(Schedulers.io())
     }
@@ -179,331 +186,78 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.getDayMiscEvents(day).subscribeOn(Schedulers.io())
     }
 
-    fun getSportData(name: String): Flowable<List<SportsData>> {
-        return eventsDao.getSportDataForSport(name).subscribeOn(Schedulers.io())
-    }
+    fun getEventsData(): Single<ListenableWorker.Result>{
+        return eventsService.getAllEvents().subscribeOn(Schedulers.io())
+            .flatMap {response ->
 
-    fun getGenderForSport(name: String): Flowable<List<String>> {
-        return eventsDao.getDistinctGenderForSport(name).subscribeOn(Schedulers.io())
-    }
+                val workerResult: ListenableWorker.Result
 
-    private fun getSportsDataFromFirestore() {
+                when(response.code()){
 
-        db.collection("events").document("sports").collection("matches")
-            .addSnapshotListener { snapshots, e ->
+                    200 -> {
 
-                if (e != null) {
-                    Log.w("Sports", "listen:error", e)
-                    return@addSnapshotListener
-                }
+                        var events: MutableList<EventData> = arrayListOf()
+                        var categories: MutableList<CategoryData> = arrayListOf()
+                        var venues: MutableList<VenueData> = arrayListOf()
 
-                var sportsData: MutableList<SportsData> = arrayListOf()
-                var sportsName: MutableList<EventsData> = arrayListOf()
+                        response.body()!!.events.forEach {eventsPojo ->
 
-                var match_no: Int
-                var name: String
-                var round: String
-                var round_type: String
-                var team_1: String
-                var team_2: String
-                var time_stamp: String
-                var venue: String
-                var gender: String
-                var isScore: Boolean
-                var layout: Int
-                var score_1: String
-                var score_2: String
-                var winner1: String
-                var winner2: String
-                var winner3: String
-
-                for (dc in snapshots!!.documentChanges) {
-                    when (dc.type) {
-                        DocumentChange.Type.ADDED -> {
-                            Log.d("sports1", "added doc data : ${dc.document.data}")
-
-                            match_no = try {
-                                dc.document.id.toInt()
-                            } catch (e: Exception) {
-                                0
+                            eventsPojo.events.forEach {
+                                events.add(it.toEventData())
+                                categories.addAll(it.toCategoryData())
+                                venues.addAll(it.toVenueData())
                             }
-                            name = try {
-                                dc.document["sport"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            round = try {
-                                dc.document["round_name"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            round_type = try {
-                                dc.document["round_type"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            team_1 = try {
-                                dc.document["team1"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            team_2 = try {
-                                dc.document["team2"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            time_stamp = try {
-                                dc.document["timestamp"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            venue = try {
-                                dc.document["venue"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-
-                            gender = try {
-                                dc.document["gender"].toString()
-                            } catch (e: Exception) {
-                                "Boys"
-                            }
-                            isScore = try {
-                                dc.document["is_score"] as Boolean
-                            } catch (e: Exception) {
-                                false
-                            }
-                            layout = try {
-                                (dc.document["layout"] as Long).toInt()
-                            } catch (e: Exception) {
-                                2
-                            }
-                            score_1 = try {
-                                dc.document["score1"].toString()
-                            } catch (e: Exception) {
-                                Log.e("sports1", "Exception = ${e.toString()}")
-                                "Not Available"
-                            }
-                            score_2 = try {
-                                dc.document["score2"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            winner1 = try {
-                                dc.document["winner1"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            winner2 = try {
-                                dc.document["winner2"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            winner3 = try {
-                                dc.document["winner3"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-
-                            sportsData.add(
-                                SportsData(
-                                    match_no = match_no,
-                                    name = name,
-                                    round = round,
-                                    round_type = round_type,
-                                    team_1 = team_1,
-                                    team_2 = team_2,
-                                    time = time_stamp,
-                                    venue = venue,
-                                    gender = gender,
-                                    isScore = isScore,
-                                    layout = layout,
-                                    score_1 = score_1,
-                                    score_2 = score_2,
-                                    winner1 = winner1,
-                                    winner2 = winner2,
-                                    winner3 = winner3,
-                                    isFavourite = 0
-                                )
-                            )
-
-                            sportsName.add(EventsData(event = name, isFav = 0))
-
                         }
 
-                        DocumentChange.Type.MODIFIED -> {
+                        Log.d("NewEvents", "$events")
+                        Log.d("NewEvents", "$categories")
+                        Log.d("NewEvents", "$venues")
+                        eventsDao.deleteAndInsertEvents(events)
+                        eventsDao.deleteAndInsertCategories(categories)
+                        eventsDao.deleteAndInsertVenues(venues)
 
-                            match_no = try {
-                                dc.document.id.toInt()
-                            } catch (e: Exception) {
-                                0
-                            }
-                            name = try {
-                                dc.document["sport"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            round = try {
-                                dc.document["round_name"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            round_type = try {
-                                dc.document["round_type"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            team_1 = try {
-                                dc.document["team1"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            team_2 = try {
-                                dc.document["team2"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            time_stamp = try {
-                                dc.document["timestamp"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            venue = try {
-                                dc.document["venue"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            //TODO Check default Value
-                            gender = try {
-                                dc.document["gender"].toString()
-                            } catch (e: Exception) {
-                                "Boys"
-                            }
-                            isScore = try {
-                                dc.document["is_score"] as Boolean
-                            } catch (e: Exception) {
-                                false
-                            }
-                            layout = try {
-                                (dc.document["layout"] as Long).toInt()
-                            } catch (e: Exception) {
-                                2
-                            }
-                            score_1 = try {
-                                dc.document["score1"].toString()
-                            } catch (e: Exception) {
-                                Log.e("sports1", "Exception = ${e.toString()}")
-                                "Not Available"
-                            }
-                            score_2 = try {
-                                dc.document["score2"].toString()
-                            } catch (e: Exception) {
-                                Log.e("sports1", "Exception = ${e.toString()}")
-                                "Not Available"
-                            }
-                            winner1 = try {
-                                dc.document["winner1"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            winner2 = try {
-                                dc.document["winner2"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-                            winner3 = try {
-                                dc.document["winner3"].toString()
-                            } catch (e: Exception) {
-                                "Not Available"
-                            }
-
-                            sportsName.add(EventsData(event = name, isFav = 0))
-
-                            eventsDao.updateSportsData(
-                                matchNo = match_no,
-                                name = name,
-                                round = round,
-                                roundType = round_type,
-                                team1 = team_1,
-                                team2 = team_2,
-                                time = time_stamp,
-                                venue = venue,
-                                gender = gender,
-                                isScore = isScore,
-                                layout = layout,
-                                score1 = score_1,
-                                score2 = score_2,
-                                winner1 = winner1,
-                                winner2 = winner2,
-                                winner3 = winner3)
-                                .subscribeOn(Schedulers.io())
-                                .subscribe({},{
-                                    Log.e("EventsRepo", it.message, it)
-                                })
-                            Log.d("sports3", "Modified city: ${dc.document.data}")
-                        }
-
-                        DocumentChange.Type.REMOVED -> {
-                            Log.d("sports4", "Removed city: ${dc.document.data}")
-                            eventsDao.deleteSportsData(dc.document.id.toInt()).subscribeOn(Schedulers.io())
-                        }
+                        workerResult = ListenableWorker.Result.success()
                     }
+
+                    else -> {
+                        workerResult = ListenableWorker.Result.retry()
+                    }
+
                 }
-
-                eventsDao.setSportName(sportsName).subscribeOn(Schedulers.io())
-                    .subscribe({},{
-                        Log.e("EventsRepo", it.message, it)
-                })
-
-                saveSportsDataRoom(sportsData).subscribe()
-                Log.d("sports2", "added sports data a: $sportsData")
+                return@flatMap Single.just(workerResult)
             }
+
+
     }
 
-    @SuppressLint("CheckResult")
-    private fun saveSportsDataRoom(sportsData: List<SportsData>): Completable {
-        Log.d("sports2", "added sports data a: $sportsData")
-        return eventsDao.saveSportsData(sportsData).subscribeOn(Schedulers.io())
-            .doOnComplete {
-                Log.d("Sports", "Data Saved")
-            }
-            .doOnError {
-                Log.d("Sports", "Data Not Saved$it")
-            }
+    fun EventItemPojo.toEventData(): EventData{
+
+        return EventData(id, name, about, rules, time, dateTime, duration, image, details)
+    }
+
+    fun EventItemPojo.toCategoryData(): List<CategoryData>{
+
+        val eventCategories: MutableList<CategoryData> = arrayListOf()
+
+        categories.forEach {
+            eventCategories.add(CategoryData(it, id, 0))
+        }
+
+        return eventCategories
+    }
+
+    fun EventItemPojo.toVenueData(): List<VenueData>{
+
+        val eventVenues: MutableList<VenueData> = arrayListOf()
+
+        eventVenues.add(VenueData(venue, id, 0))
+
+        return eventVenues
     }
 
     fun updateMiscFavourite(eventId: String, favouriteMark: Int): Completable {
         return eventsDao.updateMiscFavourite(id = eventId, mark = favouriteMark)
             .subscribeOn(Schedulers.io())
-    }
-
-    fun updateSportsFavourite(matchNo: Int, favouriteMark: Int): Completable{
-        return eventsDao.updateSportsFavourite(matchNo, favouriteMark)
-            .subscribeOn(Schedulers.io())
-    }
-
-    fun updateEventFavourite(sport: String, favouriteMark: Int): Completable{
-        return eventsDao.updateSportFav(sport, favouriteMark)
-            .subscribeOn(Schedulers.io())
-    }
-
-    fun getEventEpc(event: String, eventId: String): Single<Pair<String, String>>{
-        return eventsService.getEpcArticle(event, eventId).subscribeOn(Schedulers.io())
-            .flatMap {response ->
-
-                var pair: Pair<String, String>
-                when(response.code()){
-
-                    200 -> {
-                         pair = Pair(response.body()!!.summary, response.body()!!.link)
-                    }
-                    else -> {
-                        throw Exception("No description available")
-                    }
-                }
-
-                return@flatMap Single.just(pair)
-            }
     }
 }
 

@@ -7,7 +7,7 @@ import com.dvm.appd.oasis.dbg.di.events.EventsModule
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import javax.inject.Inject
 
-class MiscEventsViewModelFactory: ViewModelProvider.Factory {
+class EventsViewModelFactory: ViewModelProvider.Factory {
 
     @Inject
     lateinit var eventsRepository: EventsRepository
@@ -15,6 +15,6 @@ class MiscEventsViewModelFactory: ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         OASISApp.appComponent.newEventsComponent(EventsModule()).injectMiscEvents(this)
         @Suppress("UNCHECKED_CAST")
-        return MiscEventsViewModel(eventsRepository) as T
+        return EventsViewModel(eventsRepository) as T
     }
 }

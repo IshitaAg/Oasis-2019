@@ -11,16 +11,15 @@ import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
 import kotlinx.android.synthetic.main.adapter_misc_events.view.*
 import java.lang.Exception
 
-class MiscEventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.Adapter<MiscEventsAdapter.MiscEventsViewHolder>(){
+class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.Adapter<EventsAdapter.EventsViewHolder>(){
 
     var miscEvents: List<MiscEventsData> = emptyList()
 
     interface OnMarkFavouriteClicked{
         fun updateIsFavourite(eventId: String, favouriteMark: Int)
-        fun showEpcData(eventId: String)
     }
 
-    inner class MiscEventsViewHolder(view: View): RecyclerView.ViewHolder(view){
+    inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
 
         val event: TextView = view.eventName
         val description: TextView = view.eventDesc
@@ -28,18 +27,17 @@ class MiscEventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerV
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
         val markFav: ImageView = view.markFav
-        val view: View = view.view
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MiscEventsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_misc_events, parent, false)
-        return MiscEventsViewHolder(view)
+        return EventsViewHolder(view)
     }
 
     override fun getItemCount(): Int = miscEvents.size
 
-    override fun onBindViewHolder(holder: MiscEventsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
 
 
         holder.event.text = miscEvents[position].name
@@ -61,10 +59,6 @@ class MiscEventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerV
             else if (miscEvents[position].isFavourite == 0){
                 listener.updateIsFavourite(miscEvents[position].id, 1)
             }
-        }
-
-        holder.view.setOnClickListener {
-            listener.showEpcData(miscEvents[position].id)
         }
     }
 

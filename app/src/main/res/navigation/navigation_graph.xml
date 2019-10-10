@@ -6,7 +6,7 @@
             android:id="@+id/navigation_graph"
 >
     <fragment android:id="@+id/action_events"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.MiscEventsFragment"
+              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
               android:label="fra_events_fragment" tools:layout="@layout/fra_misc_events">
         <action
                 android:id="@+id/action_action_events_to_action_profile"
@@ -66,12 +66,6 @@
         <action
                 android:id="@+id/action_action_order_history_to_notificationFragment"
                 app:destination="@id/notificationFragment" />
-    </fragment>
-
-    <fragment android:id="@+id/action_cart" android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.CartFragment"
-              android:label="CartDialog">
-        <action android:id="@+id/action_action_cart_to_orders"
-                app:destination="@id/action_order_history"/>
     </fragment>
     <fragment android:id="@+id/stallItemsFragment2"
               android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.StallItemsFragment"

@@ -259,25 +259,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.updateMiscFavourite(id = eventId, mark = favouriteMark)
             .subscribeOn(Schedulers.io())
     }
-
-    fun getEventEpc(event: String, eventId: String): Single<Pair<String, String>>{
-        return eventsService.getEpcArticle(event, eventId).subscribeOn(Schedulers.io())
-            .flatMap {response ->
-
-                var pair: Pair<String, String>
-                when(response.code()){
-
-                    200 -> {
-                         pair = Pair(response.body()!!.summary, response.body()!!.link)
-                    }
-                    else -> {
-                        throw Exception("No description available")
-                    }
-                }
-
-                return@flatMap Single.just(pair)
-            }
-    }
 }
 
 

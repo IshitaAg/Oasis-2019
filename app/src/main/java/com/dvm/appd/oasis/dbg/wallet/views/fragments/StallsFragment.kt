@@ -58,6 +58,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             when (it!!) {
                 StallResult.Success -> {
                     rootview.progressBar.visibility = View.GONE
+                    rootview.swipeStall.isRefreshing = false
                 }
                 StallResult.Failure -> {
                     rootview.progressBar.visibility = View.VISIBLE

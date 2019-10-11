@@ -32,13 +32,14 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
 
             Glide.with(holder.itemView.context!!).load(stallImgs[position]).circleCrop().placeholder(R.color.colorWhite).circleCrop().into(holder.stallImg)
 
-        holder.stallImg.setOnClickListener {
+        holder.parent.setOnClickListener {
             listener.stallSelected(stalls[position])
         }
     }
     inner class StallsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val stallName = view.quantity
         val stallImg = view.sImg
+        val parent = view.stallImage
     }
 
     interface OnStallSelectedListener{

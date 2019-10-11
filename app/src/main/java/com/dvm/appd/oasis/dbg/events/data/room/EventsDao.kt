@@ -82,5 +82,5 @@ interface EventsDao {
     fun deleteFavEvent(eventId: Int): Completable
 
     @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date_time AS dateTime, events_data.duration AS duration, events_data.image_url AS imageUrl, events_data.details AS details, event_venues.venue AS venue, event_categories.category AS category, COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_venues ON events_data.event_id = event_venues.event_id LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id ORDER BY events_data.event_id")
-    fun getAllEvents(): Flowable<List<ModifiedEventsData>>
+    fun getAllEvents(): Flowable<List<ChildEventsData>>
 }

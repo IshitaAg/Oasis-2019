@@ -159,5 +159,4 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
 
         sharedPreferences.edit().putBoolean(Keys.first_login, false).apply()
     }
-
 }

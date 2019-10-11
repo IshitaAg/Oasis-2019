@@ -65,10 +65,10 @@ interface WalletDao {
     @Query("SELECT * FROM cart_data ORDER BY vendor_id")
     fun getAllCartItems(): Flowable<List<CartData>>
 
-    @Query("SELECT cart_data.item_id AS itemId, stall_items.itemName as itemName, stall_items.isVeg as isVeg, cart_data.vendor_id AS vendorId, stalls.stallName AS vendorName, cart_data.quantity AS quantity, stall_items.price AS price FROM cart_data LEFT JOIN stall_items ON cart_data.item_id = stall_items.itemId LEFT JOIN stalls ON cart_data.vendor_id = stalls.stallId ORDER BY vendorId ")
+    @Query("SELECT cart_data.item_id AS itemId, stall_items.itemName as itemName, stall_items.isVeg as isVeg, cart_data.vendor_id AS vendorId, stalls.stallName AS vendorName, cart_data.quantity AS quantity, stall_items.current_price AS currentPrice, stall_items.discount AS discount, stall_items.base_price AS basePrice FROM cart_data LEFT JOIN stall_items ON cart_data.item_id = stall_items.itemId LEFT JOIN stalls ON cart_data.vendor_id = stalls.stallId ORDER BY vendorId ")
     fun getAllModifiedCartItems(): Flowable<List<ModifiedCartData>>
 
-    @Query("SELECT itemId, itemName, stallId, category, price, isVeg, COALESCE(cart_data.quantity, 0) AS quantity FROM stall_items LEFT JOIN cart_data ON itemId = item_id WHERE stallId = :stallId AND isAvailable = :available ORDER BY category")
+    @Query("SELECT itemId, itemName, stallId, category, current_price AS currentPrice, isVeg, COALESCE(cart_data.quantity, 0) AS quantity, discount, base_price AS basePrice FROM stall_items LEFT JOIN cart_data ON itemId = item_id WHERE stallId = :stallId AND isAvailable = :available ORDER BY category")
     fun getModifiedStallItemsById(stallId: Int, available: Boolean): Flowable<List<ModifiedStallItemsData>>
 
     @Query("UPDATE cart_data SET quantity = :quantity WHERE item_id = :itemId")

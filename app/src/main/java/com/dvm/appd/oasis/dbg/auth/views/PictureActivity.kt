@@ -49,18 +49,18 @@ class PictureActivity : AppCompatActivity() {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
             }
-            progress.visibility = View.VISIBLE
+
         }
 
         pictureActivityViewModel.state.observe(this, Observer {
             when(it){
                 LoginState.MoveToOnBoarding -> {
-                    progress.visibility = View.GONE
+
                     startActivity(Intent(this, OnboardingActivity::class.java))
                     finish()
                 }
                 is LoginState.Failure -> {
-                    progress.visibility = View.GONE
+
                     Toast.makeText(this, (it as LoginState.Failure).message, Toast.LENGTH_LONG)
                         .show()
                 }

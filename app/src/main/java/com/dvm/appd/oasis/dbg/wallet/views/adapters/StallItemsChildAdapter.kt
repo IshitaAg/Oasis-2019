@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.views.adapters
 
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,22 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
         Log.d("StallItemsChild", stallItems.toString())
 
         holder.itemName.text = stallItems[position].itemName
-        holder.price.text = "₹ ${stallItems[position].price}"
+
+        if (stallItems[position].discount != 0){
+            holder.currentPrice.isVisible = true
+            holder.discount.isVisible = true
+            holder.basePrice.text = "₹ ${stallItems[position].basePrice}"
+            holder.basePrice.paintFlags = holder.basePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.currentPrice.text = "₹ ${stallItems[position].currentPrice}"
+            holder.discount.text = "~ ${stallItems[position].discount}%"
+        }
+        else{
+            holder.basePrice.text = "₹ ${stallItems[position].basePrice}"
+            holder.basePrice.paintFlags = holder.basePrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            holder.currentPrice.isVisible = false
+            holder.discount.isVisible = false
+        }
+
         holder.quantity.text = stallItems[position].quantity.toString()
 
         if (stallItems[position].isVeg){
@@ -95,11 +111,13 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
     inner class ChildItemsViewHolder(view: View): RecyclerView.ViewHolder(view){
 
         val itemName: TextView = view.itemName
-        val price: TextView = view. price
+        val basePrice: TextView = view.basePrice
         val add: TextView = view.addBtn
         val plus: Button = view.plus
         val minus: Button = view.minus
         val quantity: TextView = view.quantity
         val isVeg: ImageView = view.isVeg
+        val discount: TextView = view.discount
+        val currentPrice: TextView = view.currentPrice
     }
 }

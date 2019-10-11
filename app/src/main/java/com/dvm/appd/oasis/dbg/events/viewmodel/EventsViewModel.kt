@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
+import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ChildEventsData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
 import io.reactivex.disposables.Disposable
 
@@ -33,9 +34,11 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
         eventsRepository.getEventsData()
             .subscribe({
+                Log.d("NewEvents", "RoomSuccess")
                 (events as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
+                Log.d("NewEvents", "Room $it")
                 (error as MutableLiveData).postValue(it.message)
             })
 

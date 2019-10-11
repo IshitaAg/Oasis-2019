@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.views.adapters
 
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
@@ -25,11 +27,13 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
     inner class CartViewHolder(view: View): RecyclerView.ViewHolder(view){
 
         val itemName: TextView = view.itemName
-        val quantityPrice: TextView = view.price
+        val basePrice: TextView = view.basePrice
         val quantity: TextView = view.quantity
         val plus: Button = view.plus
         val minus: Button = view.minus
         val isVeg: ImageView = view.isVeg
+        val discount: TextView = view.discount
+        val currentPrice: TextView = view.currentPrice
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -44,7 +48,22 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
 
         Log.d("CartRecycler", "$cartChildItems")
         holder.itemName.text = cartChildItems[position].itemName
-        holder.quantityPrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].price}"
+
+        if (cartChildItems[position].discount == 0){
+            holder.currentPrice.isVisible = true
+            holder.discount.isVisible = true
+            holder.basePrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].basePrice}"
+            holder.basePrice.paintFlags = holder.basePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            holder.currentPrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].currentPrice}"
+            holder.discount.text = "~ ${cartChildItems[position].discount}%"
+        }
+        else{
+            holder.currentPrice.isVisible = false
+            holder.discount.isVisible = false
+            holder.basePrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].basePrice}"
+            holder.basePrice.paintFlags = holder.basePrice.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
+
         holder.quantity.text = cartChildItems[position].quantity.toString()
 
         if (cartChildItems[position].isVeg){

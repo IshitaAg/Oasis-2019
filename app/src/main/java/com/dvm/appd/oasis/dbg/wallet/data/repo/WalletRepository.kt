@@ -845,10 +845,11 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                          * Donot remove this variable x. Paytm sdk will break.
                          * Just let it be here*/
                         val x = PaytmPGService.getStagingService()
+                        x.enableLog(fragment.context)
                         x.initialize(order, null)
 
                         //needs activity context for callback
-                        x.startPaymentTransaction(fragment.context, true, true, fragment)
+                        x.startPaymentTransaction(fragment.activity!!, false, true, fragment)
                     }
                     else -> {
                         Log.e("PayTm", "Something went wrong while reciveing checkSum\n${response.code()}\n${response.body()}\n${response.errorBody()}")

@@ -19,8 +19,10 @@ import com.dvm.appd.oasis.dbg.wallet.views.adapters.StallsAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_wallet_stalls.view.*
 import android.view.*
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.labo.kaji.fragmentanimations.FlipAnimation
 
 
 class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
@@ -92,5 +94,9 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_stalls)
         super.onResume()
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
     }
 }

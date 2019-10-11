@@ -67,7 +67,11 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         }
 
         profileViewModel.balance.observe(this, Observer {
+            if(it!=Integer.MAX_VALUE.toString())
             rootView.balance.text = context!!.resources.getString(R.string.rupee)+it!!
+            else{
+                rootView.balance.text = context!!.resources.getString(R.string.rupee)+"0"
+            }
         })
 
         rootView.qrCode.setOnClickListener {

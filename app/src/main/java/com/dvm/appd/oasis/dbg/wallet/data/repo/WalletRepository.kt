@@ -135,7 +135,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
         items.forEach {
             itemList =
-                itemList.plus(StallItemsData(it.itemId, it.itemName, it.stallId, it.category.trim(), it.price, it.isAvailable, it.isVeg))
+                itemList.plus(StallItemsData(it.itemId, it.itemName, it.stallId, it.category.trim(), it.currentPrice, it.isAvailable, it.isVeg, it.discount, it.basePrice))
         }
         return itemList
     }

@@ -1,6 +1,6 @@
 package com.dvm.appd.oasis.dbg.events.data.room.dataclasses
 
-data class ModifiedEventsData(
+data class ChildEventsData(
 
     val eventId: Int,
 
@@ -20,9 +20,9 @@ data class ModifiedEventsData(
 
     val details: String,
 
-    val venue: List<String>,
+    val venue: String,
 
-    val category: List<String>,
+    val category: String,
 
     val isFav: Int
 )

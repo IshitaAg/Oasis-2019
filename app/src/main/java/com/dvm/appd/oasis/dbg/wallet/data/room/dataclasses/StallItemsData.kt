@@ -20,13 +20,19 @@ data class StallItemsData(
     @ColumnInfo(name = "category")
     val category: String,
 
-    @ColumnInfo(name = "price")
-    val price:Int,
+    @ColumnInfo(name = "current_price")
+    val currentPrice:Int,
 
     @ColumnInfo(name = "isAvailable")
     val isAvailable:Boolean,
 
     @ColumnInfo(name = "isVeg")
-    val isVeg: Boolean
+    val isVeg: Boolean,
+
+    @ColumnInfo(name = "discount")
+    val discount: Int,
+
+    @ColumnInfo(name = "base_price")
+    val basePrice: Int
 
     )

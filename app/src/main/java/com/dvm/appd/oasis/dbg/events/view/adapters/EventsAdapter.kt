@@ -8,15 +8,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
+import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
 import kotlinx.android.synthetic.main.adapter_misc_events.view.*
 import java.lang.Exception
 
 class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.Adapter<EventsAdapter.EventsViewHolder>(){
 
-    var miscEvents: List<MiscEventsData> = emptyList()
+    var events: List<ModifiedEventsData> = emptyList()
 
     interface OnMarkFavouriteClicked{
-        fun updateIsFavourite(eventId: String, favouriteMark: Int)
+        fun updateIsFavourite(eventId: Int, favouriteMark: Int)
     }
 
     inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -35,29 +36,29 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         return EventsViewHolder(view)
     }
 
-    override fun getItemCount(): Int = miscEvents.size
+    override fun getItemCount(): Int = events.size
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
 
 
-        holder.event.text = miscEvents[position].name
-        holder.description.text = miscEvents[position].description
-        holder.organiser.text = miscEvents[position].organiser
-        holder.time.text = getTime(miscEvents[position].time)
-        holder.venue.text = miscEvents[position].venue
-        if (miscEvents[position].isFavourite == 1){
+        holder.event.text = events[position].name
+        holder.description.text = events[position].details
+        holder.organiser.text = events[position].duration
+        holder.time.text = events[position].dateTime //getTime(events[position].time)
+        holder.venue.text = events[position].venue.first()
+        if (events[position].isFav == 1){
             holder.markFav.setImageResource(R.drawable.ic_is_favourite)
-        }else if (miscEvents[position].isFavourite == 0){
+        }else if (events[position].isFav == 0){
             holder.markFav.setImageResource(R.drawable.ic_not_favourite)
         }
 
         holder.markFav.setOnClickListener {
 
-            if (miscEvents[position].isFavourite == 1){
-                listener.updateIsFavourite(miscEvents[position].id, 0)
+            if (events[position].isFav == 1){
+                listener.updateIsFavourite(events[position].eventId, 0)
             }
-            else if (miscEvents[position].isFavourite == 0){
-                listener.updateIsFavourite(miscEvents[position].id, 1)
+            else if (events[position].isFav == 0){
+                listener.updateIsFavourite(events[position].eventId, 1)
             }
         }
     }

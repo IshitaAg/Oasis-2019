@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 
-class ComediansAdapter : RecyclerView.Adapter<ComediansAdapter.ComediansViewHolder>() {
+class ComediansAdapter(val listener:onVoteBtnClicked) : RecyclerView.Adapter<ComediansAdapter.ComediansViewHolder>() {
 
     val comedians: List<String> = emptyList()
     override fun onCreateViewHolder(
@@ -29,5 +29,9 @@ class ComediansAdapter : RecyclerView.Adapter<ComediansAdapter.ComediansViewHold
     inner class ComediansViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
 
+    }
+
+    interface onVoteBtnClicked{
+        fun voted(name:String)
     }
 }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".MainActivity"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#242947"
+        tools:context=".MainActivity">
 
 
-        <fragment
+    <fragment
             android:id="@+id/my_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
@@ -19,23 +19,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-                app:navGraph="@navigation/navigation_graph" />
+            app:navGraph="@navigation/navigation_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
 
-                android:id="@+id/bottom_navigation_bar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_gravity="start"
-                app:itemTextColor="@color/nav_item_color"
-                app:itemIconTint="@color/nav_item_color"
-                android:elevation="16dp"
-                android:background="@color/colorWhite"
-                app:menu="@menu/bottom_nav_items"
-                style="@style/Widget.Design.BottomNavigationView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+            android:id="@+id/bottom_navigation_bar"
+            style="@style/Widget.Design.BottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            android:background="@color/colorWhite"
+            android:elevation="16dp"
+            app:itemIconTint="@color/nav_item_color"
+            app:itemTextColor="@color/nav_item_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_items" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator_parent"
@@ -52,24 +52,24 @@
 
 
     <!--    <EditText-->
-<!--            android:id="@+id/search"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="88dp"-->
-<!--            android:layout_marginEnd="88dp"-->
-<!--            android:background="@drawable/shape_rectangle_rounded_8dp"-->
-<!--            android:hint="Search"-->
-<!--            android:inputType="text"-->
-<!--            android:maxLines="1"-->
-<!--            android:paddingLeft="8dp"-->
-<!--            android:paddingTop="4dp"-->
-<!--            android:paddingRight="8dp"-->
-<!--            android:paddingBottom="4dp"-->
-<!--            android:singleLine="true"-->
-<!--            android:textSize="20sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/mainView"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/mainView" />-->
+    <!--            android:id="@+id/search"-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="88dp"-->
+    <!--            android:layout_marginEnd="88dp"-->
+    <!--            android:background="@drawable/shape_rectangle_rounded_8dp"-->
+    <!--            android:hint="Search"-->
+    <!--            android:inputType="text"-->
+    <!--            android:maxLines="1"-->
+    <!--            android:paddingLeft="8dp"-->
+    <!--            android:paddingTop="4dp"-->
+    <!--            android:paddingRight="8dp"-->
+    <!--            android:paddingBottom="4dp"-->
+    <!--            android:singleLine="true"-->
+    <!--            android:textSize="20sp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/mainView"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toBottomOf="@+id/mainView" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -67,7 +68,11 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         }
 
         profileViewModel.balance.observe(this, Observer {
+            if(it!=Integer.MAX_VALUE.toString())
             rootView.balance.text = context!!.resources.getString(R.string.rupee)+it!!
+            else{
+                rootView.balance.text = context!!.resources.getString(R.string.rupee)+"0"
+            }
         })
 
         rootView.qrCode.setOnClickListener {

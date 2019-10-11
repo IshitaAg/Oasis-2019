@@ -23,8 +23,20 @@ class AddMoneyDialog : DialogFragment() {
     private lateinit var addMoneyViewModel: AddMoneyViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val rootView = inflater.inflate(R.layout.dia_wallet_add_money, container, false)
         addMoneyViewModel = ViewModelProviders.of(this, AddMoneyViewModelFactory())[AddMoneyViewModel::class.java]
+        val rootView = inflater.inflate(R.layout.dia_wallet_add_money, container, false)
+        addMoneyViewModel.user.observe(this, Observer {
+            when(it){
+                true-> {
+                    addPaytm.visibility = View.GONE
+                    addPaytm.isClickable = false
+                }
+                false -> {
+                   addBtn.visibility = View.GONE
+                    addBtn.isClickable = false
+                }
+            }
+        })
         rootView.addBtn.isClickable = true
         rootView.addBtn.setOnClickListener {
             if (rootView.amount.text.toString().isBlank())

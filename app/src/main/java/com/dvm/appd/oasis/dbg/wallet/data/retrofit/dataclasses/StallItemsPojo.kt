@@ -22,5 +22,12 @@ data class StallItemsPojo(
     @SerializedName("is_available")
     val isAvailable: Boolean,
 
-    val price: Int
+    @SerializedName("price")
+    val currentPrice: Int,
+
+    @SerializedName("current_discount")
+    val discount: Int,
+
+    @SerializedName("base_price")
+    val basePrice: Int
 )

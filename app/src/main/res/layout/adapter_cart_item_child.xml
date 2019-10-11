@@ -62,12 +62,11 @@
             app:layout_constraintTop_toTopOf="@+id/plus" />
 
     <TextView
-            android:id="@+id/price"
+            android:id="@+id/basePrice"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="400"
@@ -75,7 +74,7 @@
             android:textColor="#4CA8F5"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/minus"
+            app:layout_constraintEnd_toStartOf="@+id/currentPrice"
             app:layout_constraintStart_toEndOf="@+id/isVeg"
             app:layout_constraintTop_toBottomOf="@+id/itemName"
             app:layout_constraintVertical_bias="0.0" />
@@ -89,5 +88,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/itemName"
             app:srcCompat="@drawable/ic_veg" />
+
+    <TextView
+            android:id="@+id/currentPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="200"
+            android:textAlignment="textStart"
+            android:textColor="#4CA8F5"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/discount"
+            app:layout_constraintStart_toEndOf="@+id/basePrice"
+            app:layout_constraintTop_toBottomOf="@+id/itemName" />
+
+    <TextView
+            android:id="@+id/discount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="~ 50%"
+            android:textAlignment="textStart"
+            android:textColor="#4CA8F5"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/minus"
+            app:layout_constraintStart_toEndOf="@+id/currentPrice"
+            app:layout_constraintTop_toBottomOf="@+id/itemName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

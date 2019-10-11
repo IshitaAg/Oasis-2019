@@ -77,9 +77,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         })
 
         view.miscEventRecycler.adapter = EventsAdapter(this)
-        eventsViewModel.miscEvents.observe(this, Observer {
+        eventsViewModel.events.observe(this, Observer {
             Log.d("MiscEventsFrag", "Observed")
-            (view.miscEventRecycler.adapter as EventsAdapter).miscEvents = it
+            (view.miscEventRecycler.adapter as EventsAdapter).events = it
             (view.miscEventRecycler.adapter as EventsAdapter).notifyDataSetChanged()
         })
 
@@ -117,9 +117,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         return view
     }
 
-    override fun updateIsFavourite(eventId: String, favouriteMark: Int) {
+    override fun updateIsFavourite(eventId: Int, favouriteMark: Int) {
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.markEventFavourite(eventId, favouriteMark)
+        eventsViewModel.markEventFav(eventId, favouriteMark)
     }
 
     override fun daySelected(day: String, position: Int) {

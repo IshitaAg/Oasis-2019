@@ -1,18 +1,12 @@
 package com.dvm.appd.oasis.dbg.events.data.repo
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.work.*
-import com.dvm.appd.oasis.dbg.OASISApp
-import com.dvm.appd.oasis.dbg.events.data.retrofit.AllEventsPojo
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventItemPojo
-import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsPojo
 import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.*
-import com.google.common.util.concurrent.ListenableFuture
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
@@ -29,10 +23,10 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
     init {
 
-        updateEventsData().subscribe()
+        //updateEventsData().subscribe()
 
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(2, TimeUnit.HOURS).setConstraints(constraints).build()
+        val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(1, TimeUnit.MINUTES).setConstraints(constraints).build()
 
         WorkManager.getInstance(application.applicationContext).enqueue(request)
 
@@ -277,7 +271,30 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
         return eventsDao.getAllEvents().subscribeOn(Schedulers.io())
             .flatMap {
-               return@flatMap Flowable.just(it)
+
+                var events: MutableList<ModifiedEventsData> = arrayListOf()
+                var categories: MutableList<String> = arrayListOf()
+                var venues: MutableList<String> = arrayListOf()
+
+                for ((index, item) in it.listIterator().withIndex()){
+
+                    categories.add(item.category)
+                    venues.add(item.venue)
+
+                    if (index != it.lastIndex && it[index].eventId != it[index+1].eventId){
+
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        categories = arrayListOf()
+                        venues = arrayListOf()
+                    }
+                    else if (index == it.lastIndex){
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        categories = arrayListOf()
+                        venues = arrayListOf()
+                    }
+                }
+
+               return@flatMap Flowable.just(events)
             }
     }
 }

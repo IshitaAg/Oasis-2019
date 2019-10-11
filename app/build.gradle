@@ -124,6 +124,8 @@ dependencies {
     // Ripple Effect library
     implementation 'com.balysv:material-ripple:1.0.2'
 
+    implementation 'com.labo.kaji:fragmentanimations:0.1.1'
+
     implementation 'br.com.simplepass:loading-button-android:2.1.5'
 
     def work_version = "2.2.0"

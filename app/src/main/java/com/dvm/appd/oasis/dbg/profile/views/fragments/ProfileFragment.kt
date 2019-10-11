@@ -28,6 +28,7 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.labo.kaji.fragmentanimations.FlipAnimation
+import com.labo.kaji.fragmentanimations.MoveAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -197,6 +198,10 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
+        if (enter) {
+            return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
+        } else {
+            return MoveAnimation.create(MoveAnimation.LEFT, false, 500)
+        }
     }
 }

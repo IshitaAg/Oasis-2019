@@ -4,7 +4,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_rectangle_rounded_16dp">
+        android:background="@drawable/shape_rectangle_rounded_16dp"
+        android:backgroundTint="#31365E"
+        android:padding="16dp">
 
     <EditText
             android:id="@+id/userId"
@@ -13,38 +15,45 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:background="#806F6F6F"
             android:ems="10"
-            android:backgroundTint="#4F32D7"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:hint="User Id"
             android:inputType="number"
+            android:padding="8dp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
+            android:id="@+id/loadingPBR"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="#4F32D7"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:indeterminateTint="#4F32D7"
-            android:visibility="gone"
-            android:id="@+id/loadingPBR"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
             android:id="@+id/Amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#806F6F6F"
             android:ems="10"
-            android:backgroundTint="#4F32D7"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:hint="Amount"
             android:inputType="number"
+            android:padding="8dp"
+            android:textColorHint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@+id/userId"
             app:layout_constraintStart_toStartOf="@+id/userId"
-            app:layout_constraintTop_toBottomOf="@+id/userId" />
+            app:layout_constraintTop_toBottomOf="@+id/userId"
+            tools:textColor="@color/colorWhite" />
 
     <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/SendBtn"
@@ -52,15 +61,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/shape_rectangle_rounded_24dp"
+            android:background="@drawable/shape_rectangle_rounded_8dp"
             android:backgroundTint="#6C58B9"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/Amount"
             app:layout_constraintStart_toStartOf="@+id/Amount"
             app:layout_constraintTop_toBottomOf="@+id/Amount"
-            app:mrl_rippleOverlay="true"
+            app:mrl_rippleDelayClick="true"
             app:mrl_rippleHover="true"
-            app:mrl_rippleDelayClick="true">
+            app:mrl_rippleOverlay="true">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +80,8 @@
                 android:paddingEnd="12dp"
                 android:text="Proceed"
                 android:textColor="#FFFFFF"
-                android:textSize="14sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
     </com.balysv.materialripple.MaterialRippleLayout>
 

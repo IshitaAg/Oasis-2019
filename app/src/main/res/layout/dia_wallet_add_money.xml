@@ -6,7 +6,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shape_rectangle_rounded_16dp"
         android:backgroundTint="#31365E"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
 
 
     <EditText
@@ -42,17 +43,17 @@
             android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/shape_rectangle_rounded_8dp"
             android:backgroundTint="#6C58B9"
             android:elevation="2dp"
-            app:layout_constraintBottom_toTopOf="@id/textView24"
+            app:layout_constraintBottom_toBottomOf="@+id/addPaytm"
             app:layout_constraintEnd_toEndOf="@+id/amount"
             app:layout_constraintStart_toStartOf="@+id/amount"
             app:layout_constraintTop_toBottomOf="@+id/amount"
-            app:mrl_rippleOverlay="true"
+            app:mrl_rippleDelayClick="true"
             app:mrl_rippleHover="true"
-            app:mrl_rippleDelayClick="true">
+            app:mrl_rippleOverlay="true">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -84,69 +85,31 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="45dp"
-            android:layout_marginBottom="41dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="OR"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView26"
-            app:layout_constraintEnd_toEndOf="@+id/addBtn"
-            app:layout_constraintStart_toStartOf="@+id/addBtn"
-            app:layout_constraintTop_toBottomOf="@+id/addBtn" />
-
-    <View
-            android:id="@+id/view14"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/thumbColor"
-            app:layout_constraintBottom_toBottomOf="@+id/textView24"
-            app:layout_constraintEnd_toStartOf="@+id/textView24"
-            app:layout_constraintStart_toStartOf="@+id/amount"
-            app:layout_constraintTop_toTopOf="@+id/textView24" />
-
-    <View
-            android:id="@+id/view16"
-            android:layout_width="0dp"
-            android:layout_height="2dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="@color/thumbColor"
-            app:layout_constraintBottom_toBottomOf="@+id/textView24"
-            app:layout_constraintEnd_toEndOf="@+id/amount"
-            app:layout_constraintStart_toEndOf="@+id/textView24"
-            app:layout_constraintTop_toTopOf="@+id/textView24" />
-
     <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/textView26"
+            android:id="@+id/addPaytm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/shape_rectangle_rounded_8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/addBtn"
-            app:layout_constraintStart_toStartOf="@+id/addBtn"
-            app:layout_constraintTop_toBottomOf="@id/textView24"
-            app:mrl_rippleOverlay="true"
+            app:layout_constraintEnd_toEndOf="@+id/amount"
+            app:layout_constraintStart_toStartOf="@+id/amount"
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            app:mrl_rippleDelayClick="true"
             app:mrl_rippleHover="true"
-            app:mrl_rippleDelayClick="true">
+            app:mrl_rippleOverlay="true">
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_paytm"
+                android:drawablePadding="8dp"
                 android:fontFamily="@font/shellypalmer_circular_std_book"
                 android:padding="8dp"
                 android:text="Add via Paytm"
                 android:textAlignment="center"
                 android:textColor="#31365e"
-                android:textSize="18sp"
-                android:drawableStart="@drawable/ic_paytm"
-                android:drawablePadding="8dp"/>
+                android:textSize="18sp" />
 
     </com.balysv.materialripple.MaterialRippleLayout>
 

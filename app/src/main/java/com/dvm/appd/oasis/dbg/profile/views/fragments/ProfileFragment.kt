@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
+import com.labo.kaji.fragmentanimations.FlipAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -192,5 +194,9 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
     override fun onBackPressedCancelTransaction() {
         Log.d("PayTm", "Transaction was cancelled because of back pressed")
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
     }
 }

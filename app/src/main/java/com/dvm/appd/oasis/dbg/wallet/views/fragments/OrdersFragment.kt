@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -21,6 +22,7 @@ import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrdersViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartChildAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrdersAdapter
+import com.labo.kaji.fragmentanimations.FlipAnimation
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
 
@@ -115,5 +117,9 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         (activity!! as MainActivity).showCustomToolbar()
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_orders)
         super.onResume()
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
     }
 }

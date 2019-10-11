@@ -810,7 +810,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
             this.addProperty("TXN_AMOUNT", txnAmount)
         }
         return walletService.getCheckSum(
-            "Basic dXNlcjE6bG9sbWFvMTIzNDU=",
+            "Basic dXNlcjI6bG9sbWFvMTIzNDU=",
             body
         ).subscribeOn(Schedulers.io())
             .doOnSuccess {response ->
@@ -859,6 +859,6 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
-        return walletService.confirmPaytmPayment("Basic dXNlcjE6bG9sbWFvMTIzNDU=", body).subscribeOn(Schedulers.io())
+        return walletService.confirmPaytmPayment("Basic dXNlcjI6bG9sbWFvMTIzNDU=", body).subscribeOn(Schedulers.io())
     }
 }

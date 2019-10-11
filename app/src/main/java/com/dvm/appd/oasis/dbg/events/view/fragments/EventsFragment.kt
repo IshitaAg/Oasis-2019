@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,7 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
+import com.labo.kaji.fragmentanimations.FlipAnimation
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,7 +33,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         eventsViewModel = ViewModelProviders.of(this, EventsViewModelFactory())[EventsViewModel::class.java]
 
         val view = inflater.inflate(R.layout.fra_misc_events, container, false)
-        
+
         val sdf = SimpleDateFormat("dd MM yyyy")
         val c = Calendar.getInstance()
 
@@ -128,5 +130,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
         eventsViewModel.getMiscEventsData(day)
         view!!.dayRecycler.smoothScrollToPosition(position)
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
     }
 }

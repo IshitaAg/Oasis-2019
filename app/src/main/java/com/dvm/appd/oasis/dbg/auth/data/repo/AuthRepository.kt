@@ -2,16 +2,19 @@ package com.dvm.appd.oasis.dbg.auth.data.repo
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.util.Log
 import com.dvm.appd.oasis.dbg.auth.data.User
 import com.dvm.appd.oasis.dbg.auth.data.retrofit.AuthService
 import com.dvm.appd.oasis.dbg.auth.views.LoginState
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.JsonObject
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import java.io.ByteArrayOutputStream
 
 class AuthRepository(val authService: AuthService, val sharedPreferences: SharedPreferences) {
 
@@ -64,6 +67,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         val firstLogin = sharedPreferences.getBoolean(Keys.first_login,false)
         Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin).toString())
         if (listOf(name, email, contact, jwt, qr).contains(null)) {
+            setUser(null).subscribe()
             return Maybe.empty()
         }
         return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin))
@@ -112,7 +116,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                                 phone = response.body()!!.phone,
                                 qrCode = response.body()!!.qrCode,
                                 isBitsian = bitsian,
-                                firstLogin = firstLogin
+                                firstLogin = true
                             )
                         ).subscribe()
                         Single.just(LoginState.Success)
@@ -152,6 +156,8 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
     }
 
     fun disableOnBoardingForUser() {
+
         sharedPreferences.edit().putBoolean(Keys.first_login, false).apply()
     }
+
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -14,6 +15,7 @@ import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.adapters.MoreAdapter
+import com.labo.kaji.fragmentanimations.FlipAnimation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
@@ -72,5 +74,9 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_more)
 
         super.onResume()
+    }
+
+    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
     }
 }

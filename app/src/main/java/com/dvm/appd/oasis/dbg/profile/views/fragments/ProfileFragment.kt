@@ -80,6 +80,11 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             profileViewModel.logout()
         }
 
+        profileViewModel.tokens.observe(this, Observer {
+            if(it!=Integer.MAX_VALUE.toString())
+                rootView.tokens.text = it!!
+        })
+
         profileViewModel.balance.observe(this, Observer {
             if(it!=Integer.MAX_VALUE.toString())
             rootView.balance.text = context!!.resources.getString(R.string.rupee)+it!!

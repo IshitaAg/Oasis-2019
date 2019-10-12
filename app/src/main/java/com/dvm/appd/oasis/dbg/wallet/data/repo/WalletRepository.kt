@@ -512,6 +512,12 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
         }
     }
 
+    fun getTockens():Flowable<Int>{
+        return moneyTracker.getTokens().doOnError {
+            Log.d("checke", it.toString())
+        }
+    }
+
     fun transferMoney(id:Int,amount:Int):Single<TransactionResult>{
 
         val body = JsonObject().also {

@@ -1,12 +1,16 @@
 package com.dvm.appd.oasis.dbg.events.data.repo
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.work.*
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventItemPojo
 import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.*
+import com.dvm.appd.oasis.dbg.more.ComediansVoting
+import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
@@ -17,7 +21,7 @@ import io.reactivex.Single
 import java.util.concurrent.TimeUnit
 
 
-class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService, val application: Application) {
+class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService, val application: Application,val comediansVoting: ComediansVoting,val sharedPreferences: SharedPreferences) {
 
     val db = FirebaseFirestore.getInstance()
 
@@ -169,7 +173,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                     eventsDao.insertMiscEventData(miscEvents).subscribeOn(Schedulers.io()).subscribe({},{})
                 }
             }
-
     }
 
     fun miscEventDays(): Flowable<List<String>> {
@@ -296,6 +299,21 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
                return@flatMap Flowable.just(events)
             }
+    }
+   fun isVotingEnabled(): Flowable<Boolean> {
+        return comediansVoting.getStatus()
+    }
+
+    fun getComedians():Flowable<List<Comedian>>{
+        return comediansVoting.getComedians()
+    }
+
+    fun voteForComedian(name:String):Completable{
+        return Completable.fromAction{
+            sharedPreferences.edit().putBoolean(AuthRepository.Keys.voted,true).apply()
+            comediansVoting.vote(name)
+        }
+
     }
 }
 

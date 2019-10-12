@@ -90,7 +90,7 @@ class AppModule(private val application: Application) {
             .build()
     }
 
-    // http://wallet.bits-oasis.org/
+    // https://wallet.bits-oasis.org/
     // http://testapp.bits-dvm.org:9090/
     @Provides
     @Singleton

@@ -203,10 +203,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        if (enter) {
-            return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
-        } else {
-            return MoveAnimation.create(MoveAnimation.LEFT, false, 500)
-        }
+        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
     }
 }

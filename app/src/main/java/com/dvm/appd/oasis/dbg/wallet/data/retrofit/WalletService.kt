@@ -47,5 +47,5 @@ interface WalletService {
     fun confirmPaytmPayment(@Header("Authorization")jwt: String, @Body body: JsonObject): Single<Response<Void>>
 
     @GET("kind-store/items")
-    fun getKindstoreItems():Single<Response<KindItemsPojo>>
+    fun getKindstoreItems():Single<Response<JsonObject>>
 }

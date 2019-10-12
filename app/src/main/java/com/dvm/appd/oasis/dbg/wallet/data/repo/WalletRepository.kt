@@ -24,6 +24,8 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.joinAll
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import java.lang.Exception
@@ -875,8 +877,19 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
            Log.d("check",it.code().toString())
            when(it.code()){
               200 ->{
-                 Log.d("checkr",it.body()!!.items.toString())
-
+                  var kindItems:List<KindItems> = emptyList()
+                 Log.d("checkr",it.body().toString())
+                 val jObj = JSONObject(it.body()!!.toString())
+                  val iNames:JSONArray = jObj.getJSONArray("items_list")
+                  for(i in 0 until iNames.length()){
+                      val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
+                      val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
+                      val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
+                      kindItems = kindItems.plus(KindItems(0,iNames[i] as String,iPrice,iAvail,iImg))
+                  }
+                  Log.d("checkkind",kindItems.toString())
+                 walletDao.deleteAllKindItems()
+                  walletDao.insertKindItems(kindItems)
               }
              else -> Log.d("check","repo error")
 
@@ -889,6 +902,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun getKindItems():Observable<List<KindItems>>{
+        Log.d("check","getkind")
         return walletDao.getAllkindItems().toObservable().subscribeOn(Schedulers.io()).doOnError {
             Log.d("check",it.toString())
         }

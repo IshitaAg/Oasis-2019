@@ -12,19 +12,14 @@ class KindItemsViewModel(val walletRepository: WalletRepository):ViewModel() {
     var toast:LiveData<String> = MutableLiveData()
     var items:LiveData<List<KindItems>> = MutableLiveData()
     init {
-       fetchFreshData()
-        walletRepository.getKindItems().subscribe({
-            items.asMut().postValue(it)
-        },{
-            toast.asMut().postValue(it.toString())
-        })
-    }
-
-    fun fetchFreshData(){
         walletRepository.fetchKindItems().subscribe({
-
+            walletRepository.getKindItems().subscribe{
+                items.asMut().postValue(it)
+            }
         },{
             toast.asMut().postValue(it.toString())
         })
+
     }
+
 }

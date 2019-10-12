@@ -123,7 +123,7 @@ interface WalletDao {
     fun insertKindItems(items:List<KindItems>):Completable
 
     @Query("DELETE from kindItems")
-    fun deleteAllItems()
+    fun deleteAllKindItems()
 
     @Query("SELECT * FROM kindItems")
     fun getAllkindItems():Flowable<List<KindItems>>

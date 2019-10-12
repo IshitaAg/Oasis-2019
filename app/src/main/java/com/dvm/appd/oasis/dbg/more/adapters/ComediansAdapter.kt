@@ -3,6 +3,7 @@ package com.dvm.appd.oasis.dbg.more.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
@@ -24,17 +25,22 @@ class ComediansAdapter(val listener: onVoteBtnClicked) :
     override fun getItemCount(): Int {
         return comedians.size
     }
-
+   var lastChecked:RadioButton?=null
     override fun onBindViewHolder(holder: ComediansAdapter.ComediansViewHolder, position: Int) {
         holder.comName.text = comedians[position].name
-        holder.voteBtn.setOnClickListener{
+        holder.parent.setOnClickListener{
+            if(lastChecked!=null){
+                lastChecked!!.isChecked=false
+            }
             listener.voted(comedians[position].name)
+            lastChecked = holder.voteBtn
         }
     }
 
     inner class ComediansViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val voteBtn = view.checkBtn
         val comName = view.comedianName
+        val parent = view.voteView
 
     }
 

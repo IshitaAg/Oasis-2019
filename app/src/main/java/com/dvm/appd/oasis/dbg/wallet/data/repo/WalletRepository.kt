@@ -862,4 +862,22 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
         return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
     }
+    fun fetchKindItems():Completable{
+        Log.d("checkr","called")
+       return walletService.getKindstoreItems().doOnSuccess {
+           Log.d("check",it.code().toString())
+           when(it.code()){
+              200 ->{
+                 Log.d("checkr",it.body()!!.items.toString())
+
+              }
+             else -> Log.d("check","repo error")
+
+           }
+       }.doOnError {
+           Log.d("checke",it.toString())
+       }.ignoreElement()
+           .subscribeOn(Schedulers.io())
+
+    }
 }

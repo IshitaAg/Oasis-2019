@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
@@ -52,7 +51,7 @@ class CartAdapter(private val listener: CartChildAdapter.OnButtonClicked): Recyc
     inner class CartHolder(view: View): RecyclerView.ViewHolder(view){
 
         val vendor: TextView = view.vendor
-        val items: RecyclerView = view.items
+        val items: RecyclerView = view.itemsRecycler
 //        val price: TextView = view.price
 //        val order: TextView = view.order
     }

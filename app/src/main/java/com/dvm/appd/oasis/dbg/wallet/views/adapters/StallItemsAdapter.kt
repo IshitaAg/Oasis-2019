@@ -37,6 +37,6 @@ class StallItemsAdapter(private val listener: StallItemsChildAdapter.OnAddClicke
     inner class ItemsViewHolder(view: View):RecyclerView.ViewHolder(view){
 
         val category: TextView = view.category
-        val items: RecyclerView = view.items
+        val items: RecyclerView = view.itemsRecycler
     }
 }

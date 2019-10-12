@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ class KindItemsViewModel(val walletRepository: WalletRepository):ViewModel() {
     init {
         walletRepository.fetchKindItems().subscribe({
             walletRepository.getKindItems().subscribe{
+                Log.d("check",it.toString())
                 items.asMut().postValue(it)
             }
         },{

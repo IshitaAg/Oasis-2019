@@ -48,32 +48,32 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         when(sdfDate.format(date.time)){
             "2019-10-19" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19")
+                eventsViewModel.getEventData("2019-10-19", null)
             }
 
             "2019-10-20" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-20")
-                eventsViewModel.getEventData("2019-10-20")
+                eventsViewModel.getEventData("2019-10-20", null)
             }
 
             "2019-10-21" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-21")
-                eventsViewModel.getEventData("2019-10-21")
+                eventsViewModel.getEventData("2019-10-21", null)
             }
 
             "2019-10-22" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-22")
-                eventsViewModel.getEventData("2019-10-22")
+                eventsViewModel.getEventData("2019-10-22", null)
             }
 
             "2019-10-23" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-23")
-                eventsViewModel.getEventData("2019-10-23")
+                eventsViewModel.getEventData("2019-10-23", null)
             }
 
             else -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19")
+                eventsViewModel.getEventData("2019-10-19", null)
             }
         }
 
@@ -138,7 +138,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.getEventData(day)
+        eventsViewModel.getEventData(day, null)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 

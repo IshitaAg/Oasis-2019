@@ -25,7 +25,6 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
         val event: TextView = view.eventName
         val description: TextView = view.eventDesc
-        val organiser: TextView = view.eventOrg
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
         val markFav: ImageView = view.markFav
@@ -45,8 +44,8 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
 
         holder.event.text = events[position].name
+        holder.event.isSelected = true
         holder.description.text = events[position].details
-        holder.organiser.text = events[position].duration
         holder.time.text = events[position].time
         holder.venue.text = events[position].venue
         if (events[position].isFav == 1){

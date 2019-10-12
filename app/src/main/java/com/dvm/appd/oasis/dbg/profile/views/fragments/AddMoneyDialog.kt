@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -13,6 +14,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModelFactory
 import kotlinx.android.synthetic.main.dia_wallet_add_money.*
@@ -56,6 +58,12 @@ class AddMoneyDialog : DialogFragment() {
         }
 
         rootView.addPaytm.setOnClickListener {
+            if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
+                AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("There won't be any possibility of refund, so please add money accordingly").setNegativeButton("OK") {dialog, which ->
+                    addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
+                    dialog.dismiss()
+                }.show()
+            }
             if(rootView.amount.text.toString().isBlank())
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
             else if(try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } > 10000) {

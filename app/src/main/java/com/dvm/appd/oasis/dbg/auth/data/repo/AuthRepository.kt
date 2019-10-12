@@ -34,6 +34,8 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         const val voted="VOTED"
         const val referralCode = "REFERRAL_CODE"
         const val referredBy = "REFERRED_BY"
+        const val payTmDisclaimerShown = "PAYTM_DISCLAIMER"
+
     }
 
     fun loginOutstee(username: String, password: String): Single<LoginState> {

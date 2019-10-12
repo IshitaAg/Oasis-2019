@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.di.AppModule
 import com.dvm.appd.oasis.dbg.notification.FirebaseMessagingService
 import com.dvm.appd.oasis.dbg.shared.NetworkChangeReciver
@@ -81,7 +82,6 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
         remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
-
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
         setupNotificationChannel()
         checkSMSREadPermissions()
@@ -196,21 +196,20 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     private fun checkForInvitation() {
-        if (sharedPreferences.getBoolean("firstTime", true)) {
-            // sharedPreferences.edit().putBoolean("firstTime", false).apply()
-            FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener {
-                Log.d("Main Activity", "OnSuccess of dynamic link")
-                var deepLink: Uri? = null
-                if (it != null) {
-                    deepLink = it.link
-                    Toast.makeText(this, deepLink.getQueryParameter("invitedBy"), Toast.LENGTH_LONG).show()
-                    Log.d("Main Activity", "Deep link received = $deepLink")
-                } else {
-                    Log.e("Main Activity", "Empty link found")
-                }
-            }.addOnFailureListener {
-                Log.e("Main Activity", "Failed to get Link = $it")
+        // sharedPreferences.edit().putBoolean("firstTime", false).apply()
+        FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener {
+            Log.d("Main Activity", "OnSuccess of dynamic link")
+            var deepLink: Uri? = null
+            if (it != null) {
+                deepLink = it.link
+                Toast.makeText(this, deepLink.getQueryParameter("invitedBy"), Toast.LENGTH_LONG).show()
+                sharedPreferences.edit().putString(AuthRepository.Keys.referredBy, deepLink.getQueryParameter("invitedBy")).apply()
+                Log.d("Main Activity", "Deep link received = $deepLink")
+            } else {
+                Log.e("Main Activity", "Empty link found")
             }
+        }.addOnFailureListener {
+            Log.e("Main Activity", "Failed to get Link = $it")
         }
     }
 

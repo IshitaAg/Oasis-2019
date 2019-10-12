@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,10 +21,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -76,6 +80,30 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                 rootView.balance.text = context!!.resources.getString(R.string.rupee)+"0"
             }
         })
+
+        rootView.imageView7.setOnClickListener {
+            var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
+            if(code != "") {
+                FirebaseDynamicLinks.getInstance().createDynamicLink()
+                    .setLink(Uri.parse("https://google.com?invitedby="))
+                    .setDomainUriPrefix("https://app.bits-oasis.org")
+                    .setAndroidParameters(DynamicLink.AndroidParameters.Builder("v2015.oasis.pilani.bits.com.home").setMinimumVersion(18).build())
+                    .buildShortDynamicLink().addOnSuccessListener {
+                        Toast.makeText(context, "Link = ${it.shortLink}", Toast.LENGTH_LONG).show()
+                        var shareBody = it.shortLink.toString()
+                        Log.d("Profile Frag", "Message Body = ${shareBody}")
+                        var sharingIntent = Intent(Intent.ACTION_SEND)
+                        sharingIntent.type = "text/plain"
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Referral Code for the Official Oasis App")
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                        startActivity(Intent.createChooser(sharingIntent, "Share"))
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
+                    }
+            } else {
+                Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
+            }
+        }
 
         rootView.qrCode.setOnClickListener {
             QrDialog().show(childFragmentManager,"QR_DIALOG")

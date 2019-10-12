@@ -12,6 +12,8 @@ data class AuthPojo(
     val email: String,
     val phone: String,
     @SerializedName("qr_code")
-    val qrCode: String
+    val qrCode: String,
+    @SerializedName("referral_code")
+    val referralCode: String
 
 )

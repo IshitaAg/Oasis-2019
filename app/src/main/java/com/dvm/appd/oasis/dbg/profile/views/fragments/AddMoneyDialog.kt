@@ -45,10 +45,28 @@ class AddMoneyDialog : DialogFragment() {
                 Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT)
                     .show()
                 rootView.amount.text.clear()
+            } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
+                Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
+                rootView.amount.text.clear()
             } else {
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
                 loadingPBR.visibility = View.VISIBLE
                 it.isClickable = false
+            }
+        }
+
+        rootView.addPaytm.setOnClickListener {
+            if(rootView.amount.text.toString().isBlank())
+                Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
+            else if(try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } > 10000) {
+                Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT).show()
+                rootView.amount.text.clear()
+            } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
+                Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
+                rootView.amount.text.clear()
+            } else {
+                addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
+                dialog!!.dismiss()
             }
         }
 

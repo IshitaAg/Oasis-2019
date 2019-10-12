@@ -72,7 +72,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
-    def room_version = "2.1.0"
+    def room_version = "2.2.0"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
@@ -89,7 +89,7 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$lifecycle_version"
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
-    def nav_version = "2.2.0-alpha03"
+    def nav_version = "2.2.0-beta01"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -105,7 +105,7 @@ dependencies {
 
     implementation 'com.github.navasmdc:MaterialDesign:1.5@aar'
     implementation 'com.ogaclejapan.smarttablayout:library:1.2.1@aar'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta04'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0-beta05'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'

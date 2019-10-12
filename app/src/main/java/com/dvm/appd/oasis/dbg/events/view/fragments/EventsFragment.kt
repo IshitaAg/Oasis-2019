@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
 import com.labo.kaji.fragmentanimations.FlipAnimation
+import com.labo.kaji.fragmentanimations.MoveAnimation
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -155,7 +156,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
-    }
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
+    }*/
 }

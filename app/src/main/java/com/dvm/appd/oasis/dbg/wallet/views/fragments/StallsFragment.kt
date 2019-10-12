@@ -23,6 +23,7 @@ import android.view.animation.Animation
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.labo.kaji.fragmentanimations.FlipAnimation
+import com.labo.kaji.fragmentanimations.MoveAnimation
 
 
 class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
@@ -96,7 +97,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
         super.onResume()
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
-    }
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
+    }*/
 }

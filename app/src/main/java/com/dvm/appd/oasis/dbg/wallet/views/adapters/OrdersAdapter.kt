@@ -113,7 +113,7 @@ class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<O
         val orderId: TextView = view.orderId
         val price: TextView = view.price
         val view: View = view.view
-        val otp: TextView = view.otp
+        val otp: TextView = view.text_otp
         val acceptedMark: ImageView = view.acceptedMark
         val readyMark: ImageView = view.readyMark
         val finishedMark: ImageView = view.finishedMark

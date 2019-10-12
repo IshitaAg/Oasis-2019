@@ -6,6 +6,8 @@ import com.dvm.appd.oasis.dbg.di.auth.AuthComponent
 import com.dvm.appd.oasis.dbg.di.auth.AuthModule
 import com.dvm.appd.oasis.dbg.di.events.EventsComponent
 import com.dvm.appd.oasis.dbg.di.events.EventsModule
+import com.dvm.appd.oasis.dbg.di.more.MoreComponent
+import com.dvm.appd.oasis.dbg.di.more.MoreModule
 import com.dvm.appd.oasis.dbg.di.notification.NotificationComponent
 import com.dvm.appd.oasis.dbg.di.notification.NotificationModule
 import com.dvm.appd.oasis.dbg.di.profile.ProfileComponent
@@ -32,4 +34,6 @@ interface AppComponent {
     fun newSplashComponent(e:SplashModule):SplashComponent
 
     fun newNotificationComponent(n: NotificationModule): NotificationComponent
+
+    fun newMoreComponent(m:MoreModule):MoreComponent
 }

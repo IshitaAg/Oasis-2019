@@ -15,6 +15,7 @@ import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.ByteArrayOutputStream
+import java.security.Key
 
 class AuthRepository(val authService: AuthService, val sharedPreferences: SharedPreferences) {
 
@@ -30,6 +31,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         const val REGTOKEN = "REGTOKEN"
         const val TOPIC_SUBSCRIPTION = "TOPIC_SUBSCRIPTION"
         const val first_login = "FIRST_LOGIN"
+        const val voted="VOTED"
         const val referralCode = "REFERRAL_CODE"
         const val referredBy = "REFERRED_BY"
     }
@@ -73,13 +75,14 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         val qr = sharedPreferences.getString(Keys.qrCode, null)
         val bitsian = sharedPreferences.getBoolean(Keys.isBitsian, false)
         val firstLogin = sharedPreferences.getBoolean(Keys.first_login,false)
+        val voted = sharedPreferences.getBoolean(Keys.voted,false)
         val referralCode = sharedPreferences.getString(Keys.referralCode, "")
-        Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin,referralCode).toString())
-        if (listOf(name, jwt, qr).contains(null)) {
+        Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin).toString())
+        if (listOf(name, email, contact, jwt, qr).contains(null)) {
             setUser(null).subscribe()
             return Maybe.empty()
         }
-        return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin,referralCode))
+        return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin,voted,referralCode!!))
     }
 
     @SuppressLint("ApplySharedPref")
@@ -94,6 +97,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                 putString(Keys.qrCode, user?.qrCode)
                 putBoolean(Keys.isBitsian, user?.isBitsian?:false)
                 putBoolean(Keys.first_login,user?.firstLogin?:false)
+                putBoolean(Keys.voted,user?.voted?:false)
                 putString(Keys.referralCode,user?.referralCode?:"")
             }.commit()
         }
@@ -131,7 +135,8 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                                 phone = response.body()!!.phone,
                                 qrCode = response.body()!!.qrCode,
                                 isBitsian = bitsian,
-                                firstLogin = true,
+                                firstLogin = firstLogin,
+                                voted = false,
                                 referralCode = response.body()!!.referralCode
                             )
                         ).subscribe()

@@ -139,8 +139,8 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
 
 
-        val latitude = ""
-        val longitude = ""
+        val latitude = "28.3633546"
+        val longitude = "75.5871163"
         val uri = Uri.parse("google.navigation:q=$latitude,$longitude&mode=w")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {

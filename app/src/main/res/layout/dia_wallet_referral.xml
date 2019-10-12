@@ -11,7 +11,7 @@
 
 
     <EditText
-            android:id="@+id/amount"
+            android:id="@+id/referralCode"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -19,56 +19,26 @@
             android:layout_marginEnd="32dp"
             android:background="#806F6F6F"
             android:ems="10"
-            android:textColor="@color/colorWhite"
+            android:textAlignment="center"
+            android:inputType="none"
+            android:textIsSelectable="true"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:hint="Amount"
-            android:inputType="number"
             android:padding="8dp"
-            android:textColorHint="@color/colorWhite"
+            android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <ProgressBar
-            android:id="@+id/loadingPBR"
+            android:id="@+id/loadingReferral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateTint="#4F32D7"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/addBtn"
+            app:layout_constraintBottom_toBottomOf="@+id/shareReferral"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/addBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/shape_rectangle_rounded_8dp"
-            android:backgroundTint="#6C58B9"
-            android:elevation="2dp"
-            app:layout_constraintBottom_toBottomOf="@+id/addPaytm"
-            app:layout_constraintEnd_toEndOf="@+id/amount"
-            app:layout_constraintStart_toStartOf="@+id/amount"
-            app:layout_constraintTop_toBottomOf="@+id/amount"
-            app:mrl_rippleDelayClick="true"
-            app:mrl_rippleHover="true"
-            app:mrl_rippleOverlay="true">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/shellypalmer_circular_std_book"
-                android:padding="8dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:text="Add money(SWD)"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-    </com.balysv.materialripple.MaterialRippleLayout>
 
     <TextView
             android:id="@+id/textView10"
@@ -78,7 +48,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Add Money (Stalls)"
+            android:text="Refer and Earn"
             android:textColor="@color/colorWhite"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -87,15 +57,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     <com.balysv.materialripple.MaterialRippleLayout
-            android:id="@+id/addPaytm"
+            android:id="@+id/shareReferral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:backgroundTint="#6C58B9"
             android:background="@drawable/shape_rectangle_rounded_8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/amount"
-            app:layout_constraintStart_toStartOf="@+id/amount"
-            app:layout_constraintTop_toBottomOf="@+id/amount"
+            app:layout_constraintEnd_toEndOf="@+id/referralCode"
+            app:layout_constraintStart_toStartOf="@+id/referralCode"
+            app:layout_constraintTop_toBottomOf="@+id/referralCode"
             app:mrl_rippleDelayClick="true"
             app:mrl_rippleHover="true"
             app:mrl_rippleOverlay="true">
@@ -103,14 +74,13 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_paytm"
-                android:drawablePadding="8dp"
                 android:fontFamily="@font/shellypalmer_circular_std_book"
                 android:padding="8dp"
-                android:text="Add via Paytm"
+                android:text="Share Referral Code"
                 android:textAlignment="center"
-                android:textColor="#31365e"
-                android:textSize="18sp" />
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
     </com.balysv.materialripple.MaterialRippleLayout>
 

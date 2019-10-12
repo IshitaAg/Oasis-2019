@@ -147,7 +147,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     @SuppressLint("CheckResult")
     private fun sendNotification(message: Notification, sport: String) {
-        /*val pendingIntent = NavDeepLinkBuilder(this.baseContext)
+        val pendingIntent = NavDeepLinkBuilder(this.baseContext)
             .setGraph(R.navigation.navigation_graph)
             .setComponentName(MainActivity::class.java)
             .setDestination(R.id.action_events)
@@ -157,7 +157,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
             if (sport != "Not Available") {
                 for(s in it) {
-                    if (sport == s) {
+                    if (sport == s.eventId.toString()) {
                         Log.d("Notification", "Found matching sport = $s")
                         val notificationBuilder = NotificationCompat.Builder(this, message.channel)
                             .setSmallIcon(R.drawable.ic_launcher_background)
@@ -175,7 +175,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             }
         } .subscribe({},{
             Log.e("Notification", "Error in Displaying notification = ${it.toString()}")
-        })*/
+        })
     }
 
     private fun sendNotification(message: Notification, orderId: String, otp: String) {

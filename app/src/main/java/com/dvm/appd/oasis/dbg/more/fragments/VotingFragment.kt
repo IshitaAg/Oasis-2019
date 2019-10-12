@@ -34,6 +34,8 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         }
         rootView.votingRecycler.adapter = ComediansAdapter(this)
         rootView.voteBtn.setOnClickListener {
+            rootView.progressBar3.visibility = View.VISIBLE
+            rootView.voteBtn.isClickable=false
             votingViewModel.vote(comedianName)
         }
         votingViewModel.comedians.observe(this, Observer {
@@ -48,18 +50,24 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         votingViewModel.voteState.observe(this, Observer {
             when(it!!){
                 "Voted" -> {
+                    rootView.progressBar3.visibility = View.GONE
                     rootView.textVote.visibility = View.VISIBLE
+                    rootView.voteBtn.visibility= View.GONE
                     rootView.votingRecycler.visibility =View.INVISIBLE
                     rootView.textVote.text= "Voted Successfully!"
                 }
                 "Enabled" -> {
+                    rootView.progressBar3.visibility = View.GONE
                     rootView.textVote.visibility = View.INVISIBLE
+                    rootView.voteBtn.visibility= View.VISIBLE
                     rootView.votingRecycler.visibility =View.VISIBLE
                 }
                 "Closed" -> {
+                    rootView.progressBar3.visibility = View.GONE
                     rootView.textVote.visibility = View.VISIBLE
+                    rootView.voteBtn.visibility= View.GONE
                     rootView.votingRecycler.visibility =View.INVISIBLE
-                    rootView.textVote.text= "Voted is closed!"
+                    rootView.textVote.text= "Voting is closed!"
                 }
             }
         })

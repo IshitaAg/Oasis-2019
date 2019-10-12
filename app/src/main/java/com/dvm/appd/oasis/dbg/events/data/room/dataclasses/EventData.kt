@@ -23,8 +23,8 @@ data class EventData(
     @ColumnInfo(name = "time")
     val time: String,
 
-    @ColumnInfo(name = "date_time")
-    val dateTime: String,
+    @ColumnInfo(name = "date")
+    val date: String,
 
     @ColumnInfo(name = "duration")
     val duration: Int,

@@ -81,7 +81,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
     private fun EventItemPojo.toEventData(): EventData{
 
-        return EventData(id, name, about, rules, time, dateTime, duration, image, details)
+        return EventData(id, name, about, rules, time.substring(0, 5), dateTime.substring(0, 10), duration, image, details)
     }
 
     private fun EventItemPojo.toCategoryData(): List<CategoryData>{
@@ -117,9 +117,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         }
     }
 
-    fun getEventsData(): Flowable<List<ModifiedEventsData>>{
+    fun getEventsDayData(date: String): Flowable<List<ModifiedEventsData>>{
 
-        return eventsDao.getAllEvents().subscribeOn(Schedulers.io())
+        return eventsDao.getAllEventsByDate(date).subscribeOn(Schedulers.io())
             .flatMap {
 
                 var events: MutableList<ModifiedEventsData> = arrayListOf()
@@ -133,12 +133,12 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
                     if (index != it.lastIndex && it[index].eventId != it[index+1].eventId){
 
-                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.date, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
                         categories = arrayListOf()
                         venues = arrayListOf()
                     }
                     else if (index == it.lastIndex){
-                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.date, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
                         categories = arrayListOf()
                         venues = arrayListOf()
                     }
@@ -147,6 +147,11 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                return@flatMap Flowable.just(events)
             }
     }
+
+    fun getEventsDates(): Flowable<List<String>>{
+        return eventsDao.getEventsDates().subscribeOn(Schedulers.io())
+    }
+
    fun isVotingEnabled(): Flowable<Boolean> {
         return comediansVoting.getStatus()
     }

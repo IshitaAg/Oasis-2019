@@ -6,15 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
-import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
-import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ChildEventsData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
 import io.reactivex.disposables.Disposable
 
 @SuppressLint("CheckResult")
 class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
-    var miscEvents: LiveData<List<MiscEventsData>> = MutableLiveData()
     var eventDays: LiveData<List<String>> = MutableLiveData()
     var daySelected: LiveData<String> = MutableLiveData()
     var events: LiveData<List<ModifiedEventsData>> = MutableLiveData()
@@ -24,26 +21,28 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
     init {
 
-        eventsRepository.miscEventDays()
+        eventsRepository.getEventsDates()
             .subscribe({
-                Log.d("MiscEventVM", it.toString())
                 (eventDays as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                Log.d("MiscEventVM", it.toString())
                 (error as MutableLiveData).postValue(it.message)
             })
 
-        eventsRepository.getEventsData()
+    }
+
+    fun getDataByDate(date: String){
+        eventsRepository.getEventsDayData(date)
             .subscribe({
                 Log.d("NewEvents", "RoomSuccess")
+                (progressBarMark as MutableLiveData).postValue(1)
                 (events as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
                 Log.d("NewEvents", "Room $it")
+                (progressBarMark as MutableLiveData).postValue(1)
                 (error as MutableLiveData).postValue(it.message)
             })
-
     }
 
     fun markEventFav(eventId: Int, favMark: Int){
@@ -57,20 +56,6 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
             (progressBarMark as MutableLiveData).postValue(1)
             (error as MutableLiveData).postValue(it.message)
         })
-    }
-
-    fun getMiscEventsData(day: String){
-        currentSubscription = eventsRepository.getDayMiscEvents(day)
-            .subscribe({
-                (progressBarMark as MutableLiveData).postValue(1)
-                Log.d("MiscEventVM", it.toString())
-                (miscEvents as MutableLiveData).postValue(it)
-                (error as MutableLiveData).postValue(null)
-            },{
-                Log.d("MiscEventVM", it.toString())
-                (progressBarMark as MutableLiveData).postValue(1)
-                (error as MutableLiveData).postValue(it.message)
-            })
     }
 
     fun refreshData(){

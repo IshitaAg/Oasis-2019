@@ -110,7 +110,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="200"
             android:textAlignment="textStart"
-            android:textColor="#4CA8F5"
+            android:textColor="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/discount"

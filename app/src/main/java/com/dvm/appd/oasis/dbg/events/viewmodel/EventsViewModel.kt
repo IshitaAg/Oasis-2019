@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.events.viewmodel
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ChildEventsData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
 import io.reactivex.disposables.Disposable
 
+@SuppressLint("CheckResult")
 class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
     var miscEvents: LiveData<List<MiscEventsData>> = MutableLiveData()
@@ -44,19 +46,6 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
 
     }
 
-    fun markEventFavourite(eventId: String, favouriteMark: Int){
-        eventsRepository.updateMiscFavourite(eventId, favouriteMark).subscribe({
-            (progressBarMark as MutableLiveData).postValue(1)
-            if (favouriteMark == 1)
-                (error as MutableLiveData).postValue("You will now receive notifications for this event")
-            else if (favouriteMark == 0)
-                (error as MutableLiveData).postValue("You will no longer receive notifications for this event")
-        },{
-            (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
-        })
-    }
-
     fun markEventFav(eventId: Int, favMark: Int){
         eventsRepository.updateFavourite(eventId, favMark).subscribe({
             (progressBarMark as MutableLiveData).postValue(1)
@@ -87,8 +76,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
     fun refreshData(){
         eventsRepository.updateEventsData().subscribe({
             (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(it.message)
         })
     }
 }

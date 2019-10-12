@@ -9,33 +9,6 @@ import io.reactivex.Single
 @Dao
 interface EventsDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertMiscEventData(events: List<MiscEventsData>): Completable
-
-    @Query("DELETE FROM misc_table")
-    fun deleteAllMiscEvents()
-
-    @Transaction
-    fun updateAllMiscEvents(events: List<MiscEventsData>){
-        deleteAllMiscEvents()
-        insertMiscEventData(events)
-    }
-
-    @Query("UPDATE misc_table SET favourite = :mark WHERE event_id = :id")
-    fun updateMiscFavourite(id: String, mark: Int): Completable
-
-    @Query("UPDATE misc_table SET event_name = :name, event_venue = :venue, event_time = :time, event_description = :description, event_day = :day, organiser = :organiser WHERE event_id = :id")
-    fun updateMiscData(id: String, name: String, venue: String, time: String, description: String, day: String, organiser: String): Completable
-
-    @Query("DELETE FROM misc_table WHERE event_id = :id")
-    fun deleteMiscEvent(id: String): Completable
-
-    @Query("SELECT * FROM misc_table WHERE event_day = :day OR event_day = 'Day 6' ORDER BY event_day, event_time")
-    fun getDayMiscEvents(day: String): Flowable<List<MiscEventsData>>
-
-    @Query("SELECT DISTINCT event_day FROM misc_table WHERE event_day != 'Day 6' ORDER BY event_day")
-    fun getMiscDays(): Flowable<List<String>>
-
     @Query("SELECT name FROM events_data WHERE event_id = 1 UNION SELECT event_name FROM misc_table WHERE favourite = 1")
     fun getAllFavourites(): Single<List<String>>
 

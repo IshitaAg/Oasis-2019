@@ -32,8 +32,6 @@ import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.labo.kaji.fragmentanimations.FlipAnimation
-import com.labo.kaji.fragmentanimations.MoveAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -171,7 +169,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     fun String.generateQr(): Bitmap {
-        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400)
+        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400, com.google.common.collect.ImmutableMap.of(com.google.zxing.EncodeHintType.MARGIN,0))
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 

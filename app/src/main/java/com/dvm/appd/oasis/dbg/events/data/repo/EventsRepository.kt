@@ -309,10 +309,13 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     }
 
     fun voteForComedian(name:String):Completable{
-        return Completable.fromAction{
+        return comediansVoting.vote(name).doOnComplete {
             sharedPreferences.edit().putBoolean(AuthRepository.Keys.voted,true).apply()
-            comediansVoting.vote(name)
+        }.doOnError {
+            Log.d("checke",it.toString())
         }
+
+
 
     }
 }

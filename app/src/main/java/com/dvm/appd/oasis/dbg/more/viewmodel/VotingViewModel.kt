@@ -43,7 +43,7 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
 
    fun vote(name:String){
        eventsRepository.voteForComedian(name).subscribe({
-
+            voteState.asMut().postValue("Voted")
        },{
            toast.asMut().postValue(it.toString())
        })

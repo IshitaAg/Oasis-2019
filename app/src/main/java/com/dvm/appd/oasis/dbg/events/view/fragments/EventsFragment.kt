@@ -11,10 +11,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
@@ -38,38 +40,38 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
         val view = inflater.inflate(R.layout.fra_misc_events, container, false)
 
-        val sdf = SimpleDateFormat("dd MM yyyy")
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
         val c = Calendar.getInstance()
 
         when(sdf.format(c.time)){
-            "19 10 2019" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 0")
-                eventsViewModel.getMiscEventsData("Day 0")
+            "2019-10-19" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
+                eventsViewModel.getDataByDate("2019-10-19")
             }
 
-            "20 10 2019" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 1")
-                eventsViewModel.getMiscEventsData("Day 1")
+            "2019-10-20" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-20")
+                eventsViewModel.getDataByDate("2019-10-20")
             }
 
-            "21 10 2019" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 2")
-                eventsViewModel.getMiscEventsData("Day 2")
+            "2019-10-21" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-21")
+                eventsViewModel.getDataByDate("2019-10-21")
             }
 
-            "22 10 2019" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 3")
-                eventsViewModel.getMiscEventsData("Day 3")
+            "2019-10-22" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-22")
+                eventsViewModel.getDataByDate("2019-10-22")
             }
 
-            "23 10 2019" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 4")
-                eventsViewModel.getMiscEventsData("Day 4")
+            "2019-10-23" -> {
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-23")
+                eventsViewModel.getDataByDate("2019-10-23")
             }
 
             else -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("Day 0")
-                eventsViewModel.getMiscEventsData("Day 0")
+                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
+                eventsViewModel.getDataByDate("2019-10-19")
             }
         }
 
@@ -78,7 +80,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         view.dayRecycler.adapter = EventsDayAdapter(this)
         eventsViewModel.eventDays.observe(this, Observer {
             Log.d("MiscEventsFrag", "Observed")
-            (view.dayRecycler.adapter as EventsDayAdapter).miscDays = it
+            (view.dayRecycler.adapter as EventsDayAdapter).days = it
             (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
         })
 
@@ -132,7 +134,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
         eventsViewModel.currentSubscription.dispose()
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.getMiscEventsData(day)
+        eventsViewModel.getDataByDate(day)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 
@@ -156,7 +158,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     }
 
-    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
-    }*/
+    override fun showAboutRules(about: String, rules: String) {
+
+        val bundle = bundleOf("about" to about, "rules" to rules)
+        view!!.findNavController().navigate(R.id.action_action_events_to_event_data, bundle)
+    }
 }

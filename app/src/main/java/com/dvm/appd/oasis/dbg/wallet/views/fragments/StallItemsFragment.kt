@@ -51,6 +51,7 @@ class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListen
 
             if (it.sumBy {it1 -> it1.second.sumBy {it2 -> it2.quantity * it2.currentPrice}} != 0){
                 rootView.stallOrderView.isVisible = true
+                rootView.imageView5.isVisible = true
                 rootView.viewCart.text = "View Cart"
                 rootView.totalPrice.text = "₹ ${it.sumBy {it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.currentPrice}}}"
                 rootView.itemCount.text = "${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity }}} items"
@@ -60,6 +61,7 @@ class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListen
                 rootView.itemCount.text = ""
                 rootView.viewCart.text = ""
                 rootView.stallOrderView.isVisible = false
+                rootView.imageView5.isVisible = false
             }
         })
 

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.adapter_misc_day.view.*
 
 class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<EventsDayAdapter.EventsDayViewHolder>(){
 
-    var miscDays: List<String> = emptyList()
+    var days: List<String> = emptyList()
     var daySelected: String = ""
 
     interface OnDaySelected{
@@ -34,26 +34,24 @@ class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapte
         return EventsDayViewHolder(view)
     }
 
-    override fun getItemCount(): Int = miscDays.size
+    override fun getItemCount(): Int = days.size
 
     override fun onBindViewHolder(holder: EventsDayViewHolder, position: Int) {
 
-        holder.day.text = miscDays[position]
+        holder.day.text = "Day ${position}"
 
-        if (miscDays[position] == daySelected){
-            holder.day.setTextColor(Color.rgb(104, 81, 218))
+        if (days[position] == daySelected){
             holder.day.setTypeface(null, Typeface.BOLD)
             holder.underline.isVisible = true
             holder.underline.setBackgroundResource(R.color.white)
         }
         else{
-            holder.day.setTextColor(Color.rgb(137, 134, 134))
             holder.day.setTypeface(null, Typeface.NORMAL)
             holder.underline.isVisible = false
         }
 
         holder.day.setOnClickListener {
-            listener.daySelected(miscDays[position], position)
+            listener.daySelected(days[position], position)
         }
     }
 }

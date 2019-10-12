@@ -35,6 +35,9 @@
                 app:destination="@id/action_more"
                 app:enterAnim="@anim/fade_in"
                 app:exitAnim="@anim/fade_in" />
+        <action
+                android:id="@+id/action_action_events_to_event_data"
+                app:destination="@id/eventDataDialog"/>
     </fragment>
 
     <fragment
@@ -150,6 +153,9 @@
     <dialog android:id="@+id/buyTicketDialog"
             android:name="com.dvm.appd.oasis.dbg.profile.views.fragments.TicketDialog"
             android:label="BuyTicketsDialog"/>
+    <dialog android:id="@+id/eventDataDialog"
+            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventDialog"
+            android:label="EventDialog"/>
 
     <fragment
             android:id="@+id/notificationFragment"

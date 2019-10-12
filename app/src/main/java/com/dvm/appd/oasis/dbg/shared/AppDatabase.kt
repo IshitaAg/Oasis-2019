@@ -13,10 +13,10 @@ import com.dvm.appd.oasis.dbg.notification.NotificationDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.WalletDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
 
-@Database(entities = [StallData::class,StallItemsData::class, MiscEventsData::class,
-    OrderItemsData::class, OrderData::class, CartData::class, QuestionData::class,
-    OptionData::class,  Notification::class, FavEvents::class, TicketsData::class,
-    UserShows::class, TicketsCart::class, PlayerRankingResponse::class, EventData::class,
+@Database(entities = [StallData::class,StallItemsData::class, OrderItemsData::class,
+    OrderData::class, CartData::class, QuestionData::class, OptionData::class,
+    Notification::class, FavEvents::class, TicketsData::class, UserShows::class,
+    TicketsCart::class, PlayerRankingResponse::class, EventData::class,
     CategoryData::class, VenueData::class],version = 2)
 abstract class AppDatabase : RoomDatabase() {
 

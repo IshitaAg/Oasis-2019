@@ -12,7 +12,7 @@ data class ChildEventsData(
 
     val time: String,
 
-    val dateTime: String,
+    val date: String,
 
     val duration: String,
 

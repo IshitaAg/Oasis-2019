@@ -94,7 +94,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         })
 
         rootView.imageView7.setOnClickListener {
-            var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
+            /*var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
             if(code != "") {
                 FirebaseDynamicLinks.getInstance().createDynamicLink()
                     .setLink(Uri.parse("https://google.com/?invitedby=$code"))
@@ -114,7 +114,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                     }
             } else {
                 Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
-            }
+            }*/
+            ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")
         }
 
         rootView.qrCode.setOnClickListener {

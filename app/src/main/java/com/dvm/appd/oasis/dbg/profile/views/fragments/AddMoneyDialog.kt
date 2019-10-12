@@ -59,7 +59,7 @@ class AddMoneyDialog : DialogFragment() {
 
         rootView.addPaytm.setOnClickListener {
             if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
-                AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("There won't be any possibility of refund, so please add money accordingly").setNegativeButton("OK") {dialog, which ->
+                AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
                     addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
                     dialog.dismiss()
                 }.show()

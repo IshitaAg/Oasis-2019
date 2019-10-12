@@ -12,7 +12,7 @@ data class ModifiedEventsData(
 
     val time: String,
 
-    val dateTime: String,
+    val date: String,
 
     val duration: String,
 
@@ -20,9 +20,7 @@ data class ModifiedEventsData(
 
     val details: String,
 
-    val venue: List<String>,
-
-    val category: List<String>,
+    val venue: String,
 
     val isFav: Int
 )

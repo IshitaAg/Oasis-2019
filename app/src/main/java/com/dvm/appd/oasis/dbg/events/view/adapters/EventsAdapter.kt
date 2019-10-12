@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
-import com.jackandphantom.androidlikebutton.AndroidLikeButton
 import kotlinx.android.synthetic.main.adapter_misc_events.view.*
 import java.lang.Exception
 
@@ -26,10 +25,9 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
         val event: TextView = view.eventName
         val description: TextView = view.eventDesc
-        val organiser: TextView = view.eventOrg
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
-        val markFav: AndroidLikeButton = view.markFav
+        val markFav: ImageView = view.markFav
         val directions: ImageView = view.directions
         val view: View = view.view
     }
@@ -46,14 +44,14 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
 
         holder.event.text = events[position].name
+        holder.event.isSelected = true
         holder.description.text = events[position].details
-        holder.organiser.text = events[position].duration
         holder.time.text = events[position].time
-        holder.venue.text = events[position].venue.first()
+        holder.venue.text = events[position].venue
         if (events[position].isFav == 1){
-            holder.markFav.setLikeIcon(R.drawable.ic_is_favourite)
+            holder.markFav.setBackgroundResource(R.drawable.ic_is_favourite)
         }else if (events[position].isFav == 0){
-            holder.markFav.setUnlikeIcon(R.drawable.ic_not_favourite)
+            holder.markFav.setBackgroundColor(R.drawable.ic_not_favourite)
         }
 
         holder.markFav.setOnClickListener {
@@ -67,20 +65,11 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         }
 
         holder.directions.setOnClickListener {
-            listener.getDirections(events[position].venue.first())
+            listener.getDirections(events[position].venue)
         }
 
         holder.view.setOnClickListener {
             listener.showAboutRules(events[position].about, events[position].rules)
-        }
-    }
-
-    private fun getTime(datetime: String): String {
-
-        return try {
-            datetime.substring(11, 16)
-        }catch (e: Exception){
-            datetime
         }
     }
 

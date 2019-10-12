@@ -139,7 +139,7 @@
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toTopOf="@+id/status"
             app:layout_constraintEnd_toEndOf="@+id/view"
-            app:srcCompat="@drawable/ic_circle_fade" />
+            app:srcCompat="@drawable/ic_circle_faded" />
 
     <ImageView
             android:id="@+id/readyMark"
@@ -149,7 +149,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/finishedMark"
             app:layout_constraintEnd_toStartOf="@+id/finishedMark"
             app:layout_constraintTop_toTopOf="@+id/finishedMark"
-            app:srcCompat="@drawable/ic_circle_fade" />
+            app:srcCompat="@drawable/ic_circle_faded" />
 
     <ImageView
             android:id="@+id/acceptedMark"
@@ -159,6 +159,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/readyMark"
             app:layout_constraintEnd_toStartOf="@+id/readyMark"
             app:layout_constraintTop_toTopOf="@+id/readyMark"
-            app:srcCompat="@drawable/ic_circle_fade" />
+            app:srcCompat="@drawable/ic_circle_faded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

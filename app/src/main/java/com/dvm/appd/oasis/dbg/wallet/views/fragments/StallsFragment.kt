@@ -82,6 +82,9 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             stallsViewModel.refreshData()
         }
 
+        rootview.kindStore.setOnClickListener {
+
+        }
         return rootview
     }
 

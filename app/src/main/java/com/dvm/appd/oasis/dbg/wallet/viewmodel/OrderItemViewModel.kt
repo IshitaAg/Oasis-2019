@@ -10,6 +10,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedOrdersData
 class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: Int): ViewModel() {
 
     val order: LiveData<ModifiedOrdersData> = MutableLiveData()
+    val progressBarMark: LiveData<Int> = MutableLiveData(1)
     var error: LiveData<String> = MutableLiveData(null)
 
     init {
@@ -28,10 +29,22 @@ class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: In
     fun rateOrder(shell: Int, rating: Int) {
         walletRepository.rateOrder(orderId, shell, rating)
             .subscribe({
+                (progressBarMark as MutableLiveData).postValue(1)
                 (error as MutableLiveData).postValue(null)
             },{
+                (progressBarMark as MutableLiveData).postValue(1)
                 (error as MutableLiveData).postValue(it.message)
             })
+    }
+
+    fun updateOtpSeen(orderId: Int){
+        walletRepository.updateOtpSeen(orderId).subscribe({
+            (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(null)
+        },{
+            (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(it.message)
+        })
     }
 
 }

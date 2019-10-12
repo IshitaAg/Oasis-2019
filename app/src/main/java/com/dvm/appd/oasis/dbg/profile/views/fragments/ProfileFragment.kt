@@ -36,8 +36,6 @@ import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.labo.kaji.fragmentanimations.FlipAnimation
-import com.labo.kaji.fragmentanimations.MoveAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -73,8 +71,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-        //(activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_profile)
 
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
@@ -145,6 +141,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                     startActivity(Intent(context!!, AuthActivity::class.java))
                 }
                 UiState.ShowIdle -> {
+                    rootView.swipeProfile.isRefreshing = false
                     rootView.loading.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
@@ -179,11 +176,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             }
         })
 
+        rootView.swipeProfile.setOnRefreshListener {
+            (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
+            profileViewModel.refreshTicketsData()
+            profileViewModel.refreshUserShows()
+        }
+
         return rootView
     }
 
     fun String.generateQr(): Bitmap {
-        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 500, 500)
+        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400, com.google.common.collect.ImmutableMap.of(com.google.zxing.EncodeHintType.MARGIN,0))
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 

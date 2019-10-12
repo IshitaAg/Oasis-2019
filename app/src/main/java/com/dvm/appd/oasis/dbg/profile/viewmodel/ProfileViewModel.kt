@@ -87,16 +87,20 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
 
     fun refreshUserShows(){
         walletRepository.updateUserTickets().subscribe({
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(null)
         },{
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(it.message)
         })
     }
 
     fun refreshTicketsData(){
         walletRepository.getTicketInfo().subscribe({
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(null)
         },{
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(it.message)
         })
     }

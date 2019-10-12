@@ -33,5 +33,8 @@ data class EventData(
     val image_url: String,
 
     @ColumnInfo(name = "details")
-    val details: String
+    val details: String,
+
+    @ColumnInfo(name = "venue")
+    val venues: String
 )

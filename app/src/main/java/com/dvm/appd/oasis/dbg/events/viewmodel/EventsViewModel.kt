@@ -15,9 +15,9 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
     var eventDays: LiveData<List<String>> = MutableLiveData()
     var daySelected: LiveData<String> = MutableLiveData()
     var events: LiveData<List<ModifiedEventsData>> = MutableLiveData()
+    var categories: LiveData<List<String>> = MutableLiveData()
     var error: LiveData<String> = MutableLiveData(null)
     var progressBarMark: LiveData<Int> = MutableLiveData(1)
-    lateinit var currentSubscription: Disposable
 
     init {
 
@@ -29,20 +29,45 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
                 (error as MutableLiveData).postValue(it.message)
             })
 
-    }
-
-    fun getDataByDate(date: String){
-        eventsRepository.getEventsDayData(date)
+        eventsRepository.getCategories()
             .subscribe({
-                Log.d("NewEvents", "RoomSuccess")
-                (progressBarMark as MutableLiveData).postValue(1)
-                (events as MutableLiveData).postValue(it)
+                (categories as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                Log.d("NewEvents", "Room $it")
-                (progressBarMark as MutableLiveData).postValue(1)
                 (error as MutableLiveData).postValue(it.message)
             })
+
+    }
+
+    fun getEventData(date: String, categories: List<String>?){
+
+        if (categories == null){
+            eventsRepository.getEventsDayData(date)
+                .subscribe({
+                    Log.d("NewEvents", "RoomSuccess")
+                    (progressBarMark as MutableLiveData).postValue(1)
+                    (events as MutableLiveData).postValue(it)
+                    (error as MutableLiveData).postValue(null)
+                },{
+                    Log.d("NewEvents", "Room $it")
+                    (progressBarMark as MutableLiveData).postValue(1)
+                    (error as MutableLiveData).postValue(it.message)
+                })
+        }
+        else {
+            eventsRepository.getEventsDayCategoryData(date, categories)
+                .subscribe({
+                    Log.d("NewEvents", "RoomSuccess")
+                    (progressBarMark as MutableLiveData).postValue(1)
+                    (events as MutableLiveData).postValue(it)
+                    (error as MutableLiveData).postValue(null)
+                },{
+                    Log.d("NewEvents", "Room $it")
+                    (progressBarMark as MutableLiveData).postValue(1)
+                    (error as MutableLiveData).postValue(it.message)
+                })
+        }
+
     }
 
     fun markEventFav(eventId: Int, favMark: Int){

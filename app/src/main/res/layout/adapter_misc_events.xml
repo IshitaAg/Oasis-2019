@@ -113,15 +113,12 @@
             app:layout_constraintTop_toBottomOf="@+id/directions"
             tools:text="GYM G" />
 
-    <com.jackandphantom.androidlikebutton.AndroidLikeButton
+    <ImageView
             android:id="@+id/markFav"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-
-            app:circle_startColor="@color/colorWhite"
-            app:circle_endColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="@id/view"
             app:layout_constraintTop_toTopOf="@id/view" />
 
@@ -134,7 +131,5 @@
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/eventName"
             app:srcCompat="@drawable/ic_map" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-<!--        app:like_icon="@drawable/ic_is_favourite"-->
-<!--        app:unlike_icon="@drawable/ic_not_favourite"-->
-<!--        app:liked="@drawable/ic_is_favourite"-->

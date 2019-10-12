@@ -132,6 +132,4 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation "androidx.work:work-rxjava2:$work_version"
 
-    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
-
 }

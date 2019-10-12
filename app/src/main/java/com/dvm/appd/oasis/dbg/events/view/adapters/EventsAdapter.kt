@@ -18,6 +18,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
     interface OnMarkFavouriteClicked{
         fun updateIsFavourite(eventId: Int, favouriteMark: Int)
+        fun getDirections(venue: String)
     }
 
     inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -28,6 +29,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
         val markFav: ImageView = view.markFav
+        val directions: ImageView = view.directions
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
@@ -60,6 +62,10 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
             else if (events[position].isFav == 0){
                 listener.updateIsFavourite(events[position].eventId, 1)
             }
+        }
+
+        holder.directions.setOnClickListener {
+            listener.getDirections(events[position].venue.first())
         }
     }
 

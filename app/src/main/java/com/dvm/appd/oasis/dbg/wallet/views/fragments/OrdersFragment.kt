@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.views.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -63,8 +64,20 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             })
 
         view.order.setOnClickListener {
-            (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
-            ordersViewModel.placeOrder()
+
+            val alertDialogBuilder = AlertDialog.Builder(context)
+            alertDialogBuilder.setMessage("Place Order?")
+                .setPositiveButton("OK") { _, _ ->
+                    (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
+                    ordersViewModel.placeOrder()
+                }
+                .setNegativeButton("Cancel") {dialog, _ ->
+                    dialog.dismiss()
+                }
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+
         }
 
         ordersViewModel.progressBarMark.observe(this, Observer {

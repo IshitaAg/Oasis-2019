@@ -50,4 +50,7 @@ interface WalletService {
 
     @POST("wallet/monetary/confirm_paytm_payment")
     fun confirmPaytmPayment(@Header("Authorization")jwt: String, @Body body: JsonObject): Single<Response<Void>>
+
+    /*@GET("/kind-store/items")
+    fun getKindstoreItems():Single<Response<>>*/
 }

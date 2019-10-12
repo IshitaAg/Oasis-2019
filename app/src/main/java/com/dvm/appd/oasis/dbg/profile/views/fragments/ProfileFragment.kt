@@ -85,9 +85,9 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
             if(code != "") {
                 FirebaseDynamicLinks.getInstance().createDynamicLink()
-                    .setLink(Uri.parse("https://google.com?invitedby="))
+                    .setLink(Uri.parse("https://google.com/?invitedby=$code"))
                     .setDomainUriPrefix("https://app.bits-oasis.org")
-                    .setAndroidParameters(DynamicLink.AndroidParameters.Builder("v2015.oasis.pilani.bits.com.home").setMinimumVersion(18).build())
+                    .setAndroidParameters(DynamicLink.AndroidParameters.Builder("v2015.oasis.pilani.bits.com.home").setMinimumVersion(10).build())
                     .buildShortDynamicLink().addOnSuccessListener {
                         Toast.makeText(context, "Link = ${it.shortLink}", Toast.LENGTH_LONG).show()
                         var shareBody = it.shortLink.toString()

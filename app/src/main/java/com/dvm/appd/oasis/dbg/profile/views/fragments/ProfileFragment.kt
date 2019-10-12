@@ -19,6 +19,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
@@ -26,10 +28,12 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.android.play.core.internal.x
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.labo.kaji.fragmentanimations.FlipAnimation
@@ -46,7 +50,10 @@ import kotlinx.android.synthetic.main.fra_profile.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
+import okio.Utf8
 import java.lang.Exception
+import java.sql.Array
+import java.util.*
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
@@ -170,7 +177,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     fun String.generateQr(): Bitmap {
-        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400)
+        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 500, 500)
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 

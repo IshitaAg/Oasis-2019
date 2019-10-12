@@ -14,10 +14,6 @@ data class ModifiedEventsData(
 
     val date: String,
 
-    val duration: String,
-
-    val imageUrl: String,
-
     val details: String,
 
     val venue: String,

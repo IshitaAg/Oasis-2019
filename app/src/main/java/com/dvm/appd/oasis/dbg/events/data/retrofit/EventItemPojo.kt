@@ -25,14 +25,8 @@ data class EventItemPojo(
     @SerializedName("categories")
     val categories: List<String>,
 
-    @SerializedName("duration")
-    val duration: Int,
-
     @SerializedName("venue")
     val venue: String,
-
-    @SerializedName("image_url")
-    val image: String,
 
     @SerializedName("details")
     val details: String

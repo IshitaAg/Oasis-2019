@@ -1,6 +1,7 @@
 package com.dvm.appd.oasis.dbg.events.viewmodel
 
 import android.annotation.SuppressLint
+import android.telephony.euicc.DownloadableSubscription
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,8 +17,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
     var daySelected: LiveData<String> = MutableLiveData()
     var events: LiveData<List<ModifiedEventsData>> = MutableLiveData()
     var categories: LiveData<List<String>> = MutableLiveData()
+    var filter: LiveData<List<String>> = MutableLiveData()
     var error: LiveData<String> = MutableLiveData(null)
     var progressBarMark: LiveData<Int> = MutableLiveData(1)
+    lateinit var currentSubscription: Disposable
 
     init {
 
@@ -42,7 +45,7 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
     fun getEventData(date: String, categories: List<String>?){
 
         if (categories == null){
-            eventsRepository.getEventsDayData(date)
+            currentSubscription = eventsRepository.getEventsDayData(date)
                 .subscribe({
                     Log.d("NewEvents", "RoomSuccess")
                     (progressBarMark as MutableLiveData).postValue(1)
@@ -55,7 +58,7 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
                 })
         }
         else {
-            eventsRepository.getEventsDayCategoryData(date, categories)
+            currentSubscription = eventsRepository.getEventsDayCategoryData(date, categories)
                 .subscribe({
                     Log.d("NewEvents", "RoomSuccess")
                     (progressBarMark as MutableLiveData).postValue(1)

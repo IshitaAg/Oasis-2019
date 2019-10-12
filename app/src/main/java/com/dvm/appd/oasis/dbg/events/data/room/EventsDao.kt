@@ -36,8 +36,8 @@ interface EventsDao {
     @Query("SELECT DISTINCT event_day FROM misc_table WHERE event_day != 'Day 6' ORDER BY event_day")
     fun getMiscDays(): Flowable<List<String>>
 
-    @Query("SELECT name FROM events_data WHERE event_id = 1 UNION SELECT event_name FROM misc_table WHERE favourite = 1")
-    fun getAllFavourites(): Single<List<String>>
+    @Query("SELECT * FROM fav_data")
+    fun getAllFavourites(): Single<List<FavEvents>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllEvents(events: List<EventData>)

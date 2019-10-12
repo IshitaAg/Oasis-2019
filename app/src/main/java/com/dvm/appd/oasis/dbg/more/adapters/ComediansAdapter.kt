@@ -5,10 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
+import kotlinx.android.synthetic.main.adapter_comedians.view.*
 
-class ComediansAdapter : RecyclerView.Adapter<ComediansAdapter.ComediansViewHolder>() {
+class ComediansAdapter(val listener: onVoteBtnClicked) :
+    RecyclerView.Adapter<ComediansAdapter.ComediansViewHolder>() {
 
-    val comedians: List<String> = emptyList()
+    var comedians: List<Comedian> = emptyList()
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -23,11 +26,19 @@ class ComediansAdapter : RecyclerView.Adapter<ComediansAdapter.ComediansViewHold
     }
 
     override fun onBindViewHolder(holder: ComediansAdapter.ComediansViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        holder.comName.text = comedians[position].name
+        holder.voteBtn.setOnClickListener{
+            listener.voted(comedians[position].name)
+        }
     }
 
     inner class ComediansViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val voteBtn = view.checkBtn
+        val comName = view.comedianName
 
+    }
 
+    interface onVoteBtnClicked {
+        fun voted(name: String)
     }
 }

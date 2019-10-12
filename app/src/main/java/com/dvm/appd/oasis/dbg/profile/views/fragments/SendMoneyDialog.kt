@@ -16,6 +16,7 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.profile.viewmodel.SendMoneyViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.SendMoneyViewModelFactory
 import kotlinx.android.synthetic.main.dia_wallet_send_money.view.*
+import java.lang.Exception
 
 
 class SendMoneyDialog : DialogFragment() {
@@ -37,10 +38,14 @@ class SendMoneyDialog : DialogFragment() {
             } else {
                 rootView.loadingPBR.visibility = View.VISIBLE
                 rootView.SendBtn.isClickable =false
-                sendMoneyViewModel.transferMoney(
-                    rootView.userId.text.toString().toInt(),
-                    rootView.Amount.text.toString().toInt()
-                )
+                try {
+                    val userId = rootView.userId.text.toString().toInt()
+                    val amount = rootView.Amount.text.toString().toInt()
+                    sendMoneyViewModel.transferMoney(userId, amount)
+                } catch (e: Exception) {
+                    Toast.makeText(context, "Please enter Correct values", Toast.LENGTH_LONG).show()
+                }
+
 
             }
         }

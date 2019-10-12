@@ -147,7 +147,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 
     @SuppressLint("CheckResult")
     private fun sendNotification(message: Notification, sport: String) {
-        val pendingIntent = NavDeepLinkBuilder(this.baseContext)
+        /*val pendingIntent = NavDeepLinkBuilder(this.baseContext)
             .setGraph(R.navigation.navigation_graph)
             .setComponentName(MainActivity::class.java)
             .setDestination(R.id.action_events)
@@ -175,7 +175,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             }
         } .subscribe({},{
             Log.e("Notification", "Error in Displaying notification = ${it.toString()}")
-        })
+        })*/
     }
 
     private fun sendNotification(message: Notification, orderId: String, otp: String) {

@@ -9,8 +9,8 @@ import io.reactivex.Single
 @Dao
 interface EventsDao {
 
-    @Query("SELECT name FROM events_data WHERE event_id = 1 UNION SELECT event_name FROM misc_table WHERE favourite = 1")
-    fun getAllFavourites(): Single<List<String>>
+    @Query("SELECT * FROM fav_data")
+    fun getAllFavourites(): Single<List<FavEvents>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllEvents(events: List<EventData>)

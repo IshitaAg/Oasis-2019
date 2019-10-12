@@ -12,6 +12,7 @@ import com.dvm.appd.oasis.dbg.elas.model.room.ElasDao
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
 import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
+import com.dvm.appd.oasis.dbg.more.ComediansVoting
 import com.dvm.appd.oasis.dbg.shared.AppDatabase
 import com.dvm.appd.oasis.dbg.shared.BaseInterceptor
 import com.dvm.appd.oasis.dbg.shared.MoneyTracker
@@ -30,6 +31,9 @@ import javax.inject.Singleton
 @Module
 class AppModule(private val application: Application) {
 
+    @Provides
+    @Singleton
+    fun providesN2OVoting():ComediansVoting = ComediansVoting()
     @Provides
     @Singleton
     fun providesMoneyTracker(authRepository: AuthRepository):MoneyTracker{
@@ -123,8 +127,8 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideEventsRepository(eventsDao: EventsDao, eventsService: EventsService, application: Application): EventsRepository {
-        return EventsRepository(eventsDao = eventsDao, eventsService = eventsService, application = application)
+    fun provideEventsRepository(eventsDao: EventsDao, eventsService: EventsService, application: Application,voting: ComediansVoting,sharedPreferences: SharedPreferences): EventsRepository {
+        return EventsRepository(eventsDao = eventsDao, eventsService = eventsService, application = application,comediansVoting = voting,sharedPreferences = sharedPreferences)
     }
 
     @Provides

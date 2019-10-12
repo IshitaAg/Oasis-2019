@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
 
-    var moreItems = listOf("Contact Us", "Developers", "Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors")
+    var moreItems = listOf("Contact Us", "Developers","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

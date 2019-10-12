@@ -29,16 +29,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginEnd="32dp"
             android:ellipsize="end"
-            android:maxLines="1"
             android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:maxLines="1"
             android:text="Event Name"
             android:textAlignment="textStart"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintEnd_toStartOf="@+id/markFav"
             app:layout_constraintStart_toStartOf="@id/view"
             app:layout_constraintTop_toTopOf="@id/view" />
 
@@ -48,12 +48,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="32dp"
             android:ellipsize="end"
             android:text="TextView"
-            android:textColor="#FFFFFF"
             android:textAlignment="textStart"
-            app:layout_constraintEnd_toEndOf="@+id/view"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@+id/directions"
             app:layout_constraintStart_toStartOf="@id/view"
             app:layout_constraintTop_toBottomOf="@+id/eventName" />
 
@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintEnd_toStartOf="@id/eventVenue"
             app:layout_constraintStart_toStartOf="@+id/eventName"
-            app:layout_constraintTop_toBottomOf="@+id/eventDesc"
+            app:layout_constraintTop_toBottomOf="@+id/directions"
             tools:text="DoLE" />
 
     <TextView
@@ -91,7 +91,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintEnd_toEndOf="@id/view"
-            app:layout_constraintTop_toBottomOf="@+id/eventDesc"
+            app:layout_constraintTop_toBottomOf="@+id/directions"
             tools:text="14:30" />
 
     <TextView
@@ -110,21 +110,28 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintEnd_toStartOf="@+id/eventTime"
-            app:layout_constraintTop_toBottomOf="@+id/eventDesc"
+            app:layout_constraintTop_toBottomOf="@+id/directions"
             tools:text="GYM G" />
 
-    <ImageView
+    <com.jackandphantom.androidlikebutton.AndroidLikeButton
             android:id="@+id/markFav"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="1"
-            android:src="@drawable/ic_not_favourite"
-            android:textAlignment="center"
-            android:textColor="#4CA8F5"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            app:like_icon="@drawable/ic_is_favourite"
+            app:unlike_icon="@drawable/ic_not_favourite"
+            app:liked="@drawable/ic_is_favourite"
             app:layout_constraintEnd_toEndOf="@id/view"
             app:layout_constraintTop_toTopOf="@id/view" />
+
+    <ImageView
+            android:id="@+id/directions"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/eventName"
+            app:srcCompat="@drawable/ic_map" />
 </androidx.constraintlayout.widget.ConstraintLayout>

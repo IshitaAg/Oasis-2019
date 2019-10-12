@@ -795,7 +795,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     // https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp
     // https://securegw-stage.paytm.in/theia/paytmCallback
     val callBackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order"
-    fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String): Completable{
+    fun getCheckSum(fragment: ProfileFragment, txnAmount: String): Completable{
         /*val body = JsonObject().apply {
             this.addProperty("MID", mID)
             this.addProperty("CHANNEL_ID", "WAP")
@@ -810,7 +810,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
             this.addProperty("TXN_AMOUNT", txnAmount)
         }
         return walletService.getCheckSum(
-            "Basic dXNlcjI6bG9sbWFvMTIzNDU=",
+            jwt.blockingGet(),
             body
         ).subscribeOn(Schedulers.io())
             .doOnSuccess {response ->
@@ -849,7 +849,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         x.initialize(order, null)
 
                         //needs activity context for callback
-                        x.startPaymentTransaction(fragment.activity!!, false, true, fragment)
+                        x.startPaymentTransaction(fragment.activity!!, true, true, fragment)
                     }
                     else -> {
                         Log.e("PayTm", "Something went wrong while reciveing checkSum\n${response.code()}\n${response.body()}\n${response.errorBody()}")
@@ -860,6 +860,6 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
-        return walletService.confirmPaytmPayment("Basic dXNlcjI6bG9sbWFvMTIzNDU=", body).subscribeOn(Schedulers.io())
+        return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
     }
 }

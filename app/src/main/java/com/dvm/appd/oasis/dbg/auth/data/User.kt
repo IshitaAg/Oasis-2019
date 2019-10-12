@@ -9,5 +9,6 @@ data class User(
     val qrCode: String,
     val isBitsian:Boolean,
     val firstLogin:Boolean,
-    val voted:Boolean
+    val voted:Boolean,
+    val referralCode: String
 )

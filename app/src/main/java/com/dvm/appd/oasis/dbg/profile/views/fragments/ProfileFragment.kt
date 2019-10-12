@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,15 +21,19 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.labo.kaji.fragmentanimations.FlipAnimation
+import com.labo.kaji.fragmentanimations.MoveAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -37,9 +42,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dia_wallet_send_money.view.*
 import kotlinx.android.synthetic.main.fra_auth_outstee.view.*
+import kotlinx.android.synthetic.main.fra_profile.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
+import java.lang.Exception
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
@@ -73,6 +80,30 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                 rootView.balance.text = context!!.resources.getString(R.string.rupee)+"0"
             }
         })
+
+        rootView.imageView7.setOnClickListener {
+            var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
+            if(code != "") {
+                FirebaseDynamicLinks.getInstance().createDynamicLink()
+                    .setLink(Uri.parse("https://google.com/?invitedby=$code"))
+                    .setDomainUriPrefix("https://app.bits-oasis.org")
+                    .setAndroidParameters(DynamicLink.AndroidParameters.Builder("v2015.oasis.pilani.bits.com.home").setMinimumVersion(10).build())
+                    .buildShortDynamicLink().addOnSuccessListener {
+                        Toast.makeText(context, "Link = ${it.shortLink}", Toast.LENGTH_LONG).show()
+                        var shareBody = it.shortLink.toString()
+                        Log.d("Profile Frag", "Message Body = ${shareBody}")
+                        var sharingIntent = Intent(Intent.ACTION_SEND)
+                        sharingIntent.type = "text/plain"
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Referral Code for the Official Oasis App")
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                        startActivity(Intent.createChooser(sharingIntent, "Share"))
+                    }.addOnFailureListener {
+                        Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
+                    }
+            } else {
+                Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
+            }
+        }
 
         rootView.qrCode.setOnClickListener {
             QrDialog().show(childFragmentManager,"QR_DIALOG")
@@ -135,14 +166,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             }
         })
 
-
-        profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "2.00")
-
-        //Add some button for paytm
-//        rootView.addBtn.setOnClickListener {
-//            profileViewModel.getCheckSum(stagingPgService, prodPgService, this, "1000")
-//        }
-
         return rootView
     }
 
@@ -151,33 +174,55 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 
+    @SuppressLint("CheckResult")
     override fun onTransactionResponse(bundle: Bundle?) {
-        Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
-        if (!(bundle!!.isEmpty)) {
-            if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
-                val body = JsonObject().apply {
-                    this.addProperty("STATUS", bundle["STATUS"].toString())
-                    this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
-                    this.addProperty("BANKNAME", bundle["BANKNAME"].toString())
-                    this.addProperty("ORDERID", bundle["ORDERID"].toString())
-                    this.addProperty("TXNAMOUNT", bundle["TXNAMOUNT"].toString())
-                    this.addProperty("TXNDATE", bundle["TXNDATE"].toString())
-                    this.addProperty("MID", bundle["MID"].toString())
-                    this.addProperty("TXNID", bundle["TXNID"].toString())
-                    this.addProperty("RESPCODE", bundle["RESPCODE"].toString())
-                    this.addProperty("PAYMENTMODE", bundle["PAYMENTMODE"].toString())
-                    this.addProperty("BANKTXNID", bundle["BANKTXNID"].toString())
-                    this.addProperty("CURRENCY", bundle["CURRENCY"].toString())
-                    this.addProperty("GATEWAYNAME", bundle["GATEWAYNAME"].toString())
-                    this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
-                    Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
+        try {
+            progress_profile.visibility = View.VISIBLE
+            Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
+            if (!(bundle!!.isEmpty)) {
+                if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
+                    val body = JsonObject().apply {
+                        this.addProperty("STATUS", bundle["STATUS"].toString())
+                        this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
+                        this.addProperty("BANKNAME", bundle["BANKNAME"].toString())
+                        this.addProperty("ORDERID", bundle["ORDERID"].toString())
+                        this.addProperty("TXNAMOUNT", bundle["TXNAMOUNT"].toString())
+                        this.addProperty("TXNDATE", bundle["TXNDATE"].toString())
+                        this.addProperty("MID", bundle["MID"].toString())
+                        this.addProperty("TXNID", bundle["TXNID"].toString())
+                        this.addProperty("RESPCODE", bundle["RESPCODE"].toString())
+                        this.addProperty("PAYMENTMODE", bundle["PAYMENTMODE"].toString())
+                        this.addProperty("BANKTXNID", bundle["BANKTXNID"].toString())
+                        this.addProperty("CURRENCY", bundle["CURRENCY"].toString())
+                        this.addProperty("GATEWAYNAME", bundle["GATEWAYNAME"].toString())
+                        this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
+                        Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
+                    }
+                    profileViewModel.onPaytmTransactionSucessful(body).subscribe({
+                        Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
+                        Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
+
+                        when(it.code()) {
+                            200 -> {
+                                progress_profile.visibility = View.INVISIBLE
+                                Toast.makeText(context, "Transaction Successful. Balance will be reflected shortly", Toast.LENGTH_LONG).show()
+                            } else -> {
+                                Toast.makeText(context, "Unable to Verify transaction. Please contact a DVM Official", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    },{
+                        Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
+                        Toast.makeText(context, "Unable to complete Transaction. Contact a DVM Official", Toast.LENGTH_LONG).show()
+                    })
                 }
-                profileViewModel.onPaytmTransactionSucessful(body)
             }
+        } catch (e: Exception) {
+            Toast.makeText(context, "An Error occurred during the Transaction. Please contact a DVM Official", Toast.LENGTH_LONG).show()
         }
     }
 
     override fun clientAuthenticationFailed(p0: String?) {
+        Toast.makeText(context, "PayTm was unable to verify your credentials. Please try again", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Client authentication failed ${p0}")
     }
 
@@ -186,22 +231,26 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     }
 
     override fun onTransactionCancel(p0: String?, p1: Bundle?) {
+        Toast.makeText(context, "The transaction was cancelled", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Transaction cancled $p0 \n $p1")
     }
 
     override fun networkNotAvailable() {
+        Toast.makeText(context, "Please check your internet connection and try again", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Network not available")
     }
 
     override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
+        Toast.makeText(context, "Unable to reach PayTm. Please try after some time", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Error in loading the webpage $p0\n $p1\n $p2")
     }
 
     override fun onBackPressedCancelTransaction() {
+        Toast.makeText(context, "Transaction Cancelled", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Transaction was cancelled because of back pressed")
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
-    }
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
+    }*/
 }

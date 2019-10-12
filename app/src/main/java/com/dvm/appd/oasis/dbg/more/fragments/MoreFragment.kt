@@ -16,6 +16,7 @@ import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.adapters.MoreAdapter
 import com.labo.kaji.fragmentanimations.FlipAnimation
+import com.labo.kaji.fragmentanimations.MoveAnimation
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
@@ -80,7 +81,7 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         super.onResume()
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
-        return FlipAnimation.create(FlipAnimation.RIGHT, enter, 1000)
-    }
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+        return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
+    }*/
 }

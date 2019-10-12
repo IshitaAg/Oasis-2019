@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
@@ -16,6 +17,9 @@ import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrderItemViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrderItemViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrderDialogAdapter
 import kotlinx.android.synthetic.main.dia_order_details.view.*
+import kotlinx.android.synthetic.main.dia_order_details.view.progressBar
+import kotlinx.android.synthetic.main.fra_wallet_orders.*
+import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 
 class OrderItemsDialog: DialogFragment() {
 
@@ -42,6 +46,18 @@ class OrderItemsDialog: DialogFragment() {
             if (it != null){
                 Toast.makeText(context!!, it, Toast.LENGTH_SHORT).show()
                 (orderItemViewModel.error as MutableLiveData).postValue(null)
+            }
+        })
+
+        orderItemViewModel.progressBarMark.observe(this, Observer {
+            if (it == 0){
+                view.progressBar.visibility = View.VISIBLE
+                activity!!.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
+            }
+            else if (it == 1){
+                view.progressBar.visibility = View.GONE
+                activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         })
 
@@ -98,10 +114,26 @@ class OrderItemsDialog: DialogFragment() {
                 }
             }
 
-            view.otp.text = order.otp.toString()
+            if (order.otpSeen){
+                view.otp.text = order.otp.toString()
+                view.otp.isClickable = false
+            }
+            else{
+                view.otp.text = "????"
+                view.otp.setOnClickListener {
+                    if (order.status == 2){
+                        (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
+                        orderItemViewModel.updateOtpSeen(order.orderId)
+                    }
+                    else{
+                        Toast.makeText(context, "Order not yet ready", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
             view.stallName.text = order.vendor
             view.orderId.text = "${order.orderId}"
-            view.price.text = "₹${order.totalPrice}"
+            view.price.text = "₹ ${order.totalPrice}"
 
 
             if (order.status != 3){
@@ -173,6 +205,7 @@ class OrderItemsDialog: DialogFragment() {
             view.rating4.setImageResource(R.drawable.ic_star)
             view.rating5.setImageResource(R.drawable.ic_star)
             Log.d("Rating","Clicked")
+            (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 1)
         }
 
@@ -183,6 +216,7 @@ class OrderItemsDialog: DialogFragment() {
             view.rating4.setImageResource(R.drawable.ic_star)
             view.rating5.setImageResource(R.drawable.ic_star)
             Log.d("Rating","Clicked")
+            (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 2)
         }
 
@@ -193,6 +227,7 @@ class OrderItemsDialog: DialogFragment() {
             view.rating4.setImageResource(R.drawable.ic_star)
             view.rating5.setImageResource(R.drawable.ic_star)
             Log.d("Rating","Clicked")
+            (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 3)
         }
 
@@ -203,6 +238,7 @@ class OrderItemsDialog: DialogFragment() {
             view.rating4.setImageResource(R.drawable.ic_star_full)
             view.rating5.setImageResource(R.drawable.ic_star)
             Log.d("Rating","Clicked")
+            (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 4)
         }
 
@@ -213,6 +249,7 @@ class OrderItemsDialog: DialogFragment() {
             view.rating4.setImageResource(R.drawable.ic_star_full)
             view.rating5.setImageResource(R.drawable.ic_star_full)
             Log.d("Rating","Clicked")
+            (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 5)
         }
 

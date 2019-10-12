@@ -32,15 +32,20 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         const val TOPIC_SUBSCRIPTION = "TOPIC_SUBSCRIPTION"
         const val first_login = "FIRST_LOGIN"
         const val voted="VOTED"
+        const val referralCode = "REFERRAL_CODE"
+        const val referredBy = "REFERRED_BY"
     }
 
     fun loginOutstee(username: String, password: String): Single<LoginState> {
         val regToken = sharedPreferences.getString(Keys.REGTOKEN, "")
+        val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         val body = JsonObject().also {
             it.addProperty("username", username)
             it.addProperty("password", password)
             if(regToken != "")
                 it.addProperty("reg_token", regToken)
+            if(referralCode != "")
+                it.addProperty("referral_code", referralCode)
         }
 
         Log.d("check", body.toString())
@@ -49,10 +54,13 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
 
     fun loginBitsian(id:String):Single<LoginState>{
         val regToken = sharedPreferences.getString(Keys.REGTOKEN, "Default Value")
+        val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         val body = JsonObject().also {
             it.addProperty("id_token",id)
             if(regToken != "")
                 it.addProperty("reg_token", regToken)
+            if(referralCode != "")
+                it.addProperty("referral_code", referralCode)
         }
         Log.d("check",body.toString())
         return login(body,true)
@@ -68,12 +76,13 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         val bitsian = sharedPreferences.getBoolean(Keys.isBitsian, false)
         val firstLogin = sharedPreferences.getBoolean(Keys.first_login,false)
         val voted = sharedPreferences.getBoolean(Keys.voted,false)
+        val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin).toString())
         if (listOf(name, email, contact, jwt, qr).contains(null)) {
             setUser(null).subscribe()
             return Maybe.empty()
         }
-        return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin,voted))
+        return Maybe.just(User(jwt!!, name!!, id!!, email!!, contact!!, qr!!,bitsian,firstLogin,voted,referralCode!!))
     }
 
     @SuppressLint("ApplySharedPref")
@@ -89,6 +98,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                 putBoolean(Keys.isBitsian, user?.isBitsian?:false)
                 putBoolean(Keys.first_login,user?.firstLogin?:false)
                 putBoolean(Keys.voted,user?.voted?:false)
+                putString(Keys.referralCode,user?.referralCode?:"")
             }.commit()
         }
     }
@@ -97,6 +107,11 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
     fun addRegToken(token: String) {
         Log.d("Auth Repo", "Entered to add token")
         sharedPreferences.edit().putString(Keys.REGTOKEN, token).apply()
+    }
+
+    fun addReferral(code: String) {
+        Log.d("Auth Repo", "Recived Referral Code = $code")
+        sharedPreferences.edit().putString(Keys.referredBy, code).apply()
     }
 
     fun login(body: JsonObject, bitsian: Boolean): Single<LoginState> {
@@ -121,7 +136,8 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                                 qrCode = response.body()!!.qrCode,
                                 isBitsian = bitsian,
                                 firstLogin = firstLogin,
-                                voted = false
+                                voted = false,
+                                referralCode = response.body()!!.referralCode
                             )
                         ).subscribe()
                         Single.just(LoginState.Success)

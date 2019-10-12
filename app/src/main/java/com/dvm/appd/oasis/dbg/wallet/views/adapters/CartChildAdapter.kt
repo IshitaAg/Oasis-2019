@@ -49,7 +49,7 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
         Log.d("CartRecycler", "$cartChildItems")
         holder.itemName.text = cartChildItems[position].itemName
 
-        if (cartChildItems[position].discount == 0){
+        if (cartChildItems[position].discount != 0){
             holder.currentPrice.isVisible = true
             holder.discount.isVisible = true
             holder.basePrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].basePrice}"

@@ -14,8 +14,8 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
     var voteState:LiveData<String> = MutableLiveData()
     var toast:LiveData<String> = MutableLiveData()
     init {
-        authRepository.getUser().subscribe({
-            when(it.voted!!){
+        authRepository.getUser().subscribe({user->
+            when(user.voted!!){
                 true->{
                         voteState.asMut().postValue("Voted")
                 }
@@ -41,5 +41,11 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
         })
     }
 
+   fun vote(name:String){
+       eventsRepository.voteForComedian(name).subscribe({
 
+       },{
+           toast.asMut().postValue(it.toString())
+       })
+   }
 }

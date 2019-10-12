@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.MiscEventsData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
+import com.jackandphantom.androidlikebutton.AndroidLikeButton
 import kotlinx.android.synthetic.main.adapter_misc_events.view.*
 import java.lang.Exception
 
@@ -18,6 +19,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
     interface OnMarkFavouriteClicked{
         fun updateIsFavourite(eventId: Int, favouriteMark: Int)
+        fun getDirections(venue: String)
     }
 
     inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -27,7 +29,8 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         val organiser: TextView = view.eventOrg
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
-        val markFav: ImageView = view.markFav
+        val markFav: AndroidLikeButton = view.markFav
+        val directions: ImageView = view.directions
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
@@ -47,9 +50,9 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         holder.time.text = events[position].dateTime //getTime(events[position].time)
         holder.venue.text = events[position].venue.first()
         if (events[position].isFav == 1){
-            holder.markFav.setImageResource(R.drawable.ic_is_favourite)
+            holder.markFav.setLikeIcon(R.drawable.ic_is_favourite)
         }else if (events[position].isFav == 0){
-            holder.markFav.setImageResource(R.drawable.ic_not_favourite)
+            holder.markFav.setUnlikeIcon(R.drawable.ic_not_favourite)
         }
 
         holder.markFav.setOnClickListener {
@@ -60,6 +63,10 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
             else if (events[position].isFav == 0){
                 listener.updateIsFavourite(events[position].eventId, 1)
             }
+        }
+
+        holder.directions.setOnClickListener {
+            listener.getDirections(events[position].venue.first())
         }
     }
 

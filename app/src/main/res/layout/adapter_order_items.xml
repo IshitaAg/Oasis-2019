@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/price" />
 
-    <TextView
+    <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,17 +97,27 @@
             android:layout_marginBottom="16dp"
             android:background="@drawable/shape_rectangle_rounded_24dp"
             android:elevation="5dp"
-            android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:paddingStart="10dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="4dp"
-            android:text="OTP"
-            android:textSize="12sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/view"
             app:layout_constraintStart_toStartOf="@id/price"
-            app:layout_constraintTop_toBottomOf="@id/price" />
+            app:layout_constraintTop_toBottomOf="@id/price"
+            app:mrl_rippleOverlay="true"
+            app:mrl_rippleHover="true"
+            app:mrl_rippleDelayClick="true">
+
+        <TextView
+                android:id="@+id/text_otp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/shellypalmer_circular_std_book"
+                android:paddingStart="10dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="4dp"
+                android:text="OTP"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
 
     <TextView
             android:id="@+id/textView18"

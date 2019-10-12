@@ -34,7 +34,7 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         }
         rootView.votingRecycler.adapter = ComediansAdapter(this)
         rootView.voteBtn.setOnClickListener {
-
+            votingViewModel.vote(comedianName)
         }
         votingViewModel.comedians.observe(this, Observer {
             (rootView.votingRecycler.adapter as ComediansAdapter).comedians = it

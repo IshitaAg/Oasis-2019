@@ -1,5 +1,7 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -63,8 +65,20 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         //Add progress bar
         view.button.setOnClickListener {
-            (ticketsViewModel.progressBarMark as MutableLiveData).postValue(0)
-            ticketsViewModel.buyTickets()
+
+            val alertDialogBuilder = AlertDialog.Builder(context)
+            alertDialogBuilder.setMessage("Buy Ticket(s)?")
+                .setPositiveButton("OK") { _, _ ->
+                    (ticketsViewModel.progressBarMark as MutableLiveData).postValue(0)
+                    ticketsViewModel.buyTickets()
+                }
+                .setNegativeButton("Cancel") {dialog, _ ->
+                    dialog.dismiss()
+                }
+
+            val alertDialog = alertDialogBuilder.create()
+            alertDialog.show()
+
         }
 
         return view

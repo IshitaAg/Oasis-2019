@@ -21,13 +21,8 @@
                 android:layout_width="match_parent"
                 android:padding="4dp"
                 android:background="@drawable/shape_rectangle_rounded_8dp"
+                android:backgroundTint="#31365E"
                 android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:src="@drawable/ic_outline_profile_identity_24px"
-                    android:id="@+id/img_card_more_thumbnail"
-                    android:layout_height="wrap_content"/>
 
             <TextView
                     android:id="@+id/text_card_more_title"
@@ -38,14 +33,15 @@
                     android:elevation="2dp"
                     android:fontFamily="@font/shellypalmer_circular_std_book"
                     android:text="More"
-                    android:textColor="#3B3B3B"
+                    android:layout_marginStart="16dp"
+                    android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
             <ImageButton
                     android:layout_width="wrap_content"
-                    android:background="#FFFFFF"
-                    android:layout_marginRight="16dp"
+                    android:background="#31365E"
+                    android:layout_marginEnd="16dp"
                     android:padding="8dp"
                     android:layout_gravity="center"
                     android:src="@drawable/img_next_arrow"

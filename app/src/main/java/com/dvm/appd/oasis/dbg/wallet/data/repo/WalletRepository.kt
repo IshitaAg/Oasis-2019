@@ -887,4 +887,10 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
            .subscribeOn(Schedulers.io())
 
     }
+
+    fun getKindItems():Observable<List<KindItems>>{
+        return walletDao.getAllkindItems().toObservable().subscribeOn(Schedulers.io()).doOnError {
+            Log.d("check",it.toString())
+        }
+    }
 }

@@ -38,4 +38,20 @@
             app:layout_constraintStart_toStartOf="@+id/stallImage"
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
+    <TextView
+            android:id="@+id/price"
+            android:layout_width="30dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:gravity="center"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ItemName"
+            app:layout_constraintEnd_toEndOf="@+id/stallImage"
+            app:layout_constraintStart_toEndOf="@+id/ItemName"
+            app:layout_constraintTop_toTopOf="@+id/ItemName" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

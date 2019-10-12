@@ -732,6 +732,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                             }
 
                             in 400..499 -> {
+                                Log.d("Tickets Repo", "Error = ${response.code().toString()}\n${response.errorBody()}")
                                 throw Exception(response.message())
                             }
 

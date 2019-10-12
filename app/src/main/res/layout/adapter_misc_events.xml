@@ -87,7 +87,7 @@
             android:ellipsize="end"
             android:maxWidth="160dp"
             android:maxLines="1"
-            android:textAlignment="textEnd"
+            android:textAlignment="textStart"
             android:textAllCaps="true"
             android:textColor="#4CA8F5"
             android:textStyle="bold"

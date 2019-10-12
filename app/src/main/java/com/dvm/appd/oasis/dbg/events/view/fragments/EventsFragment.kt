@@ -77,7 +77,6 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             }
         }
 
-
         view.dayRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         view.dayRecycler.adapter = EventsDayAdapter(this)
         eventsViewModel.eventDays.observe(this, Observer {
@@ -91,7 +90,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             Log.d("MiscEventsFrag", "Observed")
             (view.miscEventRecycler.adapter as EventsAdapter).events = it
             (view.miscEventRecycler.adapter as EventsAdapter).notifyDataSetChanged()
-            val index = it.indexOfFirst { it.time < compareTime }
+            val index = it.indexOfFirst { eventsData -> eventsData.time < compareTime }
             if (index > 0)
                 view.miscEventRecycler.smoothScrollToPosition(index)
         })
@@ -138,6 +137,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+        eventsViewModel.currentSubscription.dispose()
         eventsViewModel.getEventData(day, null)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }

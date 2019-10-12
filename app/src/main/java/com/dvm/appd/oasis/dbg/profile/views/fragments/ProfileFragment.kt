@@ -66,8 +66,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-        //(activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_profile)
 
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
@@ -133,6 +131,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                     startActivity(Intent(context!!, AuthActivity::class.java))
                 }
                 UiState.ShowIdle -> {
+                    rootView.swipeProfile.isRefreshing = false
                     rootView.loading.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
@@ -166,6 +165,12 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                 (profileViewModel.error as MutableLiveData).postValue(null)
             }
         })
+
+        rootView.swipeProfile.setOnRefreshListener {
+            (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
+            profileViewModel.refreshTicketsData()
+            profileViewModel.refreshUserShows()
+        }
 
         return rootView
     }

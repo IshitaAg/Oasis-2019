@@ -26,12 +26,6 @@ data class EventData(
     @ColumnInfo(name = "date")
     val date: String,
 
-    @ColumnInfo(name = "duration")
-    val duration: Int,
-
-    @ColumnInfo(name = "image_url")
-    val image_url: String,
-
     @ColumnInfo(name = "details")
     val details: String,
 

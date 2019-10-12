@@ -133,7 +133,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         super.onResume()
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
-    }
+    }*/
 }

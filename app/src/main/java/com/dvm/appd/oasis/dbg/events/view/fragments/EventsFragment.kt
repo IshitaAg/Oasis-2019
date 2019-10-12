@@ -156,7 +156,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     }
 
-    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+    /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
-    }
+    }*/
 }

@@ -1,5 +1,7 @@
 package com.dvm.appd.oasis.dbg.events.view.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +23,7 @@ import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
 import com.labo.kaji.fragmentanimations.FlipAnimation
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -130,6 +133,26 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
         eventsViewModel.getMiscEventsData(day)
         view!!.dayRecycler.smoothScrollToPosition(position)
+    }
+
+    override fun getDirections(venue: String) {
+
+
+
+        val latitude = ""
+        val longitude = ""
+        val uri = Uri.parse("google.navigation:q=$latitude,$longitude&mode=w")
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        try {
+            if (intent.resolveActivity(activity!!.packageManager) != null)
+                startActivity(intent)
+            else
+                (eventsViewModel.error as MutableLiveData).postValue("No App to view directions")
+        }
+        catch (e: Exception){
+            (eventsViewModel.error as MutableLiveData).postValue(e.message)
+        }
+
     }
 
     override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {

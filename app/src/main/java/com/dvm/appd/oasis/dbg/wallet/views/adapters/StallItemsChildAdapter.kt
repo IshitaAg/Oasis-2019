@@ -42,7 +42,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
             holder.basePrice.text = "₹ ${stallItems[position].basePrice}"
             holder.basePrice.paintFlags = holder.basePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             holder.currentPrice.text = "₹ ${stallItems[position].currentPrice}"
-            holder.discount.text = "~ ${stallItems[position].discount}%"
+            holder.discount.text = "(${stallItems[position].discount}% off)"
         }
         else{
             holder.basePrice.text = "₹ ${stallItems[position].basePrice}"

@@ -55,7 +55,7 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
             holder.basePrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].basePrice}"
             holder.basePrice.paintFlags = holder.basePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             holder.currentPrice.text = "₹ ${cartChildItems[position].quantity * cartChildItems[position].currentPrice}"
-            holder.discount.text = "~ ${cartChildItems[position].discount}%"
+            holder.discount.text = "(${cartChildItems[position].discount}% off)"
         }
         else{
             holder.currentPrice.isVisible = false

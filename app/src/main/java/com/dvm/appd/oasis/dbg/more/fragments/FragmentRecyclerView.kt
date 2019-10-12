@@ -31,8 +31,7 @@ class FragmentRecyclerView : Fragment() {
         Developer("Shivanshu Ayachi", "Backend Developer", picBaseUrl + "raghav.png"),
         Developer("Abhinav Tiwari", "Backend Developer", baseImageLink + "abhinav.jpg"),
         Developer("Divyansh Agarwal", "Backend Developer", picBaseUrl + "raghav.png"),
-        Developer("Devansh Agarwal", "UI/UX Designer", picBaseUrl + "Devansh%20Agarwal.jpg?alt=media&token=248de574-72c3-4528-a709-0115f80032cd"),
-        Developer("Mohul Maheswari", "UI/UX Designer", picBaseUrl + "Mohul%20Maheswari.jpg?alt=media&token=68c8a97f-7c40-4d6e-b511-c2281da468dd")
+        Developer("Devansh Agarwal", "UI/UX Designer", picBaseUrl + "Devansh%20Agarwal.jpg?alt=media&token=248de574-72c3-4528-a709-0115f80032cd")
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

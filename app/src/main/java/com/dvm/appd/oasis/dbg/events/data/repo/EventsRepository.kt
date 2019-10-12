@@ -34,153 +34,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
         WorkManager.getInstance(application.applicationContext).enqueue(request)
 
-        db.collection("events").document("misc").collection("eventdata")
-            .addSnapshotListener { snapshot, exception ->
-
-                if (exception != null) {
-                    Log.e("EventsRepo", "Listen failed", exception)
-                    return@addSnapshotListener
-                }
-                if (snapshot != null) {
-
-                    var miscEvents: MutableList<MiscEventsData> = arrayListOf()
-
-                    for (doc in snapshot.documentChanges) {
-
-                        var name: String
-                        var venue: String
-                        var time: String
-                        var description: String
-                        var day: String
-                        var organiser: String
-
-                        when (doc.type) {
-
-                            DocumentChange.Type.ADDED -> {
-                                Log.d("DocAdded", doc.document.get("name").toString())
-
-                                name = try {
-                                    doc.document["name"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                venue = try {
-                                    doc.document["venue"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                time = try {
-                                    doc.document["timestamp"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                description = try {
-                                    doc.document["description"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                day = try {
-                                    doc.document["day"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                organiser = try {
-                                    doc.document["organiser"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-
-                                miscEvents.add(
-                                    MiscEventsData(
-                                        id = doc.document.id,
-                                        name = name,
-                                        venue = venue,
-                                        time = time,
-                                        description = description,
-                                        day = day,
-                                        organiser = organiser,
-                                        isFavourite = 0
-                                    )
-                                )
-                            }
-
-                            DocumentChange.Type.MODIFIED -> {
-                                Log.d("DocChanged", doc.document.get("name").toString())
-
-                                name = try {
-                                    doc.document["name"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                venue = try {
-                                    doc.document["venue"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                time = try {
-                                    doc.document["timestamp"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                description = try {
-                                    doc.document["description"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                day = try {
-                                    doc.document["day"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-                                organiser = try {
-                                    doc.document["organiser"].toString()
-                                } catch (e: Exception) {
-                                    "Not Available"
-                                }
-
-                                eventsDao.updateMiscData(
-                                    id = doc.document.id,
-                                    name = name,
-                                    venue = venue,
-                                    time = time,
-                                    description = description,
-                                    day = day,
-                                    organiser = organiser
-                                )
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe({},{
-                                        Log.e("EventsRepo", it.message, it)
-                                    })
-                            }
-
-                            DocumentChange.Type.REMOVED -> {
-                                Log.d("DocRemoved", doc.document.get("name").toString())
-                                eventsDao.deleteMiscEvent(doc.document.id)
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe({},{
-                                        Log.e("EventsRepo", it.message, it)
-                                    })
-                            }
-
-                        }
-                    }
-
-                    Log.d("Events", miscEvents.toString())
-//                    Completable.fromAction {
-//                        eventsDao.updateAllMiscEvents(miscEvents)
-//                    }.subscribeOn(Schedulers.io()).subscribe({},{})
-
-                    eventsDao.insertMiscEventData(miscEvents).subscribeOn(Schedulers.io()).subscribe({},{})
-                }
-            }
-    }
-
-    fun miscEventDays(): Flowable<List<String>> {
-        return eventsDao.getMiscDays().subscribeOn(Schedulers.io())
-    }
-
-    fun getDayMiscEvents(day: String): Flowable<List<MiscEventsData>> {
-        return eventsDao.getDayMiscEvents(day).subscribeOn(Schedulers.io())
     }
 
     fun updateEventsData(): Single<ListenableWorker.Result>{
@@ -188,7 +41,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
             .flatMap {response ->
 
                 Log.d("NewEvents", "${response.code()}")
-                Log.d("NewEvents", "${response.body()}")
                 val workerResult: ListenableWorker.Result
 
                 when(response.code()){
@@ -208,9 +60,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                             }
                         }
 
-                        Log.d("NewEvents", "$events")
-                        Log.d("NewEvents", "$categories")
-                        Log.d("NewEvents", "$venues")
                         eventsDao.deleteAndInsertEvents(events)
                         eventsDao.deleteAndInsertCategories(categories)
                         eventsDao.deleteAndInsertVenues(venues)
@@ -230,12 +79,12 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
     }
 
-    fun EventItemPojo.toEventData(): EventData{
+    private fun EventItemPojo.toEventData(): EventData{
 
-        return EventData(id, name, about, rules, time, dateTime, duration, image, details)
+        return EventData(id, name, about, rules, time.substring(0, 5), dateTime.substring(0, 10), duration, image, details)
     }
 
-    fun EventItemPojo.toCategoryData(): List<CategoryData>{
+    private fun EventItemPojo.toCategoryData(): List<CategoryData>{
 
         val eventCategories: MutableList<CategoryData> = arrayListOf()
 
@@ -246,18 +95,16 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventCategories
     }
 
-    fun EventItemPojo.toVenueData(): List<VenueData>{
+    private fun EventItemPojo.toVenueData(): List<VenueData>{
 
         val eventVenues: MutableList<VenueData> = arrayListOf()
 
-        eventVenues.add(VenueData(venue, id, 0))
+        val venues = venue.split("~")
+        venues.forEach {
+            eventVenues.add(VenueData(it, id, 0))
+        }
 
         return eventVenues
-    }
-
-    fun updateMiscFavourite(eventId: String, favouriteMark: Int): Completable {
-        return eventsDao.updateMiscFavourite(id = eventId, mark = favouriteMark)
-            .subscribeOn(Schedulers.io())
     }
 
     fun updateFavourite(eventId: Int, favMark: Int): Completable{
@@ -270,9 +117,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         }
     }
 
-    fun getEventsData(): Flowable<List<ModifiedEventsData>>{
+    fun getEventsDayData(date: String): Flowable<List<ModifiedEventsData>>{
 
-        return eventsDao.getAllEvents().subscribeOn(Schedulers.io())
+        return eventsDao.getAllEventsByDate(date).subscribeOn(Schedulers.io())
             .flatMap {
 
                 var events: MutableList<ModifiedEventsData> = arrayListOf()
@@ -286,12 +133,12 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
                     if (index != it.lastIndex && it[index].eventId != it[index+1].eventId){
 
-                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.date, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
                         categories = arrayListOf()
                         venues = arrayListOf()
                     }
                     else if (index == it.lastIndex){
-                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.dateTime, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
+                        events.add(ModifiedEventsData(item.eventId, item.name, item.about, item.rules, item.time, item.date, item.duration, item.imageUrl, item.details, venues, categories, item.isFav))
                         categories = arrayListOf()
                         venues = arrayListOf()
                     }
@@ -300,6 +147,11 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                return@flatMap Flowable.just(events)
             }
     }
+
+    fun getEventsDates(): Flowable<List<String>>{
+        return eventsDao.getEventsDates().subscribeOn(Schedulers.io())
+    }
+
    fun isVotingEnabled(): Flowable<Boolean> {
         return comediansVoting.getStatus()
     }

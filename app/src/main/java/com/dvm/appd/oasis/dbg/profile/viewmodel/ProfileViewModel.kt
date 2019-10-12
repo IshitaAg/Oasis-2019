@@ -13,7 +13,9 @@ import com.dvm.appd.oasis.dbg.profile.views.fragments.UiState
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.UserShows
 import com.google.gson.JsonObject
-import com.paytm.pgsdk.PaytmPGService
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import retrofit2.Response
 
 
 @SuppressLint("CheckResult")
@@ -90,30 +92,8 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
         })
     }
 
-    //use prodPGService for production level
-    fun getCheckSum(stagingPGService: PaytmPGService, prodPGService: PaytmPGService, fragment: ProfileFragment, txnAmount: String){
-        Log.d("Paytm", "Entered View Model for request")
-        walletRepository.getCheckSum(stagingPGService, prodPGService, fragment, txnAmount)
-            .subscribe({
-                Log.d("PayTm", "Entered onNext")
-            },{
-                Log.e("PayTm", "Entered onError with ${it.toString()}")
-            })
-    }
-
-    fun onPaytmTransactionSucessful(body: JsonObject) {
+    fun onPaytmTransactionSucessful(body: JsonObject): Single<Response<Void>> {
         Log.d("PayTm", "Entered on Sucess in View Model")
-        walletRepository.sendTransactionDetails(body).subscribe({
-            Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
-            Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
-
-            when(it.code()) {
-                200 -> {
-
-                }
-            }
-        },{
-            Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
-        })
+        return walletRepository.sendTransactionDetails(body).observeOn(AndroidSchedulers.mainThread())
     }
 }

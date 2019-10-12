@@ -68,45 +68,45 @@ class OrderItemsDialog: DialogFragment() {
             when(order.status){
 
                 0 -> {
-                    view.accepted.setImageResource(R.drawable.ic_circle_fade)
-                    view.ready.setImageResource(R.drawable.ic_circle_fade)
-                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accepted.setImageResource(R.drawable.ic_circle_faded)
+                    view.ready.setImageResource(R.drawable.ic_circle_faded)
+                    view.finished.setImageResource(R.drawable.ic_circle_faded)
                     view.accToRed.setBackgroundResource(R.color.line_faded)
                     view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.pending_status)
 //                    view.status.text = "Pending"
                 }
                 1 -> {
-                    view.accepted.setImageResource(R.drawable.ic_circle)
-                    view.ready.setImageResource(R.drawable.ic_circle_fade)
-                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accepted.setImageResource(R.drawable.ic_circle_filled)
+                    view.ready.setImageResource(R.drawable.ic_circle_faded)
+                    view.finished.setImageResource(R.drawable.ic_circle_faded)
                     view.accToRed.setBackgroundResource(R.color.line_faded)
                     view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.accept_status)
 //                    view.status.text = "Accepted"
                 }
                 2 -> {
-                    view.accepted.setImageResource(R.drawable.ic_circle)
-                    view.ready.setImageResource(R.drawable.ic_circle)
-                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accepted.setImageResource(R.drawable.ic_circle_filled)
+                    view.ready.setImageResource(R.drawable.ic_circle_filled)
+                    view.finished.setImageResource(R.drawable.ic_circle_faded)
                     view.accToRed.setBackgroundResource(R.color.line_filled)
                     view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.ready_status)
 //                    view.status.text = "Ready"
                 }
                 3 -> {
-                    view.accepted.setImageResource(R.drawable.ic_circle)
-                    view.ready.setImageResource(R.drawable.ic_circle)
-                    view.finished.setImageResource(R.drawable.ic_circle)
+                    view.accepted.setImageResource(R.drawable.ic_circle_filled)
+                    view.ready.setImageResource(R.drawable.ic_circle_filled)
+                    view.finished.setImageResource(R.drawable.ic_circle_filled)
                     view.accToRed.setBackgroundResource(R.color.line_filled)
                     view.redToFin.setBackgroundResource(R.color.line_filled)
 //                    view.status.setBackgroundResource(R.drawable.finish_status)
 //                    view.status.text = "Finished"
                 }
                 4 -> {
-                    view.accepted.setImageResource(R.drawable.ic_circle_fade)
-                    view.ready.setImageResource(R.drawable.ic_circle_fade)
-                    view.finished.setImageResource(R.drawable.ic_circle_fade)
+                    view.accepted.setImageResource(R.drawable.ic_circle_faded)
+                    view.ready.setImageResource(R.drawable.ic_circle_faded)
+                    view.finished.setImageResource(R.drawable.ic_circle_faded)
                     view.accToRed.setBackgroundResource(R.color.line_faded)
                     view.redToFin.setBackgroundResource(R.color.line_faded)
 //                    view.status.setBackgroundResource(R.drawable.decline_status)

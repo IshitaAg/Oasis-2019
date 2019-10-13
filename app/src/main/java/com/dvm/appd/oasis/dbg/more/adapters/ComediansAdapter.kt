@@ -30,6 +30,9 @@ class ComediansAdapter(val listener: onVoteBtnClicked) :
         holder.comName.text = comedians[position].name
         holder.parent.setOnClickListener{
             holder.voteBtn.isChecked=true
+            if(lastChecked!=null){
+                lastChecked!!.isChecked = false
+            }
             listener.voted(comedians[position].name)
             lastChecked = holder.voteBtn
         }

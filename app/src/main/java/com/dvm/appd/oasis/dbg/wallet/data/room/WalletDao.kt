@@ -122,8 +122,14 @@ interface WalletDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertKindItems(items:List<KindItems>):Completable
 
+    @Transaction
+    fun deleteAndInsertKindItems(items:List<KindItems>) {
+        deleteAllKindItems()
+        insertKindItems(items)
+    }
+
     @Query("DELETE from kindItems")
-    fun deleteAllKindItems()
+    fun deleteAllKindItems():Completable
 
     @Query("SELECT * FROM kindItems")
     fun getAllkindItems():Flowable<List<KindItems>>

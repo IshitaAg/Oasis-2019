@@ -887,9 +887,18 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                       val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
                       kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,iImg))
                   }
-                  walletDao.deleteAllKindItems()
+                  walletDao.deleteAllKindItems().subscribeOn(Schedulers.io()).subscribe({
+                      walletDao.insertKindItems(kindItems).subscribeOn(Schedulers.io()).subscribe({
+                          Log.d("Wallet Repo", "Insert  Successful")
+                      },{
+                          Log.d("Wallet Repo", "Insert  UnSuccessful ${it.toString()}")
+                      })
+                  },{
+                      Log.d("Wallet Repo", "Delete UnSuccessful ${it.toString()}")
+                  })
                   Log.d("checkkind",kindItems.toString())
-                  walletDao.insertKindItems(kindItems)
+
+                  // walletDao.deleteAndInsertKindItems(kindItems)
               }
              else -> Log.d("check",it.errorBody()!!.string())
 

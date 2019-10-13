@@ -18,8 +18,6 @@ import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrderItemViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrderDialogAdapter
 import kotlinx.android.synthetic.main.dia_order_details.view.*
 import kotlinx.android.synthetic.main.dia_order_details.view.progressBar
-import kotlinx.android.synthetic.main.fra_wallet_orders.*
-import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 
 class OrderItemsDialog: DialogFragment() {
 
@@ -40,7 +38,7 @@ class OrderItemsDialog: DialogFragment() {
 
         orderItemViewModel = ViewModelProviders.of(this, OrderItemViewModelFactory(orderId!!))[OrderItemViewModel::class.java]
 
-        view.items.adapter = OrderDialogAdapter()
+        view.itemsRecycler.adapter = OrderDialogAdapter()
 
         orderItemViewModel.error.observe(this, Observer {
             if (it != null){
@@ -145,13 +143,13 @@ class OrderItemsDialog: DialogFragment() {
                 view.rating4.isVisible = false
                 view.rating5.isVisible = false
 
-                (view.items.adapter as OrderDialogAdapter).items = order.items
-                (view.items.adapter as OrderDialogAdapter).notifyDataSetChanged()
+                (view.itemsRecycler.adapter as OrderDialogAdapter).items = order.items
+                (view.itemsRecycler.adapter as OrderDialogAdapter).notifyDataSetChanged()
             }
             else if (order.status == 3){
 
-                (view.items.adapter as OrderDialogAdapter).items = order.items
-                (view.items.adapter as OrderDialogAdapter).notifyDataSetChanged()
+                (view.itemsRecycler.adapter as OrderDialogAdapter).items = order.items
+                (view.itemsRecycler.adapter as OrderDialogAdapter).notifyDataSetChanged()
 
                 when (order.rating) {
 

@@ -1,11 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.data.retrofit
 
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllOrdersPojo
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllTicketsPojo
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.AllUserShowsPojo
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.StallsPojo
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.ChecksumPojo
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
+import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.*
 import com.google.gson.JsonObject
 import io.reactivex.Single
 import retrofit2.Response
@@ -51,6 +46,6 @@ interface WalletService {
     @POST("wallet/monetary/confirm_paytm_payment")
     fun confirmPaytmPayment(@Header("Authorization")jwt: String, @Body body: JsonObject): Single<Response<Void>>
 
-    /*@GET("/kind-store/items")
-    fun getKindstoreItems():Single<Response<>>*/
+    @GET("kind-store/items")
+    fun getKindstoreItems():Single<Response<JsonObject>>
 }

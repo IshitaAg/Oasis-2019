@@ -12,12 +12,13 @@ import com.dvm.appd.oasis.dbg.notification.Notification
 import com.dvm.appd.oasis.dbg.notification.NotificationDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.WalletDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
+import retrofit2.http.HEAD
 
 @Database(entities = [StallData::class,StallItemsData::class, OrderItemsData::class,
     OrderData::class, CartData::class, QuestionData::class, OptionData::class,
     Notification::class, FavEvents::class, TicketsData::class, UserShows::class,
     TicketsCart::class, PlayerRankingResponse::class, EventData::class,
-    CategoryData::class],version = 2)
+    CategoryData::class,KindItems::class],version = 2)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun walletDao(): WalletDao

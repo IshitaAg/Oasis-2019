@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_picture.*
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var authViewModel: AuthViewModel
+    private var code: String = ""
 
     private var doubleBackToExitPressedOnce = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,12 +52,14 @@ class AuthActivity : AppCompatActivity() {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
-
-
-                    authViewModel.login(username.text.toString(), password.text.toString())
+                    if (referCode.text.isEmpty())
+                        code = ""
+                    else
+                        code = referCode.text.toString()
+                    authViewModel.login(username.text.toString(), password.text.toString(),code)
                     outsteeLogin.setBackgroundColor(Color.parseColor("#00000000"))
                     CircularLoadingButton.startAnimation()
-                    authViewModel.login(username.text.toString(),password.text.toString())
+                    authViewModel.login(username.text.toString(),password.text.toString(), code)
                 }
             }
         }
@@ -111,7 +114,7 @@ class AuthActivity : AppCompatActivity() {
                 val profile = GoogleSignIn.getSignedInAccountFromIntent(data)
                     .getResult(ApiException::class.java)
                 Toast.makeText(this, profile!!.displayName, Toast.LENGTH_SHORT).show()
-                authViewModel.Blogin(profile.idToken!!)
+                authViewModel.Blogin(profile.idToken!!, code)
             } catch (e: ApiException) {
                 Log.d("checke", e.toString())
                 Toast.makeText(this, "{${e.statusCode}: Sign in Failure!", Toast.LENGTH_LONG).show()

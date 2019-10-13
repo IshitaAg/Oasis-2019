@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.util.Log
 import com.dvm.appd.oasis.dbg.auth.data.User
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository.Keys.referralCode
 import com.dvm.appd.oasis.dbg.auth.data.retrofit.AuthService
 import com.dvm.appd.oasis.dbg.auth.views.LoginState
 import com.google.firebase.messaging.FirebaseMessaging
@@ -38,31 +39,29 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
 
     }
 
-    fun loginOutstee(username: String, password: String): Single<LoginState> {
+    fun loginOutstee(username: String, password: String, code: String): Single<LoginState> {
         val regToken = sharedPreferences.getString(Keys.REGTOKEN, "")
-        val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         val body = JsonObject().also {
             it.addProperty("username", username)
             it.addProperty("password", password)
             if(regToken != "")
                 it.addProperty("reg_token", regToken)
-            if(referralCode != "")
-                it.addProperty("referral_code", referralCode)
+            if(code != "")
+                it.addProperty("referral_code", code)
         }
 
         Log.d("check", body.toString())
         return login(body, false)
     }
 
-    fun loginBitsian(id:String):Single<LoginState>{
+    fun loginBitsian(id:String, code: String):Single<LoginState>{
         val regToken = sharedPreferences.getString(Keys.REGTOKEN, "Default Value")
-        val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         val body = JsonObject().also {
             it.addProperty("id_token",id)
             if(regToken != "")
                 it.addProperty("reg_token", regToken)
-            if(referralCode != "")
-                it.addProperty("referral_code", referralCode)
+            if(code != "")
+                it.addProperty("referral_code", code)
         }
         Log.d("check",body.toString())
         return login(body,true)

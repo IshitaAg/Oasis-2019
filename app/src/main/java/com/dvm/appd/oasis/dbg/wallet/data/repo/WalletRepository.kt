@@ -887,7 +887,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                       val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
                       kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,iImg))
                   }
-               //   walletDao.deleteAllKindItems()
+                  walletDao.deleteAllKindItems()
                   Log.d("checkkind",kindItems.toString())
                   walletDao.insertKindItems(kindItems)
               }

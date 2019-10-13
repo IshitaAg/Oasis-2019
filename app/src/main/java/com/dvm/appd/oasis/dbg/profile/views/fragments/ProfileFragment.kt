@@ -142,10 +142,10 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                 }
                 UiState.ShowIdle -> {
                     rootView.swipeProfile.isRefreshing = false
-                    rootView.loading.visibility = View.GONE
+                    rootView.progress_profile.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
-                    rootView.loading.visibility = View.VISIBLE
+                    rootView.progress_profile.visibility = View.VISIBLE
                 }
             }
         })

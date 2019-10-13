@@ -119,4 +119,13 @@ interface WalletDao {
     @Query("SELECT * FROM tickets_cart")
     fun getTicketsCart(): Flowable<List<TicketsCart>>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertKindItems(items:List<KindItems>):Completable
+
+    @Query("DELETE from kindItems")
+    fun deleteAllKindItems()
+
+    @Query("SELECT * FROM kindItems")
+    fun getAllkindItems():Flowable<List<KindItems>>
+
 }

@@ -18,13 +18,13 @@
     </item>
     <item android:top="-200dp"
             android:left="100dp"
-            android:bottom="610dp"
+            android:bottom="700dp"
             android:right="50dp">
         <shape android:shape="oval">
             <solid android:color="#7849f7"/>
         </shape>
     </item>
-    <item android:bottom="610dp"
+    <item android:bottom="700dp"
             android:top="-250dp"
             android:left="200dp"
             android:right="-100dp">

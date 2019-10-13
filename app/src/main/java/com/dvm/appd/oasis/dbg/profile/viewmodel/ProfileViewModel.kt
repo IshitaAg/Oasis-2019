@@ -10,6 +10,7 @@ import com.dvm.appd.oasis.dbg.auth.data.User
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment
 import com.dvm.appd.oasis.dbg.profile.views.fragments.UiState
+import com.dvm.appd.oasis.dbg.shared.util.asMut
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.UserShows
 import com.google.gson.JsonObject
@@ -26,6 +27,7 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
     var balance:LiveData<String> = MutableLiveData()
     var userTickets: LiveData<List<UserShows>> = MutableLiveData()
     var error: LiveData<String> = MutableLiveData(null)
+    var tokens:LiveData<String> = MutableLiveData()
 
     init {
 
@@ -42,6 +44,13 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
 
         walletRepository.getBalance().subscribe({
             (balance as MutableLiveData).postValue(it.toString())
+            (error as MutableLiveData).postValue(null)
+        },{
+            (error as MutableLiveData).postValue(it.message)
+        })
+
+        walletRepository.getTockens().subscribe({
+            tokens.asMut().postValue(it.toString())
             (error as MutableLiveData).postValue(null)
         },{
             (error as MutableLiveData).postValue(it.message)
@@ -78,16 +87,20 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
 
     fun refreshUserShows(){
         walletRepository.updateUserTickets().subscribe({
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(null)
         },{
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(it.message)
         })
     }
 
     fun refreshTicketsData(){
         walletRepository.getTicketInfo().subscribe({
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(null)
         },{
+            (order as MutableLiveData).postValue(UiState.ShowIdle)
             (error as MutableLiveData).postValue(it.message)
         })
     }

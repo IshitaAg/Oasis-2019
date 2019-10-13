@@ -10,5 +10,5 @@ interface WalletComponent {
     fun injectStallItems(factory:StallItemsViewModelFactory)
     fun injectOrderItems(factory: OrderItemViewModelFactory)
     fun injectOrders(factory: OrdersViewModelFactory)
-
+    fun inject(factory: KindItemsViewModelFactory)
 }

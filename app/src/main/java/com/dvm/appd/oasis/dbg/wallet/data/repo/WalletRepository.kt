@@ -24,6 +24,8 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.joinAll
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import java.lang.Exception
@@ -512,6 +514,12 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
         }
     }
 
+    fun getTockens():Flowable<Int>{
+        return moneyTracker.getTokens().doOnError {
+            Log.d("checke", it.toString())
+        }
+    }
+
     fun transferMoney(id:Int,amount:Int):Single<TransactionResult>{
 
         val body = JsonObject().also {
@@ -862,5 +870,40 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
     fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
         return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
+    }
+    fun fetchKindItems():Completable{
+        Log.d("checkr","called")
+       return walletService.getKindstoreItems().doOnSuccess {
+           Log.d("check",it.code().toString())
+           when(it.code()){
+              200 ->{
+                  var kindItems:List<KindItems> = emptyList()
+                 Log.d("checkr",it.body().toString())
+                 val jObj = JSONObject(it.body()!!.toString())
+                  val iNames:JSONArray = jObj.getJSONArray("items_list")
+                  for(i in 0 until iNames.length()){
+                      val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
+                      val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
+                      val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
+                      kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,iImg))
+                  }
+                  walletDao.deleteAllKindItems()
+                  Log.d("checkkind",kindItems.toString())
+                  walletDao.insertKindItems(kindItems)
+              }
+             else -> Log.d("check",it.errorBody()!!.string())
+
+           }
+       }.ignoreElement().doOnError {
+           Log.d("checke",it.toString())
+       }.subscribeOn(Schedulers.io())
+
+    }
+
+    fun getKindItems():Observable<List<KindItems>>{
+        Log.d("check","getkind")
+        return walletDao.getAllkindItems().toObservable().subscribeOn(Schedulers.io()).doOnError {
+            Log.d("check",it.toString())
+        }
     }
 }

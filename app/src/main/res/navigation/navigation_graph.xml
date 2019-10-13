@@ -72,6 +72,10 @@
         <action
                 android:id="@+id/action_action_food_to_notificationFragment"
                 app:destination="@id/notificationFragment" />
+        <action
+                android:id="@+id/action_action_food_to_kindItemsFragment"
+                app:destination="@id/kindItemsFragment"
+                app:popUpTo="@+id/action_food" />
     </fragment>
 
     <fragment android:id="@+id/action_order_history"
@@ -181,6 +185,10 @@
             android:id="@+id/votingFragment"
             android:name="com.dvm.appd.oasis.dbg.more.fragments.VotingFragment"
             android:label="VotingFragment" />
+    <fragment
+            android:id="@+id/kindItemsFragment"
+            android:name="com.dvm.appd.oasis.dbg.wallet.views.fragments.KindItemsFragment"
+            android:label="KindItemsFragment" />
 
 
 </navigation>

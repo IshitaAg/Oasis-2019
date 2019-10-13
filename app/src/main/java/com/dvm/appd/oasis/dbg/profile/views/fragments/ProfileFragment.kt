@@ -19,6 +19,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
@@ -26,14 +28,14 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.google.android.play.core.internal.x
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.labo.kaji.fragmentanimations.FlipAnimation
-import com.labo.kaji.fragmentanimations.MoveAnimation
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
@@ -46,7 +48,10 @@ import kotlinx.android.synthetic.main.fra_profile.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
+import okio.Utf8
 import java.lang.Exception
+import java.sql.Array
+import java.util.*
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
@@ -66,12 +71,15 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-        //(activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_profile)
 
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
         }
+
+        profileViewModel.tokens.observe(this, Observer {
+            if(it!=Integer.MAX_VALUE.toString())
+                rootView.tokens.text = it!!
+        })
 
         profileViewModel.balance.observe(this, Observer {
             if(it!=Integer.MAX_VALUE.toString())
@@ -133,10 +141,11 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
                     startActivity(Intent(context!!, AuthActivity::class.java))
                 }
                 UiState.ShowIdle -> {
-                    rootView.loading.visibility = View.GONE
+                    rootView.swipeProfile.isRefreshing = false
+                    rootView.progress_profile.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
-                    rootView.loading.visibility = View.VISIBLE
+                    rootView.progress_profile.visibility = View.VISIBLE
                 }
             }
         })
@@ -167,11 +176,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
             }
         })
 
+        rootView.swipeProfile.setOnRefreshListener {
+            (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
+            profileViewModel.refreshTicketsData()
+            profileViewModel.refreshUserShows()
+        }
+
         return rootView
     }
 
     fun String.generateQr(): Bitmap {
-        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400)
+        val bitMatrix = MultiFormatWriter().encode(this, BarcodeFormat.QR_CODE, 400, 400, com.google.common.collect.ImmutableMap.of(com.google.zxing.EncodeHintType.MARGIN,0))
         return BarcodeEncoder().createBitmap(bitMatrix)
     }
 

@@ -79,9 +79,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     private fun EventItemPojo.toEventData(): EventData{
 
         return if (time == "TBA" || dateTime == "TBA")
-            EventData(eventId = id,name =  name, about = about, rules = rules, time = time, date = dateTime, duration = duration, image_url = image, details = details, venues = venue)
+            EventData(eventId = id,name =  name, about = about, rules = rules, time = time, date = dateTime, details = details, venues = venue)
         else
-            EventData(eventId = id,name =  name, about = about, rules = rules, time = time.substring(0, 5), date = dateTime.substring(0, 10), duration = duration, image_url = image, details = details, venues = venue)
+            EventData(eventId = id,name =  name, about = about, rules = rules, time = time.substring(0, 5), date = dateTime.substring(0, 10), details = details, venues = venue)
     }
 
     private fun EventItemPojo.toCategoryData(): List<CategoryData>{

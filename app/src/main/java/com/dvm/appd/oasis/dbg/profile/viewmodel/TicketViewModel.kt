@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.profile.viewmodel
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedTicketsData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.TicketsCart
 
+@SuppressLint("CheckResult")
 class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
 
     var tickets: LiveData<List<ModifiedTicketsData>> = MutableLiveData()
@@ -32,7 +34,7 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.buyTickets().subscribe({
             Log.d("Wallet Repo", "Entered success")
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(null)
+            (error as MutableLiveData).postValue("Tickets bought successfully")
         },{
             Log.d("Wallet Repo", "Errror in Api call = ${it.toString()}")
             (progressBarMark as MutableLiveData).postValue(1)

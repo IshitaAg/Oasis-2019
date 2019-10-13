@@ -81,7 +81,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             (stallsViewModel.result as MutableLiveData).postValue(StallResult.Failure)
             stallsViewModel.refreshData()
         }
-        
+
         return rootview
     }
 

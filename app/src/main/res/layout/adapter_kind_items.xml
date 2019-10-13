@@ -51,7 +51,19 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ItemName"
             app:layout_constraintEnd_toEndOf="@+id/stallImage"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toEndOf="@+id/ItemName"
             app:layout_constraintTop_toTopOf="@+id/ItemName" />
+
+    <ImageView
+            android:id="@+id/kImg"
+            android:layout_width="56dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ItemName"
+            app:layout_constraintEnd_toStartOf="@+id/ItemName"
+            app:layout_constraintHorizontal_bias="0.28"
+            app:layout_constraintStart_toStartOf="@+id/stallImage"
+            app:layout_constraintTop_toTopOf="@+id/ItemName"
+            app:srcCompat="@drawable/ic_card_giftcard_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

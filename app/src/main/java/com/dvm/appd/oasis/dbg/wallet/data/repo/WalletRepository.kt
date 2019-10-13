@@ -404,11 +404,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
                         }
 
-                    }
-                    .doOnError {
-                        Log.e("PlaceOrder", "Error", it)
-                    }
-                    .ignoreElement()
+                    }.ignoreElement()
+            }.doOnError {
+                Log.e("PlaceOrder", "Error", it)
             }
     }
 

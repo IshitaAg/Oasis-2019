@@ -73,4 +73,8 @@
     <string name="miscellaneous">Miscellaneous</string>
     <string name="rupee">\u20B9</string>
     <string name="title_activity_map_fragment">Map</string>
+    <string-array name="profile_array">
+        <item>Refer</item>
+        <item>Logout</item>
+    </string-array>
 </resources>

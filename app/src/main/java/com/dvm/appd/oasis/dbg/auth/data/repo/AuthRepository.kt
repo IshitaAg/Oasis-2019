@@ -136,7 +136,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                                 phone = response.body()!!.phone,
                                 qrCode = response.body()!!.qrCode,
                                 isBitsian = bitsian,
-                                firstLogin = true,
+                                firstLogin = firstLogin,
                                 voted = false,
                                 referralCode = response.body()!!.referralCode
                             )

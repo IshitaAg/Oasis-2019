@@ -885,19 +885,18 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                       val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
                       val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
                       val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
-                      kindItems = kindItems.plus(KindItems(0,iNames[i] as String,iPrice,iAvail,iImg))
+                      kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,iImg))
                   }
+               //   walletDao.deleteAllKindItems()
                   Log.d("checkkind",kindItems.toString())
-                 walletDao.deleteAllKindItems()
                   walletDao.insertKindItems(kindItems)
               }
-             else -> Log.d("check","repo error")
+             else -> Log.d("check",it.errorBody()!!.string())
 
            }
-       }.doOnError {
+       }.ignoreElement().doOnError {
            Log.d("checke",it.toString())
-       }.ignoreElement()
-           .subscribeOn(Schedulers.io())
+       }.subscribeOn(Schedulers.io())
 
     }
 

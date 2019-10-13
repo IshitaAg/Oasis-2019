@@ -8,7 +8,7 @@ import javax.annotation.Nullable
 @Entity(tableName = "kindItems")
 data class KindItems(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     val id :Int,
 
     @ColumnInfo(name = "itemName")

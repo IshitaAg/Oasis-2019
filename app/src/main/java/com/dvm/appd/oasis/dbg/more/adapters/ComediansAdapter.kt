@@ -29,9 +29,7 @@ class ComediansAdapter(val listener: onVoteBtnClicked) :
     override fun onBindViewHolder(holder: ComediansAdapter.ComediansViewHolder, position: Int) {
         holder.comName.text = comedians[position].name
         holder.parent.setOnClickListener{
-            if(lastChecked!=null){
-                lastChecked!!.isChecked=false
-            }
+            holder.voteBtn.isChecked=true
             listener.voted(comedians[position].name)
             lastChecked = holder.voteBtn
         }

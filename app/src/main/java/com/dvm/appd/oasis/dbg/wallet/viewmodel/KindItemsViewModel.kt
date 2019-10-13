@@ -15,13 +15,12 @@ class KindItemsViewModel(val walletRepository: WalletRepository):ViewModel() {
     init {
         walletRepository.fetchKindItems().subscribe({
             walletRepository.getKindItems().subscribe{
-                Log.d("check",it.toString())
+                Log.d("checkkindvm",it.toString())
                 items.asMut().postValue(it)
             }
         },{
             toast.asMut().postValue(it.toString())
         })
-
     }
 
 }

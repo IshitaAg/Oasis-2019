@@ -67,6 +67,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="40dp"
                     android:layout_marginEnd="8dp"
                     android:clipToPadding="false"
                     android:paddingBottom="60dp"
@@ -74,7 +75,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/kindStore"
+                    app:layout_constraintTop_toBottomOf="@+id/stallLine"
                     app:spanCount="2"
                     tools:itemCount="12"
                     tools:listitem="@layout/adapter_wallet_stalls" />
@@ -105,76 +106,6 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="@+id/stalls"
                 app:layout_constraintTop_toBottomOf="@+id/stalls" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/kindStore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toTopOf="@+id/stalls_recycler"
-                    app:layout_constraintEnd_toEndOf="@+id/stalls_recycler"
-                    app:layout_constraintStart_toStartOf="@+id/stalls_recycler"
-                    app:layout_constraintTop_toBottomOf="@+id/stallLine"
-                    app:layout_constraintVertical_chainStyle="spread_inside">
-
-
-                <View
-                        android:id="@+id/stallImage"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@drawable/placeholder_stalls"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1.33"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                        android:id="@+id/sImg"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/transparent"
-                        app:layout_constraintBottom_toBottomOf="@+id/stallImage"
-                        app:layout_constraintStart_toStartOf="@+id/stallImage"
-                        app:layout_constraintTop_toTopOf="@+id/stallImage" />
-
-                <TextView
-                        android:id="@+id/quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:fontFamily="@font/shellypalmer_circular_std_book"
-                        android:text="Kind Store"
-
-                        android:textAlignment="center"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/goBtn"
-                        app:layout_constraintStart_toEndOf="@+id/sImg"
-                        app:layout_constraintTop_toTopOf="@+id/stallImage" />
-
-                <ImageView
-                        android:id="@+id/goBtn"
-                        android:layout_width="18dp"
-                        android:layout_height="0dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/quantity"
-                        app:layout_constraintEnd_toEndOf="@+id/stallImage"
-                        app:layout_constraintTop_toTopOf="@+id/quantity"
-                        app:srcCompat="@drawable/ic_next" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

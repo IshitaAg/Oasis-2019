@@ -882,7 +882,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                   for(i in 0 until iNames.length()){
                       val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
                       val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
-                      val kindImg= "https://wallet.bits-oasis.org/media/kind_store/items/"+iImg.substringAfterLast("/")
+                      val kindImg= "https://wallet.bits-oasis.org/media/media/kind_store/items/"+iImg.substringAfterLast("/")
                       val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
                       kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,kindImg))
                   }

@@ -5,7 +5,7 @@
         android:id="@+id/voteView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="4dp"
         android:background="@drawable/shape_rectangle_rounded_16dp"
         android:backgroundTint="#31365E"
         android:padding="16dp">

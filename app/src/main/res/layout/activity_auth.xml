@@ -58,7 +58,7 @@
             app:layout_constraintBottom_toTopOf="@id/textView7"
             app:layout_constraintEnd_toEndOf="@+id/password"
             app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/referCode"
             app:mrl_rippleOverlay="true"
             app:mrl_rippleHover="true"
             app:mrl_rippleDelayClick="true">
@@ -193,6 +193,28 @@
             app:layout_constraintEnd_toEndOf="@+id/username"
             app:layout_constraintStart_toStartOf="@+id/username"
             app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <EditText
+            android:id="@+id/referCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:background="#34000000"
+            android:drawableStart="@drawable/ic_card_giftcard_black_24dp"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:hint="Referral Code (Optional)"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColor="@color/colorWhite"
+            android:textColorHint="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/view6"
+            app:layout_constraintStart_toStartOf="@+id/view6"
+            app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <TextView
             android:id="@+id/textView7"

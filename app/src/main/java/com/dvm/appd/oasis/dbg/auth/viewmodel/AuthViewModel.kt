@@ -33,8 +33,8 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun Blogin(id: String) {
-        authRepository.loginBitsian(id).subscribe({
+    fun Blogin(id: String, code: String) {
+        authRepository.loginBitsian(id, code).subscribe({
             authRepository.subscribeToTopics()
             when (it!!) {
                 LoginState.Success -> {
@@ -56,9 +56,9 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
         })
     }
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String, code: String) {
 
-        authRepository.loginOutstee(username, password).doOnSuccess {
+        authRepository.loginOutstee(username, password, code).doOnSuccess {
             authRepository.subscribeToTopics()
             when(it!!){
                 LoginState.Success -> {

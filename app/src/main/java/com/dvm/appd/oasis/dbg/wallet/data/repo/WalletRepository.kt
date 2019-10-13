@@ -622,7 +622,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                     }
                 }
             }
-            .ignoreElement()
+            .ignoreElement().doOnError {
+                Log.d("checke",it.toString())
+            }
     }
 
     private fun ComboPojo.toTickets(): TicketsData{
@@ -634,38 +636,41 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun updateUserTickets(): Completable{
-         return walletService.getUserTickets(jwt.blockingGet().toString()).subscribeOn(Schedulers.io())
-            .doOnSuccess {response ->
+        return authRepository.getUser().flatMapCompletable {
+            walletService.getUserTickets(it.jwt)
+                .doOnSuccess {response ->
 
-                Log.d("Tickets", "$response")
-                when(response.code()){
+                    Log.d("Tickets", "$response")
+                    when(response.code()){
 
-                    200 -> {
-                        var userTickets: MutableList<UserShows> = arrayListOf()
+                        200 -> {
+                            var userTickets: MutableList<UserShows> = arrayListOf()
 
-                        response.body()!!.shows.forEach {
-                            userTickets.add(it.toUserShows())
+                            response.body()!!.shows.forEach {
+                                userTickets.add(it.toUserShows())
+                            }
+
+                            walletDao.updateUserTickets(userTickets)
                         }
 
-                        walletDao.updateUserTickets(userTickets)
-                    }
+                        401 -> {
+                            Log.d("PlaceOrder", "Success Error: 401")
+                            throw Exception("Wrong credentials: Login again")
+                        }
 
-                    401 -> {
-                        Log.d("PlaceOrder", "Success Error: 401")
-                        throw Exception("Wrong credentials: Login again")
-                    }
+                        in 400..499 -> {
+                            throw Exception(response.message())
+                        }
 
-                    in 400..499 -> {
-                        throw Exception(response.message())
-                    }
+                        else -> {
+                            throw Exception("Server error")
+                        }
 
-                    else -> {
-                        throw Exception("Server error")
                     }
-
-                }
-            }
-            .ignoreElement()
+                }.ignoreElement()
+        }.subscribeOn(Schedulers.io()).doOnError {
+                 Log.d("checke",it.toString())
+             }
     }
 
     private fun UserShowPojo.toUserShows(): UserShows{
@@ -673,24 +678,34 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun getAllUserShows(): Flowable<List<UserShows>>{
-        return walletDao.getAllUserTickets().subscribeOn(Schedulers.io())
+        return walletDao.getAllUserTickets().subscribeOn(Schedulers.io()).doOnError {
+            Log.d("checke",it.toString())
+        }
     }
 
     fun getAllTicketData(): Flowable<List<ModifiedTicketsData>>{
 
-        return walletDao.getAllTickets().subscribeOn(Schedulers.io())
+        return walletDao.getAllTickets().subscribeOn(Schedulers.io()).doOnError {
+            Log.d("checke",it.toString())
+        }
     }
 
     fun insertTicketsCart(tickets: TicketsCart): Completable{
-        return walletDao.insertTicketCart(tickets).subscribeOn(Schedulers.io())
+        return walletDao.insertTicketCart(tickets).subscribeOn(Schedulers.io()).doOnError {
+            Log.d("checke",it.toString())
+        }
     }
 
     fun deleteTicektsCartItem(id: Int): Completable{
-        return walletDao.clearTicketsCartItem(id).subscribeOn(Schedulers.io())
+        return walletDao.clearTicketsCartItem(id).subscribeOn(Schedulers.io()).doOnError {
+            Log.d("checke",it.toString())
+        }
     }
 
     fun updateTicketsCart(quantity: Int, id: Int): Completable{
-        return walletDao.updateTicketsCart(quantity, id).subscribeOn(Schedulers.io())
+        return walletDao.updateTicketsCart(quantity, id).subscribeOn(Schedulers.io()).doOnError {
+            Log.d("checke",it.toString())
+        }
     }
 
     fun buyTickets(): Completable{
@@ -748,6 +763,8 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                         }
                     }
                     .ignoreElement()
+            }.doOnError {
+                Log.d("checke",it.toString())
             }
     }
 

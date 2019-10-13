@@ -7,16 +7,16 @@
     </item>
 <item android:top="-200dp"
         android:left="-200dp"
-        android:bottom="600dp"
-        android:right="300dp">
+        android:bottom="500dp"
+        android:right="200dp">
     <shape android:shape="oval">
       <solid android:color="#8655E5"/>
     </shape>
 </item>
     <item android:bottom="-200dp"
             android:left="-200dp"
-            android:top="550dp"
-            android:right="250dp">
+            android:top="500dp"
+            android:right="200dp">
         <shape android:shape="oval">
             <gradient android:startColor="#29297D"
                 android:endColor="#7666CC"

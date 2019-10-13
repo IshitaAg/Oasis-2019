@@ -26,25 +26,23 @@
 
     <ImageView
             android:id="@+id/imageView9"
-            android:layout_width="499dp"
-            android:layout_height="773dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="128dp"
             android:src="@drawable/ic_onbording_back"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_onBoarding_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="@+id/img_onBoarding" />
 
     <ImageView
             android:id="@+id/img_onBoarding"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="24dp"
             android:layout_weight="1"
             android:src="@drawable/ic_undraw_happy_feeling_slmw"
             app:layout_constraintBottom_toTopOf="@+id/text_onBoarding_heading"
@@ -52,7 +50,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_bttn_skip"
             app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
             android:id="@+id/text_onBoarding_heading"
@@ -73,16 +71,17 @@
             android:layout_width="301dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="32dp"
             android:layout_weight="2"
             android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:lineSpacingExtra="4sp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:text="Earn Kind Store Tokens by taking part in various competitions organized during Oasis. Spend them by visiting Kind Store and get free Goodies. Know your Kind Store token points through your Profile Screen."
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/bttn_next_onBoarding"
             app:layout_constraintEnd_toEndOf="@+id/text_onBoarding_heading"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="@+id/text_onBoarding_heading"

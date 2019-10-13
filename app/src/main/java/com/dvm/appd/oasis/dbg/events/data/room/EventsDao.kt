@@ -45,12 +45,15 @@ interface EventsDao {
     @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date ORDER BY events_data.event_id, events_data.time")
     fun getAllEventsByDate(date: String): Flowable<List<ModifiedEventsData>>
 
-    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date AND event_categories.category IN (:categories) ORDER BY events_data.event_id, events_data.time")
-    fun getEventsByCategory(date: String, categories: List<String>): Flowable<List<ModifiedEventsData>>
+    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date AND event_categories.category = 'true' ORDER BY events_data.event_id, events_data.time")
+    fun getEventsByCategory(date: String): Flowable<List<ModifiedEventsData>>
 
     @Query("SELECT DISTINCT date FROM events_data")
     fun getEventsDates(): Flowable<List<String>>
 
-    @Query("SELECT DISTINCT category FROM event_categories")
-    fun getAllCategories(): Flowable<List<String>>
+    @Query("SELECT DISTINCT category, filtered FROM event_categories")
+    fun getAllCategories(): Flowable<List<FilterData>>
+
+    @Query("UPDATE event_categories SET filtered = :filtered WHERE category = :category")
+    fun updateFiltered(category: String, filtered: Boolean): Completable
 }

@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
+import kotlinx.android.synthetic.main.adapter_filter_item.view.*
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -48,32 +49,32 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         when(sdfDate.format(date.time)){
             "2019-10-19" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19", null)
+                eventsViewModel.getEventData("2019-10-19")
             }
 
             "2019-10-20" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-20")
-                eventsViewModel.getEventData("2019-10-20", null)
+                eventsViewModel.getEventData("2019-10-20")
             }
 
             "2019-10-21" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-21")
-                eventsViewModel.getEventData("2019-10-21", null)
+                eventsViewModel.getEventData("2019-10-21")
             }
 
             "2019-10-22" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-22")
-                eventsViewModel.getEventData("2019-10-22", null)
+                eventsViewModel.getEventData("2019-10-22")
             }
 
             "2019-10-23" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-23")
-                eventsViewModel.getEventData("2019-10-23", null)
+                eventsViewModel.getEventData("2019-10-23")
             }
 
             else -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19", null)
+                eventsViewModel.getEventData("2019-10-19")
             }
         }
 
@@ -101,6 +102,11 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
         })
 
+        eventsViewModel.filter.observe(this, Observer {
+            (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+            eventsViewModel.getEventData(eventsViewModel.daySelected.value.toString())
+        })
+
         eventsViewModel.error.observe(this, Observer {
             if (it != null){
                 Toast.makeText(context!!, it, Toast.LENGTH_SHORT).show()
@@ -126,19 +132,23 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             eventsViewModel.refreshData()
         }
 
+        view.filter.setOnClickListener {
+            view.findNavController().navigate(R.id.action_action_events_to_filter)
+        }
+
         return view
     }
 
-    override fun updateIsFavourite(eventId: Int, favouriteMark: Int) {
-        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.markEventFav(eventId, favouriteMark)
-    }
+//    override fun updateIsFavourite(eventId: Int, favouriteMark: Int) {
+//        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+//        eventsViewModel.markEventFav(eventId, favouriteMark)
+//    }
 
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
         (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
         eventsViewModel.currentSubscription.dispose()
-        eventsViewModel.getEventData(day, null)
+        eventsViewModel.getEventData(day)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 

@@ -12,7 +12,6 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.WalletDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallItemsData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
-import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.PaytmPojo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.gson.JsonObject
@@ -24,7 +23,6 @@ import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.joinAll
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
@@ -884,8 +882,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
                   for(i in 0 until iNames.length()){
                       val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
                       val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
+                      val kindImg= "https://wallet.bits-oasis.org/media/kind_store/items/"+iImg.substringAfterLast("/")
                       val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
-                      kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,iImg))
+                      kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,kindImg))
                   }
                   walletDao.deleteAllKindItems().subscribeOn(Schedulers.io()).subscribe({
                       walletDao.insertKindItems(kindItems).subscribeOn(Schedulers.io()).subscribe({

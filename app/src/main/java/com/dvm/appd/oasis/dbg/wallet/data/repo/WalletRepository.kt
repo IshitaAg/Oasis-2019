@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.data.repo
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment
@@ -881,7 +882,13 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
             .ignoreElement()
     }
 
-    fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
+    @SuppressLint("CheckResult")
+    fun sendTransactionDetails(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
+        walletDao.insertPaytmTransaction(transaction).subscribeOn(Schedulers.io()).subscribe({
+            Log.d("Wallet Reop", "Transacrtion insertion sucessful")
+        },{
+            Log.e("Wallet Repo", "Failed to insert transaction = ${it.toString()}")
+        })
         return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
     }
     fun fetchKindItems():Completable{

@@ -31,6 +31,7 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
 import com.google.android.play.core.internal.x
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
@@ -211,6 +212,23 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
             Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
             if (!(bundle!!.isEmpty)) {
                 if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
+                    val transaction = PaytmRoom(
+                        status = bundle["STATUS"].toString(),
+                        checkSumHash = bundle["CHECKSUMHASH"].toString(),
+                        bankName = bundle["BANKNAME"].toString(),
+                        orderId = bundle["ORDERID"].toString(),
+                        txnAmount = bundle["TXNAMOUNT"].toString(),
+                        txnDate = bundle["TXNDATE"].toString(),
+                        mid = bundle["MID"].toString(),
+                        txnId = bundle["TXNID"].toString(),
+                        respCode = bundle["RESPCODE"].toString(),
+                        paymentMode = bundle["PAYMENTMODE"].toString(),
+                        bankTxnId = bundle["PAYMENTMODE"].toString(),
+                        currency = bundle["CURRENCY"].toString(),
+                        gatewayName = bundle["GATEWAYNAME"].toString(),
+                        respMsg = bundle["RESPMSG"].toString()
+                    )
+                    Log.d("Profile Frag", "Generated TXN = $transaction")
                     val body = JsonObject().apply {
                         this.addProperty("STATUS", bundle["STATUS"].toString())
                         this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
@@ -228,7 +246,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
                         this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
                         Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
                     }
-                    profileViewModel.onPaytmTransactionSucessful(body).subscribe({
+                    profileViewModel.onPaytmTransactionSucessful(body, transaction).subscribe({
                         Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
                         Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
 

@@ -288,9 +288,9 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        parent!!.setSelection(0)
         when(parent!!.getItemAtPosition(position)){
             "Refer"-> {Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
-                parent.setSelection(0)
                 ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")}
             "Logout"->{ Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
                 profileViewModel.logout()}

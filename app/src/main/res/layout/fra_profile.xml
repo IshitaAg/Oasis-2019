@@ -92,8 +92,10 @@
             android:layout_height="48dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:clickable="false"
             android:padding="12dp"
             android:src="@drawable/ic_logout"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -358,6 +360,7 @@
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:scaleType="centerInside"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/logout"
             app:layout_constraintEnd_toStartOf="@+id/logout"
             app:layout_constraintTop_toTopOf="@+id/logout"
@@ -388,6 +391,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/ic_drop_down_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/logout"
+            app:layout_constraintEnd_toEndOf="@+id/logout"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/logout"
+            app:layout_constraintTop_toTopOf="@+id/logout"
+            app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,11 +12,11 @@
     <string name="action_game">Games</string>
     <string name="action_more">More</string>
 
-    <string name="onBoarding_events">Receive notifications for matches and events. See live scores winners, venues and much more. Read EPC articles on matches that you missed.</string>
+    <string name="onBoarding_kind">Earn Kind Store Tokens by taking part in various competitions organized during Oasis. Spend them by visiting Kind Store and get free Goodies. Know your Kind Store token points through your Profile Screen.</string>
     <string name="onBoarding_Order">No more waiting in long queues for your food! Simply order your favorite items from the app, track order status and collect it when it\'s ready. Indulge yourself in the seamless BOSM experience.</string>
-    <string name="onBoarding_quiz">Bored? Waiting for a match to start? The app features fun quizzes to keep you busy. Stay up to date with Sports trivia and latest news.</string>
-    <string name="onBoarding_tickets">Missed the signings for a show or just made up your mind to attend one? Just sign up for an event through the app and you\'re good to go. And don\'t forget, your QR code is your one identity for all shows.</string>
-    
+    <string name="onBoarding_referral">Refer the app to your friends and exciting gift vouchers!</string>
+    <string name="onBoarding_events">Get notifications and updates for different events and competitions going on in the campus!</string>
+    <string name="onBoarding_discounts">Order food through app and get discounts on food items!</string>
     <string name="chanel_id_general_notifications">General</string>
     <string name="chanel_id_status_change_notifications">Orders</string>
     <string name="chanel_id_rating_notifications">Rating</string>
@@ -73,4 +73,8 @@
     <string name="miscellaneous">Miscellaneous</string>
     <string name="rupee">\u20B9</string>
     <string name="title_activity_map_fragment">Map</string>
+    <string-array name="profile_array">
+        <item>Refer</item>
+        <item>Logout</item>
+    </string-array>
 </resources>

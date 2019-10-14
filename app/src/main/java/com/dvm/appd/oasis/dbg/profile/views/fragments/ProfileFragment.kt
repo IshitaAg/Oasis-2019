@@ -11,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -53,7 +56,7 @@ import java.lang.Exception
 import java.sql.Array
 import java.util.*
 
-class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
+class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.OnItemSelectedListener {
 
     private val profileViewModel by lazy {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
@@ -74,6 +77,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
 
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
+        }
+
+        ArrayAdapter.createFromResource(
+            context!!,
+            R.array.profile_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+           rootView.spinner.adapter = adapter
+            rootView.spinner.setSelection(0,false)
+            rootView.spinner.onItemSelectedListener = this
         }
 
         profileViewModel.tokens.observe(this, Observer {
@@ -269,4 +283,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback {
     /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
     }*/
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+               parent!!.setSelection(1)
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when(parent!!.getItemAtPosition(position)){
+            "Refer"-> {Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
+                parent.setSelection(0)
+                ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")}
+            "Logout"->{ Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
+                profileViewModel.logout()}
+        }
+    }
 }

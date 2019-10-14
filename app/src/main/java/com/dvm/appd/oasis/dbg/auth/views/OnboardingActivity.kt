@@ -28,10 +28,10 @@ class OnboardingActivity : AppCompatActivity(), onboardingFragmentButtonClickLis
 
                         return Onboarding1Fragment(
                             this@OnboardingActivity,
-                            R.drawable.layer1,
-                            "Track Events",
-                            resources.getColor(R.color.trackEvents),
-                            resources.getString(R.string.onBoarding_events)
+                            R.drawable.ic_undraw_happy_feeling_slmw,
+                            "Kind Store",
+                            resources.getColor(R.color.OnBoarding_colour),
+                            resources.getString(R.string.onBoarding_kind)
                             )
                     }
 
@@ -39,10 +39,10 @@ class OnboardingActivity : AppCompatActivity(), onboardingFragmentButtonClickLis
 
                         return Onboarding1Fragment(
                             this@OnboardingActivity,
-                            R.drawable.layer2,
-                            "Order Food",
-                            resources.getColor(R.color.orderFood),
-                            resources.getString(R.string.onBoarding_Order)
+                            R.drawable.ic_undraw_discount_d4bd,
+                            "Discounts",
+                            resources.getColor(R.color.OnBoarding_colour),
+                            resources.getString(R.string.onBoarding_discounts)
                         )
                     }
 
@@ -50,10 +50,10 @@ class OnboardingActivity : AppCompatActivity(), onboardingFragmentButtonClickLis
 
                         return Onboarding1Fragment(
                             this@OnboardingActivity,
-                            R.drawable.layer3,
-                            "Games",
-                            resources.getColor(R.color.games),
-                            resources.getString(R.string.onBoarding_quiz)
+                            R.drawable.ic_undraw_referral_4ki4,
+                            "Referral",
+                            resources.getColor(R.color.OnBoarding_colour),
+                            resources.getString(R.string.onBoarding_referral)
                         )
                     }
 
@@ -61,19 +61,29 @@ class OnboardingActivity : AppCompatActivity(), onboardingFragmentButtonClickLis
 
                         return Onboarding1Fragment(
                             this@OnboardingActivity,
-                            R.drawable.layer4,
-                            "Buy Tickets",
-                            resources.getColor(R.color.buyTickets),
-                            resources.getString(R.string.onBoarding_tickets)
+                            R.drawable.ic_undraw_order_confirmed_1m3v,
+                            "Order Food",
+                            resources.getColor(R.color.OnBoarding_colour),
+                            resources.getString(R.string.onBoarding_Order)
+                        )
+                    }
+
+                    4 ->{
+                        return Onboarding1Fragment(
+                            this@OnboardingActivity,
+                            R.drawable.ic_undraw_events_2p66,
+                            "Track Events",
+                            resources.getColor(R.color.OnBoarding_colour),
+                            resources.getString(R.string.onBoarding_Order)
                         )
                     }
                 }
                 return Onboarding1Fragment(
                     this@OnboardingActivity,
-                    R.drawable.layer1,
-                    "Track Events",
-                    resources.getColor(R.color.trackEvents),
-                    resources.getString(R.string.onBoarding_events)
+                    R.drawable.ic_undraw_happy_feeling_slmw,
+                    "Kind Store",
+                    resources.getColor(R.color.OnBoarding_colour),
+                    resources.getString(R.string.onBoarding_kind)
                 )
 
             }

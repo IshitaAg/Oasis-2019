@@ -29,7 +29,6 @@ class Onboarding1Fragment(val listener: onboardingFragmentButtonClickListener, v
         text_onBoarding_heading.text = heading
         parent.setBackgroundColor(background)
         text_onBoarding_content.text = body
-        bttn_next_onBoarding.setTextColor(background)
         text_bttn_skip.setOnClickListener {
             it.isClickable = false
             listener.onSkipButtonPressed()

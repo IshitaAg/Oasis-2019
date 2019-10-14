@@ -145,6 +145,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
         Log.d("CheckJWT", jwt.blockingGet().toString())
         return walletService.getAllOrders(jwt.blockingGet().toString()).subscribeOn(Schedulers.io())
             .doOnSuccess {response ->
+                Log.d("Checkorders", response.code().toString())
                 when(response.code()){
                     200 -> {
 
@@ -635,11 +636,11 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
     }
 
     fun updateUserTickets(): Completable{
-        return authRepository.getUser().flatMapCompletable {
-            walletService.getUserTickets(it.jwt)
+        return authRepository.getUser().flatMapCompletable {user->
+            walletService.getUserTickets("jwt ${user.jwt}")
                 .doOnSuccess {response ->
 
-                    Log.d("Tickets", "$response")
+                    Log.d("Tickets", "${response.code()}")
                     when(response.code()){
 
                         200 -> {
@@ -667,7 +668,9 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
                     }
                 }.ignoreElement()
-        }.subscribeOn(Schedulers.io())
+        }.subscribeOn(Schedulers.io()).doOnError {
+            Log.d("check",it.toString())
+        }
     }
 
     private fun UserShowPojo.toUserShows(): UserShows{

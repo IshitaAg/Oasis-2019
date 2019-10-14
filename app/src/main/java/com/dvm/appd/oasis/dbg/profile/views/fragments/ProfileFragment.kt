@@ -57,7 +57,7 @@ import java.lang.Exception
 import java.sql.Array
 import java.util.*
 
-class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.OnItemSelectedListener {
+class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterView.OnItemSelectedListener*/ {
 
     private val profileViewModel by lazy {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
@@ -80,7 +80,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
             profileViewModel.logout()
         }
 
-        ArrayAdapter.createFromResource(
+        /*ArrayAdapter.createFromResource(
             context!!,
             R.array.profile_array,
             android.R.layout.simple_spinner_item
@@ -89,7 +89,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
            rootView.spinner.adapter = adapter
             rootView.spinner.setSelection(0,false)
             rootView.spinner.onItemSelectedListener = this
-        }
+        }*/
 
         profileViewModel.tokens.observe(this, Observer {
             if(it!=Integer.MAX_VALUE.toString())
@@ -301,7 +301,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
     /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
     }*/
-    override fun onNothingSelected(parent: AdapterView<*>?) {
+    /*override fun onNothingSelected(parent: AdapterView<*>?) {
                parent!!.setSelection(1)
     }
 
@@ -313,5 +313,5 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
             "Logout"->{ Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
                 profileViewModel.logout()}
         }
-    }
+    }*/
 }

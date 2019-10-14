@@ -42,20 +42,21 @@ class AddMoneyDialog : DialogFragment() {
         rootView.addBtn.isClickable = true
         rootView.addBtn.setOnClickListener {
             if (rootView.amount.text.toString().isBlank())
+                if(context!=null)
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
             else if (try { rootView.amount.text.toString().toInt() } catch (e: Exception) { 100000 } > 10000) {
+                if(context!=null)
                 Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT)
                     .show()
                 rootView.amount.text.clear()
             } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
+                if(context!=null)
                 Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
-                it.isClickable = false
-                rootView.loadingPBR.visibility = View.VISIBLE
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
-
-
+                rootView.addBtn.isClickable = false
+                rootView.loadingPBR.visibility = View.VISIBLE
             }
         }
 

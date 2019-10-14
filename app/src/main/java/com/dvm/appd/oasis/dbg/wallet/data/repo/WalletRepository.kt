@@ -667,9 +667,7 @@ class WalletRepository(val walletService: WalletService, val walletDao: WalletDa
 
                     }
                 }.ignoreElement()
-        }.subscribeOn(Schedulers.io()).doOnError {
-                 Log.d("checke",it.toString())
-             }
+        }.subscribeOn(Schedulers.io())
     }
 
     private fun UserShowPojo.toUserShows(): UserShows{

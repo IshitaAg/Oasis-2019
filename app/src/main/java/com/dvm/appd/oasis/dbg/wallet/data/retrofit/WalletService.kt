@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.data.retrofit
 
+import androidx.room.Insert
 import com.dvm.appd.oasis.dbg.wallet.data.retrofit.dataclasses.*
 import com.google.gson.JsonObject
 import io.reactivex.Single

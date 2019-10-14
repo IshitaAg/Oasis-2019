@@ -70,6 +70,13 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
+
         try {
             FirebaseApp.initializeApp(this)
         } catch (e: Exception) {
@@ -359,6 +366,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     override fun onResume() {
         super.onResume()
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
+
         val activityManager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val listOfRunnigAppProcesses = activityManager.runningAppProcesses
         if (listOfRunnigAppProcesses != null) {
@@ -419,10 +432,19 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun setStatusBarColor(color: Int) {
-        Log.d("MainActivity", "Entered function to change color")
+       /* Log.d("MainActivity", "Entered function to change color")
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this,color))
+        window.setStatusBarColor(ContextCompat.getColor(this,color))*/
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
     }
 
     override fun onNetworkStatusScahnged(isConnected: Boolean) {

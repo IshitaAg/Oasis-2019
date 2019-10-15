@@ -282,7 +282,59 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     private fun checkForUpdates() {
         val updateManager = AppUpdateManagerFactory.create(this)
         updateManager.appUpdateInfo.addOnSuccessListener {appUpdateInfo ->
-            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+
+            /*remoteConfig.fetch().addOnCompleteListener {task ->
+                if (task.isSuccessful) {
+                    Log.d("Main Activity", "Fetched Remote config variables successfully")
+                    Log.d("Main Activity", "Available Version = ${appUpdateInfo.availableVersionCode()}")
+                    val versionNumber = remoteConfig.all["update_version"].toString()
+                    Log.d("Main Activity", "Version Number on remote Config = ${versionNumber}")
+                    if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                        updateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.IMMEDIATE,
+                            this,
+                            REQUEST_CODE_UPDATE_IMMIDIATE
+                        )
+                    }
+                    else {
+                        val updateListener = object : InstallStateUpdatedListener {
+                            override fun onStateUpdate(updateState: InstallState?) {
+                                if (updateState?.installStatus() == InstallStatus.DOWNLOADED) {
+
+                                }
+                            }
+                        }
+                        updateManager.registerListener(updateListener)
+                        val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
+                        snackbar.setAction("UPDATE", object : View.OnClickListener{
+                            override fun onClick(v: View?) {
+                                updateManager.startUpdateFlowForResult(
+                                    appUpdateInfo,
+                                    AppUpdateType.FLEXIBLE,
+                                    this@MainActivity,
+                                    REQUEST_CODE_UPDATE_FLEXIBLE
+                                )
+                                snackbar.dismiss()
+                            }
+                        })
+                        snackbar.setBehavior(object : BaseTransientBottomBar.Behavior(){
+                            override fun canSwipeDismissView(child: View): Boolean {
+                                return false
+                            }
+                        })
+                        snackbar.show()
+                    }
+                }
+                else {
+                    Log.d("Main Activity", "Unable to fetch from remote config")
+                }
+            }*/
+
+            Toast.makeText(this, "${appUpdateInfo.installStatus().toString()} this is the install status of the app\n${appUpdateInfo.updateAvailability().toString()} this is the update status", Toast.LENGTH_LONG).show()
+
+            /*if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                Toast.makeText(this, "Update has been Downloaded", Toast.LENGTH_SHORT).show()
                 showSnackBarToInstallUpdate(updateManager)
             }
             else if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
@@ -292,8 +344,9 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                     this,
                     REQUEST_CODE_UPDATE_IMMIDIATE
                 )
-            }
-            else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+            }*/
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || true) {
+                Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
                 Log.d("Main Activity", "NewUpdate Available")
                 remoteConfig.fetch().addOnCompleteListener {task ->
                     if (task.isSuccessful) {
@@ -301,22 +354,27 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         Toast.makeText(this, "Result = ${task.result.toString()}", Toast.LENGTH_LONG).show()
                         Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
                         val versionNumber = remoteConfig.all["update_version"].toString()
-                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                            updateManager.startUpdateFlowForResult(
+                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) || true) {
+                            Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
+                            /*updateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
                                 AppUpdateType.IMMEDIATE,
                                 this,
                                 REQUEST_CODE_UPDATE_IMMIDIATE
-                            )
+                            )*/
+                            startActivity(Intent(this, ImmidiateUpdateActivity::class.java))
                         }
                         else {
-                            val updateListener = object : InstallStateUpdatedListener {
-                                override fun onStateUpdate(updateState: InstallState?) {
+                            Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
+                            val updateListener =
+                                InstallStateUpdatedListener { updateState ->
+                                    Toast.makeText(this@MainActivity, "Called Listener Callback ${updateState?.installStatus()}", Toast.LENGTH_SHORT).show()
                                     if (updateState?.installStatus() == InstallStatus.DOWNLOADED) {
-
+                                        showSnackBarToInstallUpdate(updateManager)
+                                    } else if (updateState?.installStatus() == InstallStatus.FAILED) {
+                                        Snackbar.make(this@MainActivity.coordinator_parent, "Failed to install the update", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
-                            }
                             updateManager.registerListener(updateListener)
                             val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
                             snackbar.setAction("UPDATE", object : View.OnClickListener{
@@ -339,6 +397,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         }
                     }
                     else {
+                        Toast.makeText(this, "Cannot recieve data from remote config", Toast.LENGTH_LONG).show()
                         Log.d("Main Activity", "Unable to fetch from remote config")
                     }
                 }

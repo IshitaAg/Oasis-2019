@@ -54,7 +54,7 @@ class AddMoneyDialog : DialogFragment() {
                 Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
-                it.isClickable = false
+                rootView.addBtn.isClickable = false
                 rootView.loadingPBR.visibility = View.VISIBLE
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
 

@@ -70,6 +70,13 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
+
         try {
             FirebaseApp.initializeApp(this)
         } catch (e: Exception) {
@@ -275,7 +282,59 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     private fun checkForUpdates() {
         val updateManager = AppUpdateManagerFactory.create(this)
         updateManager.appUpdateInfo.addOnSuccessListener {appUpdateInfo ->
-            if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+
+            /*remoteConfig.fetch().addOnCompleteListener {task ->
+                if (task.isSuccessful) {
+                    Log.d("Main Activity", "Fetched Remote config variables successfully")
+                    Log.d("Main Activity", "Available Version = ${appUpdateInfo.availableVersionCode()}")
+                    val versionNumber = remoteConfig.all["update_version"].toString()
+                    Log.d("Main Activity", "Version Number on remote Config = ${versionNumber}")
+                    if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                        updateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.IMMEDIATE,
+                            this,
+                            REQUEST_CODE_UPDATE_IMMIDIATE
+                        )
+                    }
+                    else {
+                        val updateListener = object : InstallStateUpdatedListener {
+                            override fun onStateUpdate(updateState: InstallState?) {
+                                if (updateState?.installStatus() == InstallStatus.DOWNLOADED) {
+
+                                }
+                            }
+                        }
+                        updateManager.registerListener(updateListener)
+                        val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
+                        snackbar.setAction("UPDATE", object : View.OnClickListener{
+                            override fun onClick(v: View?) {
+                                updateManager.startUpdateFlowForResult(
+                                    appUpdateInfo,
+                                    AppUpdateType.FLEXIBLE,
+                                    this@MainActivity,
+                                    REQUEST_CODE_UPDATE_FLEXIBLE
+                                )
+                                snackbar.dismiss()
+                            }
+                        })
+                        snackbar.setBehavior(object : BaseTransientBottomBar.Behavior(){
+                            override fun canSwipeDismissView(child: View): Boolean {
+                                return false
+                            }
+                        })
+                        snackbar.show()
+                    }
+                }
+                else {
+                    Log.d("Main Activity", "Unable to fetch from remote config")
+                }
+            }*/
+
+            Toast.makeText(this, "${appUpdateInfo.installStatus().toString()} this is the install status of the app\n${appUpdateInfo.updateAvailability().toString()} this is the update status", Toast.LENGTH_LONG).show()
+
+            /*if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                Toast.makeText(this, "Update has been Downloaded", Toast.LENGTH_SHORT).show()
                 showSnackBarToInstallUpdate(updateManager)
             }
             else if (appUpdateInfo.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
@@ -285,8 +344,9 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                     this,
                     REQUEST_CODE_UPDATE_IMMIDIATE
                 )
-            }
-            else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+            }*/
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
                 Log.d("Main Activity", "NewUpdate Available")
                 remoteConfig.fetch().addOnCompleteListener {task ->
                     if (task.isSuccessful) {
@@ -295,31 +355,45 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
                         val versionNumber = remoteConfig.all["update_version"].toString()
                         if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                            updateManager.startUpdateFlowForResult(
+                            Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
+                            /*updateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
                                 AppUpdateType.IMMEDIATE,
                                 this,
                                 REQUEST_CODE_UPDATE_IMMIDIATE
-                            )
+                            )*/
+                            startActivity(Intent(this, ImmidiateUpdateActivity::class.java))
                         }
                         else {
-                            val updateListener = object : InstallStateUpdatedListener {
-                                override fun onStateUpdate(updateState: InstallState?) {
+                            Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
+                            /*val updateListener =
+                                InstallStateUpdatedListener { updateState ->
+                                    Toast.makeText(this@MainActivity, "Called Listener Callback ${updateState?.installStatus()}", Toast.LENGTH_SHORT).show()
                                     if (updateState?.installStatus() == InstallStatus.DOWNLOADED) {
-
+                                        showSnackBarToInstallUpdate(updateManager)
+                                    } else if (updateState?.installStatus() == InstallStatus.FAILED) {
+                                        Snackbar.make(this@MainActivity.coordinator_parent, "Failed to install the update", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
-                            }
-                            updateManager.registerListener(updateListener)
+                            updateManager.registerListener(updateListener)*/
                             val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
                             snackbar.setAction("UPDATE", object : View.OnClickListener{
                                 override fun onClick(v: View?) {
-                                    updateManager.startUpdateFlowForResult(
+                                    /*updateManager.startUpdateFlowForResult(
                                         appUpdateInfo,
                                         AppUpdateType.FLEXIBLE,
                                         this@MainActivity,
                                         REQUEST_CODE_UPDATE_FLEXIBLE
-                                    )
+                                    )*/
+                                    try {
+                                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                                            data = Uri.parse("https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home")
+                                            // setPackage("v2015.oasis.pilani.bits.com.home")
+                                        }
+                                        startActivity(intent)
+                                    } catch (e: Exception) {
+                                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=v2015.oasis.pilani.bits.com.home")))
+                                    }
                                     snackbar.dismiss()
                                 }
                             })
@@ -332,6 +406,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         }
                     }
                     else {
+                        Toast.makeText(this, "Cannot recieve data from remote config", Toast.LENGTH_LONG).show()
                         Log.d("Main Activity", "Unable to fetch from remote config")
                     }
                 }
@@ -359,6 +434,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     override fun onResume() {
         super.onResume()
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
+
         val activityManager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val listOfRunnigAppProcesses = activityManager.runningAppProcesses
         if (listOfRunnigAppProcesses != null) {
@@ -419,10 +500,19 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun setStatusBarColor(color: Int) {
-        Log.d("MainActivity", "Entered function to change color")
+       /* Log.d("MainActivity", "Entered function to change color")
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this,color))
+        window.setStatusBarColor(ContextCompat.getColor(this,color))*/
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        // Hide the status bar.
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+// Remember that you should never show the action bar if the
+// status bar is hidden, so hide that too if necessary.
+        actionBar?.hide()
     }
 
     override fun onNetworkStatusScahnged(isConnected: Boolean) {

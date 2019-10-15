@@ -26,8 +26,8 @@
 
     <ImageView
             android:id="@+id/sImg"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
@@ -46,7 +46,7 @@
 
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/goBtn"

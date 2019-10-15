@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@drawable/more_item_background"
         xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#242947"
         tools:context=".more.fragments.MapFragment">
 
     <TextView
@@ -27,8 +26,8 @@
             android:id="@+id/backBtn"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:padding="12dp"
             android:layout_marginStart="24dp"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/text_map_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_map_title"
@@ -36,13 +35,13 @@
 
     <fragment
             android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_map_title"
-            android:layout_height="0dp"
-            android:name="com.google.android.gms.maps.SupportMapFragment"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_map_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

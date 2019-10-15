@@ -14,7 +14,7 @@
     <color name="buyTickets">#5B3BDB</color>
    <color name="games">#EF28DB</color>
     <color name="trackEvents">#5B7DEC</color>
-
+<color name="OnBoarding_colour">#242947</color>
     <color name="status_bar_events">#724CFD</color>
     <color name="status_bar_orders">#42BAFF</color>
     <color name="status_bar_elas">#EF28DB</color>

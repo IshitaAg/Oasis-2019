@@ -12,6 +12,7 @@ import com.dvm.appd.oasis.dbg.profile.views.fragments.ProfileFragment
 import com.dvm.appd.oasis.dbg.profile.views.fragments.UiState
 import com.dvm.appd.oasis.dbg.shared.util.asMut
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
+import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.UserShows
 import com.google.gson.JsonObject
 import io.reactivex.Single
@@ -105,8 +106,8 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
         })
     }
 
-    fun onPaytmTransactionSucessful(body: JsonObject): Single<Response<Void>> {
+    fun onPaytmTransactionSucessful(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
         Log.d("PayTm", "Entered on Sucess in View Model")
-        return walletRepository.sendTransactionDetails(body).observeOn(AndroidSchedulers.mainThread())
+        return walletRepository.sendTransactionDetails(body, transaction).observeOn(AndroidSchedulers.mainThread())
     }
 }

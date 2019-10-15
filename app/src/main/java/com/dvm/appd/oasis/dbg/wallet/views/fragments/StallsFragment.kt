@@ -82,9 +82,6 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
             stallsViewModel.refreshData()
         }
 
-        rootview.kindStore.setOnClickListener {
-          it.findNavController().navigate(R.id.action_action_food_to_kindItemsFragment)
-        }
         return rootview
     }
 

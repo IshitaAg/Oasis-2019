@@ -5,7 +5,7 @@
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#673AB7"
+        android:background="@drawable/onboarding_background"
         tools:context=".auth.views.Onboarding1Fragment">
 
     <TextView
@@ -17,7 +17,7 @@
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:padding="12dp"
             android:text="Skip"
-            android:textColor="#FFFFFF"
+            android:textColor="#61B4FE"
             android:textSize="20sp"
 
             app:layout_constraintRight_toRightOf="parent"
@@ -25,46 +25,63 @@
 
 
     <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="128dp"
+            android:src="@drawable/ic_onbording_back"
+            app:layout_constraintBottom_toBottomOf="@+id/text_onBoarding_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/img_onBoarding" />
+
+    <ImageView
             android:id="@+id/img_onBoarding"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:src="@drawable/ic_online_order"
+            android:layout_height="0dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_undraw_happy_feeling_slmw"
             app:layout_constraintBottom_toTopOf="@+id/text_onBoarding_heading"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_bttn_skip"
-            app:layout_constraintVertical_bias="0.089" />
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
             android:id="@+id/text_onBoarding_heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/shellypalmer_circular_std_book"
-            android:text="Order Food"
+            android:text="Kind Store"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="38sp"
-            app:layout_constraintBottom_toTopOf="@+id/view15"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintBottom_toTopOf="@id/view15"
+            app:layout_constraintEnd_toEndOf="@+id/img_onBoarding"
             app:layout_constraintStart_toStartOf="@+id/img_onBoarding"
-            app:layout_constraintTop_toBottomOf="@+id/img_onBoarding" />
+            app:layout_constraintTop_toBottomOf="@id/img_onBoarding" />
 
     <TextView
             android:id="@+id/text_onBoarding_content"
             android:layout_width="301dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="32dp"
             android:layout_weight="2"
             android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:lineSpacingExtra="4sp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Order food from M-Lawns stalls right from your phone. Just select your order and tap on Buy Now.Order food from M-Lawns stalls right from your phone. Just select your order and tap on Buy Now."
+            android:text="Earn Kind Store Tokens by taking part in various competitions organized during Oasis. Spend them by visiting Kind Store and get free Goodies. Know your Kind Store token points through your Profile Screen."
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@id/bttn_next_onBoarding"
             app:layout_constraintEnd_toEndOf="@+id/text_onBoarding_heading"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="@+id/text_onBoarding_heading"
@@ -87,16 +104,16 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
-            android:background="@drawable/shape_rectangle_rounded_24dp"
-            android:backgroundTint="@color/colorWhite"
+            android:background="@drawable/add_button"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:padding="10dp"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:text="Next"
-            android:textColor="@color/trackEvents"
+            android:textColor="@color/colorWhite"
 
             android:textSize="18sp"
+            android:textStyle="bold"
             app:cornerRadius="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

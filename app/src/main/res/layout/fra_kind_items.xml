@@ -39,14 +39,16 @@
             android:id="@+id/itemsRecycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="12dp"
             android:clipToPadding="false"
+            android:paddingBottom="60dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/stallName"
             tools:listitem="@layout/adapter_kind_items" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,7 @@ class SendMoneyDialog : DialogFragment() {
         rootView.SendBtn.isClickable = true
         rootView.SendBtn.setOnClickListener {
             if (rootView.Amount.text.toString().isBlank() || rootView.userId.text.toString().isBlank()) {
+                if(context!=null)
                 Toast.makeText(context!!, "Please fill all the required fields!", Toast.LENGTH_SHORT).show()
             } else {
                 rootView.loadingPBR.visibility = View.VISIBLE
@@ -43,7 +44,7 @@ class SendMoneyDialog : DialogFragment() {
                     val amount = rootView.Amount.text.toString().toInt()
                     sendMoneyViewModel.transferMoney(userId, amount)
                 } catch (e: Exception) {
-                    Toast.makeText(context, "Please enter Correct values", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Please enter correct values", Toast.LENGTH_LONG).show()
                 }
 
 

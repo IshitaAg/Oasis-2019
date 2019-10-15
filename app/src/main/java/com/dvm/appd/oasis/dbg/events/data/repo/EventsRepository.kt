@@ -18,6 +18,8 @@ import com.google.firebase.firestore.DocumentChange
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import org.json.JSONObject
+import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 
@@ -64,9 +66,34 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                         workerResult = ListenableWorker.Result.success()
                     }
 
+                    500 ->
+                    {
+                        throw Exception("Error occured!!! Contact DVM official")
+                    }
                     else -> {
-                        Log.d("NewEvents", "error")
-                        workerResult = ListenableWorker.Result.retry()
+                        var errorBody: String?
+                        try {
+                            errorBody = response.errorBody()?.string()
+
+                        } catch (e: Exception) {
+                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                        }
+                        if (errorBody.isNullOrBlank()) {
+                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                        }
+
+                        else {
+                            val json = JSONObject(errorBody)
+                            when {
+                                json.has("display_message") -> {
+                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                }
+                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+
+                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                            }
+
+                        }
                     }
 
                 }

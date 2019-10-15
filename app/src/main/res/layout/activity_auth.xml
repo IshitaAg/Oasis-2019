@@ -201,10 +201,12 @@
             android:layout_marginTop="16dp"
             android:textColorHint="@color/colorWhite"
             app:hintEnabled="false"
+            app:passwordToggleEnabled="true"
+            app:hintAnimationEnabled="false"
             app:layout_constraintEnd_toEndOf="@+id/username"
             app:layout_constraintStart_toStartOf="@+id/username"
             app:layout_constraintTop_toBottomOf="@+id/username"
-            app:passwordToggleEnabled="true">
+            >
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"

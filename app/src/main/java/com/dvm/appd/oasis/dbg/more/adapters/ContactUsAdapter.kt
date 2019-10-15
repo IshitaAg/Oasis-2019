@@ -18,17 +18,15 @@ class ContactUsAdapter : RecyclerView.Adapter<ContactUsAdapter.ContactVHolder>()
     private val baseImageLink = "https://www.bits-bosm.org/"
 
     private val contacts = listOf(
-        Contact("Medical Emergency", "+91-9870050422", "+91-9408693984", "+91-7875227790", ""),
-        Contact("Raihan Riaz", "Controls", "controls@bits-bosm.org", "+91-9989401360", "${baseImageLink}img/contacts/controls.png"),
-        Contact("Amol Dalal", "Sponsorship", "sponsorship@bits-bosm.org", "+91-7020141770 ", "${baseImageLink}img/contacts/spons.png"),
-        Contact("Abhinav Kumar Singh", "Reception and Accomodation", "recnacc@bits-bosm.org", "+91-9654298614 ", "${baseImageLink}/contacts/recanec.jpg"),
-        Contact("Damanjot Singh", "Publications and Correspondence", "pcr@bits-bosm.org", "+91-8966911000", "${baseImageLink}img/contacts/pcr.png"),
-        Contact("Mayank Kulkarni", "Sports Secretary", "sportssecretary@bits-bosm.org", "+91-9929855583", "${baseImageLink}img/contacts/ss.png"),
-        Contact("Mansi Mittal", "Joint Sports Secretary", "N/A", "+91-9602775333", "${baseImageLink}img/contacts/jss1.png"),
-        Contact("Ankur Jain", "Joint Sports Secretary", "N/A", "+91-9549905512", "${baseImageLink}img/contacts/jss2.png"),
-        Contact("Kunal Gupta", "Joint Sports Secretary", "N/A", "+91-7985564751", "${baseImageLink}img/contacts/jss.jpg"),
-        Contact("Divyam Goel", "Online Registrations", "webmaster@bits-bosm.org", "+91-9602775333", "${baseImageLink}img/contacts/dvm.jpg")
-    )
+        Contact("Medical Emergency", "+91-8427878749", "+91-9717548752", "+91-9811695294", ""),
+        Contact("Tushar Goel", "Website, App & Online Payments", "webmaster@bits-oasis.org", "+91-9694345679", "${baseImageLink}images/contacts/DVM.png"),
+        Contact("Parth Kashikar", "Logistics and Operations", "controls@bits-oasis.org", "+91-9686011770", "${baseImageLink}images/contacts/Parth.jpg"),
+        Contact("Adit Chandra", "Sponsorship and Marketing", "sponsorship@bits-oasis.org", "+91-8290801301", "${baseImageLink}images/contacts/adit.png"),
+        Contact("Tanvi Gupta", "Reception and Accomodation", "recnacc@bits-oasis.org", "+91-9057232223 ", "${baseImageLink}images/contacts/tanvi.png"),
+        Contact("Aditya Pawar", "Online Collaborations and Publicity", "adp@bits-oasis.org", "+91-9829971666", "${baseImageLink}images/contacts/pawar.jpg"),
+        Contact("Rahul Bubna", "Student Union President", "President@pilani.bits-pilani.ac.in", "+91-8952824766", "${baseImageLink}images/contacts/rahul.jpg"),
+        Contact("V Abishek Balaji", "Student Union General Secretary", "gensec@pilani.bits-pilani.ac.in", "+91-9566142660", "${baseImageLink}images/contacts/abhi.jpg"),
+        Contact("Tanmaay Chandak", "Registration, Events & Other Enquiries", "pcr@bits-oasis.org", "+91-9405010405", "${baseImageLink}images/contacts/chandak.png") )
 
 
     override fun getItemCount() = contacts.size

@@ -15,7 +15,9 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
+import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.lang.Exception
 import java.security.Key
 
 class AuthRepository(val authService: AuthService, val sharedPreferences: SharedPreferences) {
@@ -143,8 +145,40 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                         ).subscribe()
                         Single.just(LoginState.Success)
                     }
-                    in 400..499 -> Single.just(LoginState.Failure(response.errorBody()!!.string()))
+                    /*in 400..499 -> Single.just(LoginState.Failure(response.errorBody()!!.string()))
                     else -> Single.just(LoginState.Failure("Something went wrong!!"))
+                    */
+
+                    500 ->
+                    {
+                        Single.just(LoginState.Failure("Error occured!!! Contact DVM official"))
+                    }
+                    else -> {
+                        var errorBody: String?
+                        try {
+                            errorBody = response.errorBody()?.string()
+
+                        } catch (e: Exception) {
+                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                        }
+                        if (errorBody.isNullOrBlank()) {
+                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                        }
+
+                        else {
+                            val json = JSONObject(errorBody)
+                            when {
+                                json.has("display_message") -> {
+                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                }
+                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+
+                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                            }
+
+                        }
+                    }
+
                 }
 
             }.doOnError {

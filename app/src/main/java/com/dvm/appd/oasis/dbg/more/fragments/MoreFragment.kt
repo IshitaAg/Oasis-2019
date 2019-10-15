@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
@@ -21,6 +22,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
+    override fun onSecretFlowEnabled() {
+        Toast.makeText(context, "Entered Secret flow", Toast.LENGTH_LONG).show()
+    }
 
     var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors")
 

@@ -133,17 +133,21 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             QrDialog().show(childFragmentManager,"QR_DIALOG")
         }
 
-
+        rootView.AddBtn.isClickable = true
         rootView.AddBtn.setOnClickListener {
+            rootView.AddBtn.isClickable = false
             AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
 
-
+        rootView.sendBtn.isClickable = true
         rootView.sendBtn.setOnClickListener {
+            rootView.sendBtn.isClickable =false
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
         }
 
+        rootView.buyTicket.isClickable = true
         rootView.buyTicket.setOnClickListener {
+            rootView.buyTicket.isClickable = false
             TicketDialog().show(childFragmentManager,"TICKETS_DIALOG")
 
         }

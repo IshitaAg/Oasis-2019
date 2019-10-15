@@ -154,27 +154,28 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
                         Single.just(LoginState.Failure("Error occured!!! Contact DVM official"))
                     }
                     else -> {
+                        var errorBody: String?
                         try {
-                            var errorBody = response.errorBody()?.string()
-                            if (errorBody.isNullOrBlank()) {
-                                Single.just(LoginState.Failure("Code: (${response.code()} Unknown Error Occured"))
-                            }
+                            errorBody = response.errorBody()?.string()
 
-                            else {
-                                val json = JSONObject(errorBody)
-                                when {
-                                    json.has("display_message") -> {
-                                        Single.just(LoginState.Failure("Code" + response.code() + json.getString("display_message")))
-                                    }
-                                    json.has("detail") ->
-                                        Single.just(LoginState.Failure("Code" + json.getString("detail")))
-
-                                    else -> Single.just(LoginState.Failure("Code: ${response.code()}: Unknown error occurred"))
-                                }
-
-                            }
                         } catch (e: Exception) {
-                            Single.just(LoginState.Failure("Code:${response.code()} Something went wrong!!!"))
+                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                        }
+                        if (errorBody.isNullOrBlank()) {
+                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                        }
+
+                        else {
+                            val json = JSONObject(errorBody)
+                            when {
+                                json.has("display_message") -> {
+                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                }
+                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+
+                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                            }
+
                         }
                     }
 

@@ -34,6 +34,7 @@ class AppModule(private val application: Application) {
     @Provides
     @Singleton
     fun providesN2OVoting():ComediansVoting = ComediansVoting()
+
     @Provides
     @Singleton
     fun providesMoneyTracker(authRepository: AuthRepository):MoneyTracker{

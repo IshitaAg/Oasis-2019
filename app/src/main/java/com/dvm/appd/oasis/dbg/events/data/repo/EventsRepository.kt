@@ -23,11 +23,9 @@ import java.util.concurrent.TimeUnit
 
 class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService, val application: Application,val comediansVoting: ComediansVoting,val sharedPreferences: SharedPreferences) {
 
-    val db = FirebaseFirestore.getInstance()
-
     init {
 
-        //updateEventsData().subscribe()
+        updateEventsData().subscribe()
 
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(1, TimeUnit.MINUTES).setConstraints(constraints).build()

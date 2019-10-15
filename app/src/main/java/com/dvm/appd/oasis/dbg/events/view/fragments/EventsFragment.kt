@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.events.view.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -78,7 +79,6 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             }
         }
 
-        view.dayRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         view.dayRecycler.adapter = EventsDayAdapter(this)
         eventsViewModel.eventDays.observe(this, Observer {
             Log.d("MiscEventsFrag", "Observed")
@@ -97,14 +97,11 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         })
 
         eventsViewModel.daySelected.observe(this, Observer {
-
             (view.dayRecycler.adapter as EventsDayAdapter).daySelected = it
             (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
-        })
-
-        eventsViewModel.filter.observe(this, Observer {
             (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-            eventsViewModel.getEventData(eventsViewModel.daySelected.value.toString())
+//            eventsViewModel.currentSubscription.dispose()
+            eventsViewModel.getEventData(it.toString())
         })
 
         eventsViewModel.error.observe(this, Observer {
@@ -132,23 +129,19 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             eventsViewModel.refreshData()
         }
 
+
+
         view.filter.setOnClickListener {
-            view.findNavController().navigate(R.id.action_action_events_to_filter)
+            FilterDialog().also {
+                it.arguments = bundleOf(("day" to (eventsViewModel.daySelected.value)))
+            }.show(childFragmentManager, "FILTER")
         }
 
         return view
     }
 
-//    override fun updateIsFavourite(eventId: Int, favouriteMark: Int) {
-//        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-//        eventsViewModel.markEventFav(eventId, favouriteMark)
-//    }
-
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
-        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.currentSubscription.dispose()
-        eventsViewModel.getEventData(day)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 

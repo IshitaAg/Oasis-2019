@@ -47,6 +47,12 @@ class AuthActivity : AppCompatActivity() {
         authViewModel =
             ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
 
+        authViewModel.referalState.observe(this, Observer {
+            if (it){
+                //open dialog
+            }
+        })
+
         outsteeLogin.setOnClickListener {
             when {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->

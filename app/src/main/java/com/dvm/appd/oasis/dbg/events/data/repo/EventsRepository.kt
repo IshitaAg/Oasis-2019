@@ -25,11 +25,9 @@ import java.util.concurrent.TimeUnit
 
 class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsService, val application: Application,val comediansVoting: ComediansVoting,val sharedPreferences: SharedPreferences) {
 
-    val db = FirebaseFirestore.getInstance()
-
     init {
 
-        //updateEventsData().subscribe()
+        updateEventsData().subscribe()
 
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(1, TimeUnit.MINUTES).setConstraints(constraints).build()
@@ -116,7 +114,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         val eventCategories: MutableList<CategoryData> = arrayListOf()
 
         categories.forEach {
-            eventCategories.add(CategoryData(it, id, 0))
+            eventCategories.add(CategoryData(it, id, false, 0))
         }
 
         return eventCategories
@@ -137,9 +135,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.getAllEventsByDate(date).subscribeOn(Schedulers.io())
     }
 
-    fun getEventsDayCategoryData(date: String, categories: List<String>): Flowable<List<ModifiedEventsData>>{
+    fun getEventsDayCategoryData(date: String): Flowable<List<ModifiedEventsData>>{
 
-        return eventsDao.getEventsByCategory(date, categories).subscribeOn(Schedulers.io())
+        return eventsDao.getEventsByCategory(date).subscribeOn(Schedulers.io())
             .flatMap {
 
                 var events: MutableList<ModifiedEventsData> = arrayListOf()
@@ -160,8 +158,12 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.getEventsDates().subscribeOn(Schedulers.io())
     }
 
-    fun getCategories(): Flowable<List<String>>{
+    fun getCategories(): Flowable<List<FilterData>>{
         return eventsDao.getAllCategories().subscribeOn(Schedulers.io())
+    }
+
+    fun updateFilter(category: String, filtered: Boolean): Completable{
+        return eventsDao.updateFiltered(category, filtered).subscribeOn(Schedulers.io())
     }
 
    fun isVotingEnabled(): Flowable<Boolean> {

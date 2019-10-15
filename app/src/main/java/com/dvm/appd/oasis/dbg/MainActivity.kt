@@ -345,7 +345,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                     REQUEST_CODE_UPDATE_IMMIDIATE
                 )
             }*/
-            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE || true) {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                 Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
                 Log.d("Main Activity", "NewUpdate Available")
                 remoteConfig.fetch().addOnCompleteListener {task ->
@@ -354,7 +354,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         Toast.makeText(this, "Result = ${task.result.toString()}", Toast.LENGTH_LONG).show()
                         Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
                         val versionNumber = remoteConfig.all["update_version"].toString()
-                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE) || true) {
+                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
                             Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
                             /*updateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
@@ -366,7 +366,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         }
                         else {
                             Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
-                            val updateListener =
+                            /*val updateListener =
                                 InstallStateUpdatedListener { updateState ->
                                     Toast.makeText(this@MainActivity, "Called Listener Callback ${updateState?.installStatus()}", Toast.LENGTH_SHORT).show()
                                     if (updateState?.installStatus() == InstallStatus.DOWNLOADED) {
@@ -375,16 +375,25 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                                         Snackbar.make(this@MainActivity.coordinator_parent, "Failed to install the update", Snackbar.LENGTH_SHORT).show()
                                     }
                                 }
-                            updateManager.registerListener(updateListener)
+                            updateManager.registerListener(updateListener)*/
                             val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
                             snackbar.setAction("UPDATE", object : View.OnClickListener{
                                 override fun onClick(v: View?) {
-                                    updateManager.startUpdateFlowForResult(
+                                    /*updateManager.startUpdateFlowForResult(
                                         appUpdateInfo,
                                         AppUpdateType.FLEXIBLE,
                                         this@MainActivity,
                                         REQUEST_CODE_UPDATE_FLEXIBLE
-                                    )
+                                    )*/
+                                    try {
+                                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                                            data = Uri.parse("https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home")
+                                            // setPackage("v2015.oasis.pilani.bits.com.home")
+                                        }
+                                        startActivity(intent)
+                                    } catch (e: Exception) {
+                                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=v2015.oasis.pilani.bits.com.home")))
+                                    }
                                     snackbar.dismiss()
                                 }
                             })

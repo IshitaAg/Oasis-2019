@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.wallet.data.repo
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository.Keys.jwt
@@ -186,8 +187,9 @@ class WalletRepository(
     fun updateOrders(): Completable {
         Log.d("CheckJWT", jwt.blockingGet().toString())
         return walletService.getAllOrders(jwt.blockingGet().toString()).subscribeOn(Schedulers.io())
-            .doOnSuccess { response ->
-                when (response.code()) {
+            .doOnSuccess {response ->
+                Log.d("Checkorders", response.code().toString())
+                when(response.code()){
                     200 -> {
 
                         var orders: MutableList<OrderData> = arrayListOf()
@@ -886,13 +888,13 @@ class WalletRepository(
         return TicketsData(id, name, price, "show", null, 0)
     }
 
-    fun updateUserTickets(): Completable {
-        return authRepository.getUser().flatMapCompletable {
-            walletService.getUserTickets(it.jwt)
-                .doOnSuccess { response ->
+    fun updateUserTickets(): Completable{
+        return authRepository.getUser().flatMapCompletable {user->
+            walletService.getUserTickets("jwt ${user.jwt}")
+                .doOnSuccess {response ->
 
-                    Log.d("Tickets", "$response")
-                    when (response.code()) {
+                    Log.d("Tickets", "${response.code()}")
+                    when(response.code()){
 
                         200 -> {
                             var userTickets: MutableList<UserShows> = arrayListOf()
@@ -1223,91 +1225,57 @@ class WalletRepository(
             .ignoreElement()
     }
 
-    fun sendTransactionDetails(body: JsonObject): Single<Response<Void>> {
-        return walletService.confirmPaytmPayment(jwt.blockingGet(), body)
-            .subscribeOn(Schedulers.io())
+
+    @SuppressLint("CheckResult")
+    fun sendTransactionDetails(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
+        walletDao.insertPaytmTransaction(transaction).subscribeOn(Schedulers.io()).subscribe({
+            Log.d("Wallet Reop", "Transacrtion insertion sucessful")
+        },{
+            Log.e("Wallet Repo", "Failed to insert transaction = ${it.toString()}")
+        })
+        return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
     }
+    fun fetchKindItems():Completable{
+        Log.d("checkr","called")
+       return walletService.getKindstoreItems().doOnSuccess {
+           Log.d("check",it.code().toString())
+           when(it.code()){
+              200 ->{
+                  var kindItems:List<KindItems> = emptyList()
+                 Log.d("checkr",it.body().toString())
+                 val jObj = JSONObject(it.body()!!.toString())
+                  val iNames:JSONArray = jObj.getJSONArray("items_list")
+                  for(i in 0 until iNames.length()){
+                      val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
+                      val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
+                      val kindImg= "https://wallet.bits-oasis.org/media/media/kind_store/items/"+iImg.substringAfterLast("/")
+                      val iAvail = jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
+                      kindItems = kindItems.plus(KindItems(i,iNames[i] as String,iPrice,iAvail,kindImg))
+                  }
+                  walletDao.deleteAllKindItems().subscribeOn(Schedulers.io()).subscribe({
+                      walletDao.insertKindItems(kindItems).subscribeOn(Schedulers.io()).subscribe({
+                          Log.d("Wallet Repo", "Insert  Successful")
+                      },{
+                          Log.d("Wallet Repo", "Insert  UnSuccessful ${it.toString()}")
+                      })
+                  },{
+                      Log.d("Wallet Repo", "Delete UnSuccessful ${it.toString()}")
+                  })
+                  Log.d("checkkind",kindItems.toString())
 
-    fun fetchKindItems(): Completable {
-        Log.d("checkr", "called")
-        return walletService.getKindstoreItems().doOnSuccess { response->
-            Log.d("check", response.code().toString())
-            when (response.code()) {
-                200 -> {
-                    var kindItems: List<KindItems> = emptyList()
-                    Log.d("checkr", response.body().toString())
-                    val jObj = JSONObject(response.body()!!.toString())
-                    val iNames: JSONArray = jObj.getJSONArray("items_list")
-                    for (i in 0 until iNames.length()) {
-                        val iPrice = jObj.getJSONObject(iNames.getString(i)).getInt("price")
-                        val iImg = jObj.getJSONObject(iNames.getString(i)).getString("image")
-                        val kindImg =
-                            "https://wallet.bits-oasis.org/media/media/kind_store/items/" + iImg.substringAfterLast(
-                                "/"
-                            )
-                        val iAvail =
-                            jObj.getJSONObject(iNames.getString(i)).getBoolean("is_available")
-                        kindItems = kindItems.plus(
-                            KindItems(
-                                i,
-                                iNames[i] as String,
-                                iPrice,
-                                iAvail,
-                                kindImg
-                            )
-                        )
-                    }
-                    walletDao.deleteAllKindItems().subscribeOn(Schedulers.io()).subscribe({
-                        walletDao.insertKindItems(kindItems).subscribeOn(Schedulers.io())
-                            .subscribe({
-                                Log.d("Wallet Repo", "Insert  Successful")
-                            }, {
-                                Log.d("Wallet Repo", "Insert  UnSuccessful ${response.toString()}")
-                            })
-                    }, {
-                        Log.d("Wallet Repo", "Delete UnSuccessful ${response.toString()}")
-                    })
-                    Log.d("checkkind", kindItems.toString())
+                  // walletDao.deleteAndInsertKindItems(kindItems)
+              }
+             else -> Log.d("check",it.errorBody()!!.string())
 
-                    // walletDao.deleteAndInsertKindItems(kindItems)
-                }
-                500 -> {
-                    throw Exception("Error occured!!! Contact DVM official")
-                }
-                else -> {
-                    var errorBody: String?
-                    try {
-                        errorBody = response.errorBody()?.string()
-
-                    } catch (e: Exception) {
-                        throw Exception("Code:${response.code()} Something went wrong!!!")
-                    }
-                    if (errorBody.isNullOrBlank()) {
-                        throw Exception("Code: (${response.code()} Unknown Error Occured")
-                    }
-
-                    else {
-                        val json = JSONObject(errorBody)
-                        when {
-                            json.has("display_message") -> {
-                                throw Exception("Code" + response.code() + json.getString("display_message"))
-                            }
-                            json.has("detail") -> throw Exception("Code" + json.getString("detail"))
-
-                            else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
-                        }
-
-                    }
-                }
-            }
-        }.ignoreElement().doOnError {
-            Log.d("checke", it.toString())
-        }.subscribeOn(Schedulers.io())
+           }
+       }.ignoreElement().doOnError {
+           Log.d("checke",it.toString())
+       }.subscribeOn(Schedulers.io())
 
     }
 
-    fun getKindItems(): Observable<List<KindItems>> {
-        Log.d("check", "getkind")
+    fun getKindItems():Observable<List<KindItems>>{
+        Log.d("check","getkind")
         return walletDao.getAllkindItems().toObservable().subscribeOn(Schedulers.io()).doOnError {
             Log.d("check", it.toString())
         }

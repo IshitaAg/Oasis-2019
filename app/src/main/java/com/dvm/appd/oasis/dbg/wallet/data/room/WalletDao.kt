@@ -134,4 +134,7 @@ interface WalletDao {
     @Query("SELECT * FROM kindItems")
     fun getAllkindItems():Flowable<List<KindItems>>
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertPaytmTransaction(transaction: PaytmRoom): Completable
+
 }

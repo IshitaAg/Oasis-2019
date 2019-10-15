@@ -31,6 +31,7 @@ import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
+import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
 import com.google.android.play.core.internal.x
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
@@ -56,7 +57,7 @@ import java.lang.Exception
 import java.sql.Array
 import java.util.*
 
-class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.OnItemSelectedListener {
+class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterView.OnItemSelectedListener*/ {
 
     private val profileViewModel by lazy {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
@@ -79,7 +80,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
             profileViewModel.logout()
         }
 
-        ArrayAdapter.createFromResource(
+        /*ArrayAdapter.createFromResource(
             context!!,
             R.array.profile_array,
             android.R.layout.simple_spinner_item
@@ -88,7 +89,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
            rootView.spinner.adapter = adapter
             rootView.spinner.setSelection(0,false)
             rootView.spinner.onItemSelectedListener = this
-        }
+        }*/
 
         profileViewModel.tokens.observe(this, Observer {
             if(it!=Integer.MAX_VALUE.toString())
@@ -211,6 +212,23 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
             Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
             if (!(bundle!!.isEmpty)) {
                 if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
+                    val transaction = PaytmRoom(
+                        status = bundle["STATUS"].toString(),
+                        checkSumHash = bundle["CHECKSUMHASH"].toString(),
+                        bankName = bundle["BANKNAME"].toString(),
+                        orderId = bundle["ORDERID"].toString(),
+                        txnAmount = bundle["TXNAMOUNT"].toString(),
+                        txnDate = bundle["TXNDATE"].toString(),
+                        mid = bundle["MID"].toString(),
+                        txnId = bundle["TXNID"].toString(),
+                        respCode = bundle["RESPCODE"].toString(),
+                        paymentMode = bundle["PAYMENTMODE"].toString(),
+                        bankTxnId = bundle["PAYMENTMODE"].toString(),
+                        currency = bundle["CURRENCY"].toString(),
+                        gatewayName = bundle["GATEWAYNAME"].toString(),
+                        respMsg = bundle["RESPMSG"].toString()
+                    )
+                    Log.d("Profile Frag", "Generated TXN = $transaction")
                     val body = JsonObject().apply {
                         this.addProperty("STATUS", bundle["STATUS"].toString())
                         this.addProperty("CHECKSUMHASH", bundle["CHECKSUMHASH"].toString())
@@ -228,7 +246,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
                         this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
                         Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
                     }
-                    profileViewModel.onPaytmTransactionSucessful(body).subscribe({
+                    profileViewModel.onPaytmTransactionSucessful(body, transaction).subscribe({
                         Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
                         Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
 
@@ -283,17 +301,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback,AdapterView.
     /*override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
         return MoveAnimation.create(MoveAnimation.RIGHT,true, 500)
     }*/
-    override fun onNothingSelected(parent: AdapterView<*>?) {
+    /*override fun onNothingSelected(parent: AdapterView<*>?) {
                parent!!.setSelection(1)
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        parent!!.setSelection(0)
         when(parent!!.getItemAtPosition(position)){
             "Refer"-> {Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
-                parent.setSelection(0)
                 ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")}
             "Logout"->{ Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
                 profileViewModel.logout()}
         }
-    }
+    }*/
 }

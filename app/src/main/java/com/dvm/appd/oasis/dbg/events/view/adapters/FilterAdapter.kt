@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.events.view.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,15 @@ class FilterAdapter(private val listener: DialogItemTouch): RecyclerView.Adapter
     override fun onBindViewHolder(holder: FilterViewHolder, position: Int) {
 
         holder.filter.text = categories[position].category
+
+        if (categories[position].filtered){
+            holder.filter.setBackgroundResource(R.drawable.shape_rectangle_rounded_16dp)
+            holder.filter.setTextColor(holder.itemView.context.resources.getColor(R.color.filter_not))
+        }
+        else{
+            holder.filter.setBackgroundResource(R.drawable.filter_not_selected)
+            holder.filter.setTextColor(holder.itemView.context.resources.getColor(R.color.colorWhite))
+        }
 
         holder.filter.setOnClickListener {
             listener.updateFilter(categories[position].category, !categories[position].filtered)

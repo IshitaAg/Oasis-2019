@@ -6,6 +6,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.fragment.app.DialogFragment
 import com.dvm.appd.oasis.dbg.R
@@ -14,6 +15,8 @@ import kotlinx.android.synthetic.main.dia_event_data.view.*
 class EventDialog: DialogFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
         val about = arguments!!.getString("about")
         val rules = arguments!!.getString("rules")

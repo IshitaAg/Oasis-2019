@@ -15,6 +15,7 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
     var tickets: LiveData<List<ModifiedTicketsData>> = MutableLiveData()
     var progressBarMark: LiveData<Int> = MutableLiveData(1)
     var error: LiveData<String> = MutableLiveData(null)
+    var redirect: LiveData<Boolean> = MutableLiveData(false)
 
     init {
 
@@ -34,9 +35,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.buyTickets().subscribe({
             Log.d("Wallet Repo", "Entered success")
             (progressBarMark as MutableLiveData).postValue(1)
+            (redirect as MutableLiveData).postValue(true)
             (error as MutableLiveData).postValue("Tickets bought successfully")
         },{
-            Log.d("Wallet Repo", "Errror in Api call = ${it.toString()}")
+            Log.d("Wallet Repo", "Errror in Api call = ${it}")
             (progressBarMark as MutableLiveData).postValue(1)
             (error as MutableLiveData).postValue(it.message)
         })

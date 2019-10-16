@@ -64,6 +64,7 @@ class MoreAdapter(private val listener: onMoreItemClicked) : RecyclerView.Adapte
                     }, longClickDuration)
                 } else if (event.action === MotionEvent.ACTION_UP) {
                     isLongPress = false
+                    listener.moreButtonClicked(position)
                 }
                 true
             }

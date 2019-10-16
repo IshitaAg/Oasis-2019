@@ -4,6 +4,7 @@ import androidx.room.*
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 @Dao
 interface WalletDao {
@@ -136,5 +137,8 @@ interface WalletDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPaytmTransaction(transaction: PaytmRoom): Completable
+
+    @Query("SELECT * FROM paytm_transactions")
+    fun getPayTmTransactions(): Single<List<PaytmRoom>>
 
 }

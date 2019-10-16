@@ -15,11 +15,11 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.dvm.appd.oasis.dbg"
+        applicationId "v2015.oasis.pilani.bits.com.home"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "1"
+        versionCode 19
+        versionName "2.0.0-beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

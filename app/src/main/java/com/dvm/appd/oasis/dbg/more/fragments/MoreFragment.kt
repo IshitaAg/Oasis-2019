@@ -52,7 +52,7 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         builder.show()
     }
 
-    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "Terms And Conditions", "Privacy Policy")
+    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "About Us", "Privacy Policy", "Terms And Conditions")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -101,11 +101,15 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }
             8 -> {
-                val bundle = bundleOf("link" to "www.bits-oasis.org/android/policy.html", "title" to "Privacy Policy")
-                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
+                val bundle = bundleOf("title" to "About Us")
+                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentRecyclerView, bundle)
             }
             9 -> {
-                val bundle = bundleOf("link" to "www.bits-oasis.org/android/tc.html", "title" to "Terms and Conditions")
+                val bundle = bundleOf("link" to "https://www.bits-oasis.org/android/policy.html", "title" to "Privacy Policy")
+                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
+            }
+            10 -> {
+                val bundle = bundleOf("link" to "https://www.bits-oasis.org/android/tc.html", "title" to "Terms and Conditions")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }
         }

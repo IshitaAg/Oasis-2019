@@ -166,6 +166,10 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.updateFiltered(category, filtered).subscribeOn(Schedulers.io())
     }
 
+    fun removeFilters(): Completable{
+        return eventsDao.removeFilters().subscribeOn(Schedulers.io())
+    }
+
    fun isVotingEnabled(): Flowable<Boolean> {
         return comediansVoting.getStatus()
     }

@@ -147,7 +147,11 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     override fun getDirections(venue: String) {
 
-
+        var locations: Map<String, Pair<String, String>> = mapOf("GymG" to Pair("28.3591263","75.5902106"),
+            "6164" to Pair("28.3621648","75.5871217"), "Main Audi" to Pair("28.3638282", "75.5869983"),
+            "SAC Amphi" to Pair("28.3601677", "75.5851640"), "SAC Entrance" to Pair("28.3607649", "75.5856723"),
+            "2204" to Pair("28.3637981", "75.5878352"), "2220" to Pair("28.3643409", "75.5883371"),
+            "2234" to Pair("28.3639199", "75.5880001"))
 
         val latitude = "28.3633546"
         val longitude = "75.5871163"
@@ -166,7 +170,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
     }
 
     override fun showAboutRules(about: String, rules: String) {
-
+        activity!!.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
         val bundle = bundleOf("about" to about, "rules" to rules)
         view!!.findNavController().navigate(R.id.action_action_events_to_event_data, bundle)
     }

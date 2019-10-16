@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -23,6 +24,8 @@ class FilterDialog: DialogFragment(), FilterAdapter.DialogItemTouch{
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+
         val view = inflater.inflate(R.layout.dia_filter_events, container, false)
         val day = arguments?.getString("day", "2019-10-19")
         eventsViewModel = ViewModelProviders.of(parentFragment!!, EventsViewModelFactory())[EventsViewModel::class.java]
@@ -34,6 +37,10 @@ class FilterDialog: DialogFragment(), FilterAdapter.DialogItemTouch{
             (view.filterRecycler.adapter as FilterAdapter).notifyDataSetChanged()
             //(eventsViewModel.daySelected as MutableLiveData).postValue(day)
         })
+
+        view.removeFilters.setOnClickListener {
+            eventsViewModel.removeFilters()
+        }
 
         return view
     }

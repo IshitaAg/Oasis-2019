@@ -62,11 +62,15 @@ class FragmentRecyclerView : Fragment() {
     private fun setAdapter() {
         when(title) {
             "Contact Us" -> {
+                aboutUs.visibility = View.GONE
+                recycler_commonRecyclerView.visibility = View.VISIBLE
                 recycler_commonRecyclerView.adapter =
                     ContactUsAdapter()
                 (recycler_commonRecyclerView.adapter as ContactUsAdapter).notifyDataSetChanged()
             }
             "Developers" -> {
+                aboutUs.visibility = View.GONE
+                recycler_commonRecyclerView.visibility = View.VISIBLE
                 var devs = emptyList<Developer>()
                 devs = devs.plus(developers.subList(0,4).shuffled())
                 devs = devs.plus(developers.subList(4, (developers.size)))
@@ -74,6 +78,12 @@ class FragmentRecyclerView : Fragment() {
                     DevelopersAdapter()
                 (recycler_commonRecyclerView.adapter as DevelopersAdapter).developers = devs
                 (recycler_commonRecyclerView.adapter as DevelopersAdapter).notifyDataSetChanged()
+            }
+
+            "About Us" -> {
+                aboutUs.visibility = View.VISIBLE
+                recycler_commonRecyclerView.visibility = View.GONE
+                aboutUs.text = "Oasis—the cultural fest of BITS Pilani—is nothing but 96 hours of unadulterated thrills comprising music, dance, drama, art, quizzes, fashion, and humour. With a footfall of around 5000+ every year, it is the second-largest cultural festival of India. This year’s theme—neon-noir—is a confluence of the contraries coexisting in harmony. On a superficial level, the theme is inherently contradictory—the concept of both light and darkness manifested simultaneously. On a metaphysical level, however, neon-noir is a commentary on specific socio-cultural dimensions such as urban decay, consumerism, and industrial encroachment. It is characterised by menacing cityscapes with the luminescence accentuating the shadows. If convoluted storylines, crime, and moral fluctuation enrapture you, this Oasis, from 19th to 23rd October, buckle up for the experience of an aesthetic so powerful that you question your very existence in this realm. Live the life of a Taxi Driver and run on blades of talent in the 49th edition of the fest which promises to leave you in a trance caused by the chiaroscuro of shadow and illumination."
             }
         }
     }

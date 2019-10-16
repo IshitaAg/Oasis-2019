@@ -12,6 +12,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.profile.viewmodel.TicketViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.TicketViewModelFactory
@@ -64,6 +65,7 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
         })
 
         //Add progress bar
+
         view.button.setOnClickListener {
 
             val alertDialogBuilder = AlertDialog.Builder(context)
@@ -81,6 +83,13 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         }
 
+        ticketsViewModel.redirect.observe(this, Observer {
+            if (it){
+                (ticketsViewModel.redirect as MutableLiveData).postValue(false)
+                view.findNavController().popBackStack()
+            }
+        })
+
         return view
     }
 
@@ -96,6 +105,11 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
         ticketsViewModel.deleteTiceketCartItem(id)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        (ticketsViewModel.redirect as MutableLiveData).postValue(false)
+    }
 //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 //        val dialog = super.onCreateDialog(savedInstanceState)
 //        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

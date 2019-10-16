@@ -81,6 +81,16 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
         })
     }
 
+    fun removeFilters(){
+        eventsRepository.removeFilters().subscribe({
+            (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(null)
+        },{
+            (progressBarMark as MutableLiveData).postValue(1)
+            (error as MutableLiveData).postValue(it.message)
+        })
+    }
+
     override fun onCleared() {
         super.onCleared()
         currentSubscription?.dispose()

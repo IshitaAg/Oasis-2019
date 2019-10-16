@@ -38,6 +38,9 @@
         <action
                 android:id="@+id/action_action_events_to_event_data"
                 app:destination="@id/eventDataDialog"/>
+        <action
+                android:id="@+id/action_action_events_to_filter"
+                app:destination="@id/eventFilterDialog"/>
     </fragment>
 
     <fragment
@@ -160,7 +163,9 @@
     <dialog android:id="@+id/eventDataDialog"
             android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventDialog"
             android:label="EventDialog"/>
-
+    <dialog android:id="@+id/eventFilterDialog"
+            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.FilterDialog"
+            android:label="EventFilterDialog"/>
     <fragment
             android:id="@+id/notificationFragment"
             android:name="com.dvm.appd.oasis.dbg.notification.NotificationFragment"

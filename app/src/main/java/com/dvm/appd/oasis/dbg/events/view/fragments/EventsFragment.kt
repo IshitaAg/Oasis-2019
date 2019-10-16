@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.events.view.fragments
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -22,6 +23,7 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
+import kotlinx.android.synthetic.main.adapter_filter_item.view.*
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -48,36 +50,35 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         when(sdfDate.format(date.time)){
             "2019-10-19" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19", null)
+                eventsViewModel.getEventData("2019-10-19")
             }
 
             "2019-10-20" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-20")
-                eventsViewModel.getEventData("2019-10-20", null)
+                eventsViewModel.getEventData("2019-10-20")
             }
 
             "2019-10-21" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-21")
-                eventsViewModel.getEventData("2019-10-21", null)
+                eventsViewModel.getEventData("2019-10-21")
             }
 
             "2019-10-22" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-22")
-                eventsViewModel.getEventData("2019-10-22", null)
+                eventsViewModel.getEventData("2019-10-22")
             }
 
             "2019-10-23" -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-23")
-                eventsViewModel.getEventData("2019-10-23", null)
+                eventsViewModel.getEventData("2019-10-23")
             }
 
             else -> {
                 (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
-                eventsViewModel.getEventData("2019-10-19", null)
+                eventsViewModel.getEventData("2019-10-19")
             }
         }
 
-        view.dayRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         view.dayRecycler.adapter = EventsDayAdapter(this)
         eventsViewModel.eventDays.observe(this, Observer {
             Log.d("MiscEventsFrag", "Observed")
@@ -96,9 +97,11 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         })
 
         eventsViewModel.daySelected.observe(this, Observer {
-
             (view.dayRecycler.adapter as EventsDayAdapter).daySelected = it
             (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
+            (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
+//            eventsViewModel.currentSubscription.dispose()
+            eventsViewModel.getEventData(it.toString())
         })
 
         eventsViewModel.error.observe(this, Observer {
@@ -126,19 +129,19 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             eventsViewModel.refreshData()
         }
 
-        return view
-    }
 
-    override fun updateIsFavourite(eventId: Int, favouriteMark: Int) {
-        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.markEventFav(eventId, favouriteMark)
+
+        view.filter.setOnClickListener {
+            FilterDialog().also {
+                it.arguments = bundleOf(("day" to (eventsViewModel.daySelected.value)))
+            }.show(childFragmentManager, "FILTER")
+        }
+
+        return view
     }
 
     override fun daySelected(day: String, position: Int) {
         (eventsViewModel.daySelected as MutableLiveData).postValue(day)
-        (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-        eventsViewModel.currentSubscription.dispose()
-        eventsViewModel.getEventData(day, null)
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 

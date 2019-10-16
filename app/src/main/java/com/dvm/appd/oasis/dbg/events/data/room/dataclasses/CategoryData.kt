@@ -13,6 +13,9 @@ data class CategoryData(
     @ColumnInfo(name = "event_id")
     val eventId: Int,
 
+    @ColumnInfo(name = "filtered")
+    val isFiltered: Boolean,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int

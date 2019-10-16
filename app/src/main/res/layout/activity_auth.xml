@@ -203,14 +203,16 @@
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etPasswordLayout"
             android:layout_width="0dp"
-            android:textColorHint="@color/colorWhite"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:textColorHint="@color/colorWhite"
+            app:hintEnabled="false"
             app:passwordToggleEnabled="true"
             app:hintAnimationEnabled="false"
             app:layout_constraintEnd_toEndOf="@+id/username"
             app:layout_constraintStart_toStartOf="@+id/username"
-            app:layout_constraintTop_toBottomOf="@+id/username" >
+            app:layout_constraintTop_toBottomOf="@+id/username"
+            >
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"

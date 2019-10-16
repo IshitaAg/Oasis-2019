@@ -7,15 +7,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.views.LoginState
+import com.dvm.appd.oasis.dbg.shared.util.asMut
 import com.google.firebase.iid.FirebaseInstanceId
 
+@SuppressLint("CheckResult")
 class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     var state: LiveData<LoginState> = MutableLiveData()
-
+    var referal: LiveData<String> = MutableLiveData()
+    var referalState: LiveData<Boolean> = MutableLiveData()
 
     init {
         listenRegToken()
+
+
     }
 
     private fun listenRegToken() {
@@ -80,4 +85,15 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
         }.subscribe()
 
     }
+
+//    authRepository.getUser().subscribe({
+//        if (it.firstLogin){
+//            refqeralState.asMut().postValue(true)
+//        }
+//        else{
+//            referalState.asMut().postValue(false)
+//        }
+//    },{
+//        (state as MutableLiveData).postValue(LoginState.Failure(it.message.toString()))
+//    })
 }

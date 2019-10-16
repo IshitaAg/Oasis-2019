@@ -16,7 +16,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
     var events: List<ModifiedEventsData> = emptyList()
 
     interface OnMarkFavouriteClicked{
-        fun updateIsFavourite(eventId: Int, favouriteMark: Int)
+        //fun updateIsFavourite(eventId: Int, favouriteMark: Int)
         fun getDirections(venue: String)
         fun showAboutRules(about: String, rules: String)
     }
@@ -27,7 +27,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         val description: TextView = view.eventDesc
         val time: TextView = view.eventTime
         val venue: TextView = view.eventVenue
-        val markFav: ImageView = view.markFav
+        //val markFav: ImageView = view.markFav
         val directions: ImageView = view.directions
         val view: View = view.view
     }
@@ -48,21 +48,21 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         holder.description.text = events[position].details
         holder.time.text = events[position].time
         holder.venue.text = events[position].venue
-        if (events[position].isFav == 1){
-            holder.markFav.setBackgroundResource(R.drawable.ic_is_favourite)
-        }else if (events[position].isFav == 0){
-            holder.markFav.setBackgroundColor(R.drawable.ic_not_favourite)
-        }
-
-        holder.markFav.setOnClickListener {
-
-            if (events[position].isFav == 1){
-                listener.updateIsFavourite(events[position].eventId, 0)
-            }
-            else if (events[position].isFav == 0){
-                listener.updateIsFavourite(events[position].eventId, 1)
-            }
-        }
+//        if (events[position].isFav == 1){
+//            holder.markFav.setBackgroundResource(R.drawable.ic_is_favourite)
+//        }else if (events[position].isFav == 0){
+//            holder.markFav.setBackgroundColor(R.drawable.ic_not_favourite)
+//        }
+//
+//        holder.markFav.setOnClickListener {
+//
+//            if (events[position].isFav == 1){
+//                listener.updateIsFavourite(events[position].eventId, 0)
+//            }
+//            else if (events[position].isFav == 0){
+//                listener.updateIsFavourite(events[position].eventId, 1)
+//            }
+//        }
 
         holder.directions.setOnClickListener {
             listener.getDirections(events[position].venue)

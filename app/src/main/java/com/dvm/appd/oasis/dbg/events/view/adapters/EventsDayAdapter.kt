@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.adapter_misc_day.view.*
 class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<EventsDayAdapter.EventsDayViewHolder>(){
 
     var days: List<String> = emptyList()
-    var daySelected: String = ""
+    var daySelected: String = "2019-10-19"
 
     interface OnDaySelected{
         fun daySelected(day: String, position: Int)

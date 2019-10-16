@@ -26,7 +26,7 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         Toast.makeText(context, "Entered Secret flow", Toast.LENGTH_LONG).show()
     }
 
-    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors")
+    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "Terms And Conditions", "Privacy Policy")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -72,6 +72,14 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
             }
             7 -> {
                 val bundle = bundleOf("link" to view!!.resources.getString(R.string.link_Sponsors), "title" to "Sponsors")
+                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
+            }
+            8 -> {
+                val bundle = bundleOf("link" to "www.bits-oasis.org/android/policy.html", "title" to "Privacy Policy")
+                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
+            }
+            9 -> {
+                val bundle = bundleOf("link" to "www.bits-oasis.org/android/termsandconditions.html", "title" to "Terms and Conditions")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
             }
         }

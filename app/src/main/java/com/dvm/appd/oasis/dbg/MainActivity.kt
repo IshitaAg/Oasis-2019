@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
         setupNotificationChannel()
         checkSMSREadPermissions()
-        checkForInvitation()
+        // checkForInvitation()
         checkNotificationPermissions()
         checkForUpdates()
 
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                                 try {
                                     startActivity(intent)
                                 }catch (e: ActivityNotFoundException){
-                                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext, "Error. Not supported in your phone", Toast.LENGTH_SHORT).show()
                                 } catch (e: Exception) {
                                     Toast.makeText(this, "Your mobile doesn't support this feature", Toast.LENGTH_LONG).show()
                                     dialog.cancel()
@@ -331,7 +331,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 }
             }*/
 
-            Toast.makeText(this, "${appUpdateInfo.installStatus().toString()} this is the install status of the app\n${appUpdateInfo.updateAvailability().toString()} this is the update status", Toast.LENGTH_LONG).show()
+            // Toast.makeText(this, "${appUpdateInfo.installStatus().toString()} this is the install status of the app\n${appUpdateInfo.updateAvailability().toString()} this is the update status", Toast.LENGTH_LONG).show()
 
             /*if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
                 Toast.makeText(this, "Update has been Downloaded", Toast.LENGTH_SHORT).show()
@@ -346,16 +346,16 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 )
             }*/
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
+                // Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
                 Log.d("Main Activity", "NewUpdate Available")
                 remoteConfig.fetch().addOnCompleteListener {task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Fetched Remote config variables successfully", Toast.LENGTH_LONG).show()
-                        Toast.makeText(this, "Result = ${task.result.toString()}", Toast.LENGTH_LONG).show()
-                        Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "Fetched Remote config variables successfully", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "Result = ${task.result.toString()}", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
                         val versionNumber = remoteConfig.all["update_version"].toString()
                         if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                            Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
+                            // Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
                             /*updateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
                                 AppUpdateType.IMMEDIATE,
@@ -365,7 +365,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                             startActivity(Intent(this, ImmidiateUpdateActivity::class.java))
                         }
                         else {
-                            Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
+                            // Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
                             /*val updateListener =
                                 InstallStateUpdatedListener { updateState ->
                                     Toast.makeText(this@MainActivity, "Called Listener Callback ${updateState?.installStatus()}", Toast.LENGTH_SHORT).show()
@@ -406,7 +406,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         }
                     }
                     else {
-                        Toast.makeText(this, "Cannot recieve data from remote config", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "Cannot recieve data from remote config", Toast.LENGTH_LONG).show()
                         Log.d("Main Activity", "Unable to fetch from remote config")
                     }
                 }

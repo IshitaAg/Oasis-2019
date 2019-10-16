@@ -137,8 +137,8 @@ class AuthActivity : AppCompatActivity() {
                     .getResult(ApiException::class.java)
                 circularLoadingButtonBitsMail.startAnimation()
                 showLoadingState()
-                Toast.makeText(this, profile!!.displayName, Toast.LENGTH_SHORT).show()
-                authViewModel.Blogin(profile.idToken!!, code)
+                // Toast.makeText(this, profile!!.displayName, Toast.LENGTH_SHORT).show()
+                authViewModel.Blogin(profile!!.idToken!!, code)
             } catch (e: ApiException) {
                 Log.d("checke", e.toString())
                 circularLoadingButtonBitsMail.revertAnimation()

@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_more.*
 
 class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
     override fun onSecretFlowEnabled() {
-        Toast.makeText(context, "Entered Secret flow", Toast.LENGTH_LONG).show()
+        // Toast.makeText(context, "Entered Secret flow", Toast.LENGTH_LONG).show()
         val editView = EditText(context)
         editView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         val builder = AlertDialog.Builder(context)

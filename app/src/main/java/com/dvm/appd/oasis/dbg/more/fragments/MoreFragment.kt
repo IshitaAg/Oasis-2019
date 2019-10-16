@@ -1,5 +1,8 @@
 package com.dvm.appd.oasis.dbg.more.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,12 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
+import com.dvm.appd.oasis.dbg.PaytmLogs
 
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.adapters.MoreAdapter
@@ -24,6 +30,26 @@ import kotlinx.android.synthetic.main.fragment_more.*
 class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
     override fun onSecretFlowEnabled() {
         Toast.makeText(context, "Entered Secret flow", Toast.LENGTH_LONG).show()
+        val editView = EditText(context)
+        editView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Enter Password")
+        builder.setView(editView)
+        builder.setPositiveButton("Continue", object : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                if(editView.text.toString() == "001103020011") {
+                    startActivity(Intent(context, PaytmLogs::class.java))
+                }
+                dialog!!.dismiss()
+            }
+
+        })
+        builder.setNegativeButton("Cancel", object : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                dialog!!.dismiss()
+            }
+        })
+        builder.show()
     }
 
     var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "About Us", "Privacy Policy", "Terms And Conditions")

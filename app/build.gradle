@@ -133,4 +133,10 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$work_version"
     implementation "androidx.work:work-rxjava2:$work_version"
 
+    // RxBinding
+    implementation 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0'
+    implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
+
 }

@@ -49,32 +49,32 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
         when(sdfDate.format(date.time)){
             "2019-10-19" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-19"
                 eventsViewModel.getEventData("2019-10-19")
             }
 
             "2019-10-20" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-20")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-20"
                 eventsViewModel.getEventData("2019-10-20")
             }
 
             "2019-10-21" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-21")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-21"
                 eventsViewModel.getEventData("2019-10-21")
             }
 
             "2019-10-22" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-22")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-22"
                 eventsViewModel.getEventData("2019-10-22")
             }
 
             "2019-10-23" -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-23")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-23"
                 eventsViewModel.getEventData("2019-10-23")
             }
 
             else -> {
-                (eventsViewModel.daySelected as MutableLiveData).postValue("2019-10-19")
+                (eventsViewModel.daySelected as MutableLiveData).value = "2019-10-19"
                 eventsViewModel.getEventData("2019-10-19")
             }
         }
@@ -100,7 +100,6 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             (view.dayRecycler.adapter as EventsDayAdapter).daySelected = it
             (view.dayRecycler.adapter as EventsDayAdapter).notifyDataSetChanged()
             (eventsViewModel.progressBarMark as MutableLiveData).postValue(0)
-//            eventsViewModel.currentSubscription.dispose()
             eventsViewModel.getEventData(it.toString())
         })
 
@@ -141,7 +140,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
     }
 
     override fun daySelected(day: String, position: Int) {
-        (eventsViewModel.daySelected as MutableLiveData).postValue(day)
+        (eventsViewModel.daySelected as MutableLiveData).value = day
         view!!.dayRecycler.smoothScrollToPosition(position)
     }
 
@@ -193,9 +192,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     }
 
-    override fun showAboutRules(about: String, rules: String) {
+    override fun showAboutRules(about: String, rules: String, description: String) {
         activity!!.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        val bundle = bundleOf("about" to about, "rules" to rules)
+        val bundle = bundleOf("about" to about, "rules" to rules, "description" to description)
         view!!.findNavController().navigate(R.id.action_action_events_to_event_data, bundle)
     }
 

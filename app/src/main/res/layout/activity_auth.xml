@@ -22,8 +22,6 @@
             android:id="@+id/bitsianLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_login_btn"
-            android:backgroundTint="@color/colorWhite"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/view6"
             app:layout_constraintEnd_toEndOf="@+id/view6"
@@ -33,9 +31,12 @@
             app:mrl_rippleHover="true"
             app:mrl_rippleOverlay="true">
 
-        <TextView
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                android:id="@+id/circularLoadingButtonBitsMail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/gradient_login_btn"
+                android:backgroundTint="@color/colorWhite"
                 android:fontFamily="@font/shellypalmer_circular_std_book"
                 android:padding="8dp"
                 android:paddingStart="32dp"
@@ -45,7 +46,12 @@
                 android:text="Login using BITS mail"
                 android:textAlignment="center"
                 android:textColor="#31365E"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:finalCornerAngle="100dp"
+                app:initialCornerAngle="8dp"
+                app:spinning_bar_color="#FFFFFF"
+                app:spinning_bar_padding="6dp" />
+        <!--#31365E-->
 
     </com.balysv.materialripple.MaterialRippleLayout>
 

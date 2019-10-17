@@ -15,6 +15,7 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModelFactory
+import io.reactivex.android.plugins.RxAndroidPlugins
 import kotlinx.android.synthetic.main.dia_wallet_add_money.*
 import kotlinx.android.synthetic.main.dia_wallet_add_money.view.*
 import java.lang.Exception
@@ -56,18 +57,10 @@ class AddMoneyDialog : DialogFragment() {
                 rootView.addBtn.isClickable = false
                 rootView.loadingPBR.visibility = View.VISIBLE
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
-
-
             }
         }
 
         rootView.addPaytm.setOnClickListener {
-            if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
-                AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
-                    addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
-                    dialog.dismiss()
-                }.show()
-            }
             if(rootView.amount.text.toString().isBlank()){
                 if(context!=null)
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
@@ -81,6 +74,12 @@ class AddMoneyDialog : DialogFragment() {
                 Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
+                if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
+                    AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
+                        addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
+                        dialog.dismiss()
+                    }.show()
+                }
                 addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
                 dialog!!.dismiss()
             }

@@ -18,6 +18,7 @@
             android:required="false" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
             android:name=".OASISApp"
             android:allowBackup="true"
@@ -27,7 +28,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ImmidiateUpdateActivity"></activity>
+        <activity android:name=".PaytmLogs"></activity>
+        <activity android:name=".ImmidiateUpdateActivity" />
         <activity
                 android:name=".auth.views.OnboardingActivity"
                 android:screenOrientation="portrait" />

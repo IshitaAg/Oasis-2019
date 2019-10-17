@@ -14,7 +14,7 @@
           android:bottom="500dp"
           android:right="200dp">
       <shape android:shape="oval">
-          <solid android:color="#7849f7"/>
+          <solid android:color="#AB7849F7"/>
       </shape>
   </item>
 <item  android:top="100dp"
@@ -22,7 +22,7 @@
         android:left="250dp"
         android:bottom="300dp">
     <shape android:shape="oval">
-        <solid android:color="#5152fa"/>
+        <solid android:color="#AB5152FA"/>
     </shape>
 </item>
 </layer-list>

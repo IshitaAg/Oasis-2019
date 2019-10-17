@@ -56,4 +56,7 @@ interface EventsDao {
 
     @Query("UPDATE event_categories SET filtered = :filtered WHERE category = :category")
     fun updateFiltered(category: String, filtered: Boolean): Completable
+
+    @Query("UPDATE event_categories SET filtered = 0")
+    fun removeFilters(): Completable
 }

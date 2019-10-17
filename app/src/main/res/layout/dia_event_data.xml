@@ -5,7 +5,7 @@
         android:id="@+id/dialogEvent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:minWidth="320dp"
+        android:minWidth="260dp"
         android:background="#31365E"
         android:orientation="vertical">
 

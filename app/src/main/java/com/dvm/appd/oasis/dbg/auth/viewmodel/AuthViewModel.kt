@@ -15,9 +15,10 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     var state: LiveData<LoginState> = MutableLiveData()
 //    var referral: LiveData<String> = MutableLiveData()
-    var referralState: LiveData<Boolean> = MutableLiveData(true)
+    var referralState: LiveData<Boolean> = MutableLiveData()
 
     init {
+        (referralState as MutableLiveData).value = true
         listenRegToken()
     }
 

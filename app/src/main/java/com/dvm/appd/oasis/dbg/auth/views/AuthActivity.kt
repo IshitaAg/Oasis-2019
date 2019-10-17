@@ -1,9 +1,11 @@
 package com.dvm.appd.oasis.dbg.auth.views
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -50,14 +52,7 @@ class AuthActivity : AppCompatActivity() {
                 .requestProfile()
                 .build()
         )
-        authViewModel =
-            ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
-
-        authViewModel.referralState.observe(this, Observer {
-            if (it){
-                ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
-            }
-        })
+        authViewModel = ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
 
         outsteeLogin.setOnClickListener {
             when {
@@ -82,7 +77,6 @@ class AuthActivity : AppCompatActivity() {
                 startActivityForResult(gso.signInIntent, 108)
             }
         }
-
 
         authViewModel.state.observe(this, Observer {
             when (it!!) {
@@ -127,6 +121,15 @@ class AuthActivity : AppCompatActivity() {
         actionBar?.hide()
 
     }
+
+//    override fun onStart() {
+//        super.onStart()
+//        authViewModel.referralState.observe(this, Observer {
+//            if (it){
+//                ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
+//            }
+//        })
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

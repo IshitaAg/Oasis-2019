@@ -25,11 +25,11 @@
             android:text="@android:string/ok"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button3"
+            app:layout_constraintStart_toEndOf="@+id/cancelReferral"
             app:layout_constraintTop_toBottomOf="@+id/referralText" />
 
     <Button
-            android:id="@+id/button3"
+            android:id="@+id/cancelReferral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"

@@ -52,7 +52,7 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
         builder.show()
     }
 
-    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "About Us", "Privacy Policy", "Terms And Conditions")
+    var moreItems = listOf("Contact Us", "Developers","Kind Store","Map","N2O Voting","EPC Blog", "HPC Blog", "Sponsors", "About Us", "Privacy Policy", "Terms And Conditions", "Credits")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -111,6 +111,10 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
             10 -> {
                 val bundle = bundleOf("link" to "https://www.bits-oasis.org/android/tc.html", "title" to "Terms and Conditions")
                 view!!.findNavController().navigate(R.id.action_action_more_to_fragmentWebPage, bundle)
+            }
+            11 -> {
+                val bundle = bundleOf("title" to "Credits")
+                view!!.findNavController().navigate(R.id.action_action_more_to_fragmentRecyclerView, bundle)
             }
         }
     }

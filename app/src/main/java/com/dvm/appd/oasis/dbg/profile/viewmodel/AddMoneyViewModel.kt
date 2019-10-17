@@ -31,7 +31,7 @@ class AddMoneyViewModel(val authRepository: AuthRepository,val walletRepository:
 
     }
 
-    @SuppressLint("CheckResult")
+   /* @SuppressLint("CheckResult")
     fun getCheckSum(fragment: ProfileFragment, txnAmount: String){
         Log.d("Paytm", "Entered View Model for request")
         walletRepository.getCheckSum(fragment, txnAmount)
@@ -40,5 +40,5 @@ class AddMoneyViewModel(val authRepository: AuthRepository,val walletRepository:
             },{
                 Log.e("PayTm", "Entered onError with ${it.toString()}")
             })
-    }
+    }*/
 }

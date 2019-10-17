@@ -14,7 +14,7 @@ class ComediansVoting {
     private val votingStatus = BehaviorSubject.create<Boolean>()
 
     init{
-       database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+       /*database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
            if(documentSnapshot!=null){
                val comedians = ArrayList<Comedian>()
                database.collection("voting").document("info").collection("comedians").get().addOnSuccessListener {docs->
@@ -25,7 +25,7 @@ class ComediansVoting {
                comediansSubject.onNext(comedians)
                votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
            }
-       }
+       }*/
 
     }
 

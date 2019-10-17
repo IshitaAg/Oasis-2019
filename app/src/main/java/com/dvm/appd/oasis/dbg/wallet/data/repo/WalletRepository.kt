@@ -15,6 +15,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.WalletDao
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallItemsData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.*
+import com.google.android.play.core.internal.x
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.gson.JsonObject
@@ -1133,8 +1134,8 @@ class WalletRepository(
     // https://securegw-stage.paytm.in/theia/paytmCallback
     val callBackUrl = "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order"
 
-    /*fun getCheckSum(fragment: ProfileFragment, txnAmount: String): Completable {
-        *//*val body = JsonObject().apply {
+    fun getCheckSum(fragment: ProfileFragment, txnAmount: String): Completable {
+        /*val body = JsonObject().apply {
             this.addProperty("MID", mID)
             this.addProperty("CHANNEL_ID", "WAP")
             this.addProperty("TXN_AMOUNT", txnAmount)
@@ -1143,7 +1144,7 @@ class WalletRepository(
             this.addProperty("INDUSTRY_TYPE_ID", industryTypeId)
             this.addProperty("MOBILE_NO", "7777777777")
             // this.addProperty("EMAIL", "username@emailprovider.com")
-        }*//*
+        }*/
         val body = JsonObject().apply {
             this.addProperty("TXN_AMOUNT", txnAmount)
         }
@@ -1181,10 +1182,10 @@ class WalletRepository(
                             "password for client side certificate",
                             "file name for client side certificate"
                         )
-                        *//**WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                         * WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                         * Donot remove this variable x. Paytm sdk will break.
-                         * Just let it be here*//*
+                        /**WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        Donot remove this variable x. Paytm sdk will break.
+                        Just let it be here*/
                         val x = PaytmPGService.getStagingService()
                         x.enableLog(fragment.context)
                         x.initialize(order, null)
@@ -1223,10 +1224,10 @@ class WalletRepository(
                 }
             }
             .ignoreElement()
-    }*/
+    }
 
 
-    /*@SuppressLint("CheckResult")
+    @SuppressLint("CheckResult")
     fun sendTransactionDetails(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
         walletDao.insertPaytmTransaction(transaction).subscribeOn(Schedulers.io()).subscribe({
             Log.d("Wallet Reop", "Transacrtion insertion sucessful")
@@ -1234,7 +1235,7 @@ class WalletRepository(
             Log.e("Wallet Repo", "Failed to insert transaction = ${it.toString()}")
         })
         return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
-    }*/
+    }
 
     fun fetchKindItems():Completable{
         Log.d("checkr","called")
@@ -1281,6 +1282,5 @@ class WalletRepository(
             Log.d("check", it.toString())
         }
     }
-
 
 }

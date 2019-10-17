@@ -20,7 +20,7 @@ class OASISApp : Application() {
 
         RxJavaPlugins.setErrorHandler {
             Log.e("App", "error $it: ${it.message ?: "No message"}")
-            Crashlytics.log("Global Event handler Crash With error = ${it.toString()}")
+            // Crashlytics.log("Global Event handler Crash With error = ${it.toString()}")
         }
 
     }

@@ -106,8 +106,8 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
         })
     }
 
-    /*fun onPaytmTransactionSucessful(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
+    fun onPaytmTransactionSucessful(body: JsonObject, transaction: PaytmRoom): Single<Response<Void>> {
         Log.d("PayTm", "Entered on Sucess in View Model")
         return walletRepository.sendTransactionDetails(body, transaction).observeOn(AndroidSchedulers.mainThread())
-    }*/
+    }
 }

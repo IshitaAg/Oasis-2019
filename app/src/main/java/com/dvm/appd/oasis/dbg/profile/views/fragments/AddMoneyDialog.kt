@@ -32,8 +32,8 @@ class AddMoneyDialog : DialogFragment() {
                     addPaytm.isClickable = false
                 }
                 false -> {
-                    addPaytm.visibility = View.GONE
-                    addPaytm.isClickable = false
+                    /*addPaytm.isClickable = false
+                    addPaytm.visibility = View.GONE*/
                    addBtn.visibility = View.GONE
                     addBtn.isClickable = false
                 }
@@ -62,7 +62,7 @@ class AddMoneyDialog : DialogFragment() {
             }
         }
 
-        /*rootView.addPaytm.setOnClickListener {
+        rootView.addPaytm.setOnClickListener {
             if(rootView.amount.text.toString().isBlank()){
                 if(context!=null)
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
@@ -85,7 +85,7 @@ class AddMoneyDialog : DialogFragment() {
                 addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
                 dialog!!.dismiss()
             }
-        }*/
+        }
 
         addMoneyViewModel.result.observe(this, Observer {
             when (it!!) {

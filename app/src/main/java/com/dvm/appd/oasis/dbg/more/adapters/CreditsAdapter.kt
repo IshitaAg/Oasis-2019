@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.more.adapters
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class CreditsAdapter : RecyclerView.Adapter<CreditsAdapter.CreditsAdapterViewHol
 
     override fun onBindViewHolder(holder: CreditsAdapterViewHolder, position: Int) {
         holder.txt.text = credids[position]
+        holder.txt.movementMethod = LinkMovementMethod.getInstance()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CreditsAdapterViewHolder {

@@ -53,9 +53,9 @@ class AuthActivity : AppCompatActivity() {
         authViewModel =
             ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
 
-        authViewModel.referalState.observe(this, Observer {
+        authViewModel.referralState.observe(this, Observer {
             if (it){
-                //open dialog
+                ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
             }
         })
 

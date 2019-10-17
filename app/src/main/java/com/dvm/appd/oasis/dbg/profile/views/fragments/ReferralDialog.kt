@@ -17,7 +17,7 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import kotlinx.android.synthetic.main.dia_wallet_referral.view.*
 
-class ReferealDialog : DialogFragment() {
+class ReferralDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

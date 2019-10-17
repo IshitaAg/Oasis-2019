@@ -147,15 +147,39 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     override fun getDirections(venue: String) {
 
-        var locations: Map<String, Pair<String, String>> = mapOf("GymG" to Pair("28.3591263","75.5902106"),
-            "6164" to Pair("28.3621648","75.5871217"), "Main Audi" to Pair("28.3638282", "75.5869983"),
-            "SAC Amphi" to Pair("28.3601677", "75.5851640"), "SAC Entrance" to Pair("28.3607649", "75.5856723"),
-            "2204" to Pair("28.3637981", "75.5878352"), "2220" to Pair("28.3643409", "75.5883371"),
-            "2234" to Pair("28.3639199", "75.5880001"))
+        var locations: Map<String, Pair<String, String>> = mapOf("gymg" to Pair("28.3591263","75.5902106"),
+            "6164" to Pair("28.3621648","75.5871217"),
+            "main audi" to Pair("28.3638282", "75.5869983"),
+            "sac amphi" to Pair("28.3601677", "75.5851640"),
+            "sac entrance" to Pair("28.3607649", "75.5856723"),
+            "2204" to Pair("28.3637981", "75.5878352"),
+            "2220" to Pair("28.3643409", "75.5883371"),
+            "2234" to Pair("28.3639199", "75.5880001"),
+            "2158" to Pair("28.3647260", "75.5866801"),
+            "3219" to Pair("28.3641872", "75.5855653"),
+            "old sac entrance" to Pair("28.3602176", "75.5856824"),
+            "nab audi" to Pair("28.3622769", "75.5874429"),
+            "6101" to Pair("28.3631204", "75.5872437"),
+            "rotunda" to Pair("28.3633546", "75.5871163"),
+            "sr grounds" to Pair("28.3659745", "75.5880608"),
+            "m lawns" to Pair("28.3634765", "75.5884400"),
+            "fd2 qt" to Pair("28.3641294", "75.5879015"),
+            "fd3 qt" to Pair("28.3639471", "75.5860257"),
+            "ltc" to Pair("28.3650947","75.5898673"))
 
-        val latitude = "28.3633546"
-        val longitude = "75.5871163"
-        val uri = Uri.parse("google.navigation:q=$latitude,$longitude&mode=w")
+        var venueLocation: Pair<String, String> = Pair("28.3633546", "75.5871163")
+        venueLocation = when{
+            locations.containsKey(venue.toLowerCase()) -> locations[venue.toLowerCase()]!!
+            venue.contains("fd2", true) -> locations["fd2 qt"]!!
+            venue.contains("fd3", true) -> locations["fd3 qt"]!!
+            venue.contains("lawns", true) -> locations["m lawns"]!!
+            venue.contains("sr", true) -> locations["sr grounds"]!!
+            venue.contains("fd", true) -> locations["ltc"]!!
+            venue.contains("audi", true) -> locations["main audi"]!!
+            else -> locations["rotunda"]!!
+        }
+
+        val uri = Uri.parse("google.navigation:q=${venueLocation.first},${venueLocation.second}&mode=w")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         try {
             if (intent.resolveActivity(activity!!.packageManager) != null)

@@ -36,6 +36,8 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         ticketsViewModel = ViewModelProviders.of(this, TicketViewModelFactory())[TicketViewModel::class.java]
 
+        (ticketsViewModel.redirect as MutableLiveData).value = false
+
         view.ticketsList.adapter = TicketsAdapter(this)
 
         ticketsViewModel.tickets.observe(this, Observer {
@@ -85,8 +87,7 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         ticketsViewModel.redirect.observe(this, Observer {
             if (it){
-                (ticketsViewModel.redirect as MutableLiveData).postValue(false)
-                view.findNavController().popBackStack()
+                dismiss()
             }
         })
 
@@ -108,7 +109,7 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
     override fun onResume() {
         super.onResume()
 
-        (ticketsViewModel.redirect as MutableLiveData).postValue(false)
+        (ticketsViewModel.redirect as MutableLiveData).value = false
     }
 //    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 //        val dialog = super.onCreateDialog(savedInstanceState)

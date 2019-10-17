@@ -1,43 +1,26 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.R
-import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.views.AuthActivity
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.ProfileViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.UserTicketsAdapter
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
-import com.google.android.play.core.internal.x
-import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
-import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.paytm.pgsdk.PaytmPGService
@@ -45,17 +28,11 @@ import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dia_wallet_send_money.view.*
-import kotlinx.android.synthetic.main.fra_auth_outstee.view.*
 import kotlinx.android.synthetic.main.fra_profile.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
-import okio.Utf8
 import java.lang.Exception
-import java.sql.Array
-import java.util.*
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterView.OnItemSelectedListener*/ {
 
@@ -125,7 +102,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             } else {
                 Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
             }*/
-            ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")
+            ReferralDialog().show(childFragmentManager, "REFERRAL_DIALOG")
         }
         rootView.qrCode.setOnClickListener {
             QrDialog().show(childFragmentManager,"QR_DIALOG")
@@ -315,7 +292,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
         parent!!.setSelection(0)
         when(parent!!.getItemAtPosition(position)){
             "Refer"-> {Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
-                ReferealDialog().show(childFragmentManager, "REFERRAL_DIALOG")}
+                ReferralDialog().show(childFragmentManager, "REFERRAL_DIALOG")}
             "Logout"->{ Log.d("checkspin",parent!!.getItemAtPosition(position).toString())
                 profileViewModel.logout()}
         }

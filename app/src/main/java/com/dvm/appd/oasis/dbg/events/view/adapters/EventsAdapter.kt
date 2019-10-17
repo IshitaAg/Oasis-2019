@@ -45,7 +45,8 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
         holder.event.text = events[position].name
         holder.event.isSelected = true
-        holder.description.text = events[position].details
+        // holder.description.text = events[position].details
+        holder.description.visibility = View.GONE
         holder.time.text = events[position].time
         holder.venue.text = events[position].venue
 //        if (events[position].isFav == 1){

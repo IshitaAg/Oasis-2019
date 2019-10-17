@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
         setupNotificationChannel()
-        checkSMSREadPermissions()
+        // checkSMSREadPermissions()
         // checkForInvitation()
         checkNotificationPermissions()
         checkForUpdates()
@@ -193,12 +193,6 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             } catch (e: Exception) {
                 Log.e("AutoStart Execute", "Error in opening AutoStart = ${e.toString()}")
             }
-        }
-    }
-
-    private fun checkSMSREadPermissions() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-	        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS), REQUEST_CODE_SMS_PERMISSIONS)
         }
     }
 

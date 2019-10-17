@@ -131,17 +131,21 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             QrDialog().show(childFragmentManager,"QR_DIALOG")
         }
 
-
+        rootView.AddBtn.isClickable = true
         rootView.AddBtn.setOnClickListener {
+            rootView.AddBtn.isClickable = false
             AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
 
-
+        rootView.sendBtn.isClickable = true
         rootView.sendBtn.setOnClickListener {
+            rootView.sendBtn.isClickable =false
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
         }
 
+        rootView.buyTicket.isClickable = true
         rootView.buyTicket.setOnClickListener {
+            rootView.buyTicket.isClickable = false
             TicketDialog().show(childFragmentManager,"TICKETS_DIALOG")
 
         }
@@ -164,6 +168,9 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
         })
 
         profileViewModel.user.observe(this, Observer {
+            if(it.isBitsian == false){
+                rootView.sendBtn.visibility = View.GONE
+            }
             rootView.username.text = it.name
             rootView.userId.text = "User id: ${it.userId}"
             Observable.just(it.qrCode.generateQr())

@@ -76,6 +76,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
 
+
+
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
         }
@@ -170,6 +172,9 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
         })
 
         profileViewModel.user.observe(this, Observer {
+            if(it.isBitsian == false){
+                rootView.sendBtn.visibility = View.GONE
+            }
             rootView.username.text = it.name
             rootView.userId.text = "User id: ${it.userId}"
             Observable.just(it.qrCode.generateQr())

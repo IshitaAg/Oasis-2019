@@ -16,8 +16,8 @@ data class EventItemPojo(
     @SerializedName("rules")
     val rules: String,
 
-    @SerializedName("time")
-    val time: String,
+    @SerializedName("timings")
+    val timing: String,
 
     @SerializedName("date_time")
     val dateTime: String,

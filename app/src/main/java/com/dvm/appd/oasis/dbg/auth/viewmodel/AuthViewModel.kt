@@ -14,13 +14,11 @@ import com.google.firebase.iid.FirebaseInstanceId
 class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     var state: LiveData<LoginState> = MutableLiveData()
-    var referal: LiveData<String> = MutableLiveData()
-    var referalState: LiveData<Boolean> = MutableLiveData()
+//    var referral: LiveData<String> = MutableLiveData()
+    var referralState: LiveData<Boolean> = MutableLiveData(true)
 
     init {
         listenRegToken()
-
-
     }
 
     private fun listenRegToken() {
@@ -89,6 +87,9 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
 
     }
 
+    fun setReferral(referral: String){
+        authRepository.addReferral(referral)
+    }
 //    authRepository.getUser().subscribe({
 //        if (it.firstLogin){
 //            refqeralState.asMut().postValue(true)

@@ -101,7 +101,7 @@ class AppModule(private val application: Application) {
     @Singleton
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://wallet.bits-oasis.org/")
+            .baseUrl("https://www.bits-oasis.org/")
             .client(OkHttpClient().newBuilder().addInterceptor(BaseInterceptor()).build())
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

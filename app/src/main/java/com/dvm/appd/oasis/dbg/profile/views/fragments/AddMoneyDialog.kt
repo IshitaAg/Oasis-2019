@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
@@ -15,10 +16,13 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.AddMoneyViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import io.reactivex.android.plugins.RxAndroidPlugins
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.dia_wallet_add_money.*
 import kotlinx.android.synthetic.main.dia_wallet_add_money.view.*
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class AddMoneyDialog : DialogFragment() {
     private lateinit var addMoneyViewModel: AddMoneyViewModel
@@ -40,27 +44,28 @@ class AddMoneyDialog : DialogFragment() {
             }
         })
         rootView.addBtn.isClickable = true
-        rootView.addBtn.setOnClickListener {
+
+        RxView.clicks(rootView.addBtn).debounce(500,TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe({
             if (rootView.amount.text.toString().isBlank())
             { if(context!=null)
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()}
             else if (try { rootView.amount.text.toString().toInt() } catch (e: Exception) { 100000 } > 10000) {
                 if(context!=null)
-                Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT)
-                    .show()
+                    Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT)
+                        .show()
                 rootView.amount.text.clear()
             } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
                 if(context!=null)
-                Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
-                val a = activity!!
-                a.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 rootView.addBtn.isClickable = false
                 rootView.loadingPBR.visibility = View.VISIBLE
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
             }
-        }
+        },{
+            Log.d("checkview",it.toString())
+        })
 
         /*rootView.addPaytm.setOnClickListener {
             if(rootView.amount.text.toString().isBlank()){

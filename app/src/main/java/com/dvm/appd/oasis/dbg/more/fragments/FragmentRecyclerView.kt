@@ -11,6 +11,7 @@ import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.adapters.ContactUsAdapter
+import com.dvm.appd.oasis.dbg.more.adapters.CreditsAdapter
 import com.dvm.appd.oasis.dbg.more.adapters.DevelopersAdapter
 import com.dvm.appd.oasis.dbg.more.dataClasses.Developer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -84,6 +85,13 @@ class FragmentRecyclerView : Fragment() {
                 aboutUs.visibility = View.VISIBLE
                 recycler_commonRecyclerView.visibility = View.GONE
                 aboutUs.text = "Oasis—the cultural fest of BITS Pilani—is nothing but 96 hours of unadulterated thrills comprising music, dance, drama, art, quizzes, fashion, and humour. With a footfall of around 5000+ every year, it is the second-largest cultural festival of India. This year’s theme—neon-noir—is a confluence of the contraries coexisting in harmony. On a superficial level, the theme is inherently contradictory—the concept of both light and darkness manifested simultaneously. On a metaphysical level, however, neon-noir is a commentary on specific socio-cultural dimensions such as urban decay, consumerism, and industrial encroachment. It is characterised by menacing cityscapes with the luminescence accentuating the shadows. If convoluted storylines, crime, and moral fluctuation enrapture you, this Oasis, from 19th to 23rd October, buckle up for the experience of an aesthetic so powerful that you question your very existence in this realm. Live the life of a Taxi Driver and run on blades of talent in the 49th edition of the fest which promises to leave you in a trance caused by the chiaroscuro of shadow and illumination."
+            }
+
+            "Credits" -> {
+                recycler_commonRecyclerView.visibility = View.VISIBLE
+                aboutUs.visibility = View.INVISIBLE
+                recycler_commonRecyclerView.adapter = CreditsAdapter()
+                (recycler_commonRecyclerView.adapter as CreditsAdapter).notifyDataSetChanged()
             }
         }
     }

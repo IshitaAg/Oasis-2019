@@ -52,6 +52,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
         rootview.stalls_recycler.adapter = StallsAdapter(this)
 
         stallsViewModel.stalls.observe(this, Observer {
+            rootview.progressBar.visibility = View.GONE
             (rootview.stalls_recycler.adapter as StallsAdapter).stalls = it
             (rootview.stalls_recycler.adapter as StallsAdapter).stallImgs = stallImgs
             (rootview.stalls_recycler.adapter as StallsAdapter).notifyDataSetChanged()

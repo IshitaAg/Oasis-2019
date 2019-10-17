@@ -68,9 +68,10 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
             when(it!!){
                 LoginState.Success -> {
                     authRepository.getUser().subscribe {
+                        Log.d("checklogin",it.firstLogin.toString())
                         if(it.firstLogin==true) {
-                            authRepository.disableOnBoardingForUser()
                             (state as MutableLiveData).postValue(LoginState.MoveToOnBoarding)
+                            authRepository.disableOnBoardingForUser()
                         }
                         else
                             (state as MutableLiveData).postValue(LoginState.MoveToMainApp)

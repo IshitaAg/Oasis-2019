@@ -2,13 +2,11 @@ package com.dvm.appd.oasis.dbg.profile.views.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -24,7 +22,6 @@ import java.lang.Exception
 class AddMoneyDialog : DialogFragment() {
     private lateinit var addMoneyViewModel: AddMoneyViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         addMoneyViewModel = ViewModelProviders.of(this, AddMoneyViewModelFactory())[AddMoneyViewModel::class.java]
         val rootView = inflater.inflate(R.layout.dia_wallet_add_money, container, false)
         addMoneyViewModel.user.observe(this, Observer {
@@ -54,6 +51,8 @@ class AddMoneyDialog : DialogFragment() {
                 Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
+                val a = activity!!
+                a.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 rootView.addBtn.isClickable = false
                 rootView.loadingPBR.visibility = View.VISIBLE
                 addMoneyViewModel.addMoney(rootView.amount.text.toString().toInt())
@@ -103,6 +102,11 @@ class AddMoneyDialog : DialogFragment() {
         })
 
         return rootView
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

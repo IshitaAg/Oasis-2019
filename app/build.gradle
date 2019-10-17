@@ -15,7 +15,7 @@ apply plugin: 'io.fabric'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.dvm.appd.oasis.dbg"
+        applicationId "v2015.oasis.pilani.bits.com.home"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 19

@@ -89,7 +89,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
             else if (it == 1){
                 view.progressBar.visibility = View.GONE
-                view.swipeOrder.isRefreshing = false
+                // view.swipeOrder.isRefreshing = false
                 activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         })
@@ -101,10 +101,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
         })
 
-        view.swipeOrder.setOnRefreshListener {
+        /*view.swipeOrder.setOnRefreshListener {
             (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
             ordersViewModel.refreshData()
-        }
+        }*/
 
         return view
     }

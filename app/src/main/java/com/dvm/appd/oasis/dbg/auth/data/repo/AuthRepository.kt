@@ -81,7 +81,7 @@ class AuthRepository(val authService: AuthService, val sharedPreferences: Shared
         val voted = sharedPreferences.getBoolean(Keys.voted,false)
         val referralCode = sharedPreferences.getString(Keys.referralCode, "")
         Log.d("checkSp", listOf(name, email, contact, jwt, qr, bitsian,firstLogin).toString())
-        if (listOf(name, email, contact, jwt, qr).contains(null)) {
+        if (listOf(name, jwt, qr).contains(null)) {
             setUser(null).subscribe()
             return Maybe.empty()
         }

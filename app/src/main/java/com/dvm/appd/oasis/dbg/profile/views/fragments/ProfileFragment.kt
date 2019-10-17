@@ -75,7 +75,6 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-
         rootView.logout.setOnClickListener {
             profileViewModel.logout()
         }

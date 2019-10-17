@@ -17,10 +17,13 @@ class ComediansVoting {
        /*database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
            if(documentSnapshot!=null){
                val comedians = ArrayList<Comedian>()
-               database.collection("voting").document("info").collection("comedians").get().addOnSuccessListener {docs->
-                   for(doc in docs){
-                       comedians.add(Comedian(doc.id))
-                   }
+               if(documentSnapshot.getBoolean("enabled")==true) {
+                   database.collection("voting").document("info").collection("comedians").get()
+                       .addOnSuccessListener { docs ->
+                           for (doc in docs) {
+                               comedians.add(Comedian(doc.id))
+                           }
+                       }
                }
                comediansSubject.onNext(comedians)
                votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)

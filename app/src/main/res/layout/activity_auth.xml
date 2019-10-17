@@ -49,7 +49,7 @@
                 android:textSize="18sp"
                 app:finalCornerAngle="100dp"
                 app:initialCornerAngle="8dp"
-                app:spinning_bar_color="#FFFFFF"
+                app:spinning_bar_color="@color/filter_not"
                 app:spinning_bar_padding="6dp" />
         <!--#31365E-->
 

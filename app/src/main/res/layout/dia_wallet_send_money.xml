@@ -22,7 +22,7 @@
             android:inputType="number"
             android:padding="8dp"
             android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="#B0FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -49,7 +49,7 @@
             android:hint="Amount"
             android:inputType="number"
             android:padding="8dp"
-            android:textColorHint="@color/colorWhite"
+            android:textColorHint="#B0FFFFFF"
             app:layout_constraintEnd_toEndOf="@+id/userId"
             app:layout_constraintStart_toStartOf="@+id/userId"
             app:layout_constraintTop_toBottomOf="@+id/userId"

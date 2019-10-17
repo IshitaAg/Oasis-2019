@@ -147,7 +147,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
         profileViewModel.user.observe(this, Observer {
             if(it.isBitsian == false){
                 rootView.sendBtn.visibility = View.GONE
-                rootView.AddBtn.visibility = View.GONE
+                // rootView.AddBtn.visibility = View.GONE
             }
             rootView.username.text = it.name
             rootView.userId.text = "User id: ${it.userId}"
@@ -229,7 +229,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                         this.addProperty("RESPMSG", bundle["RESPMSG"].toString())
                         Log.d("PayTm", "Sent request body for confirmation = ${this.toString()}")
                     }
-                    /*profileViewModel.onPaytmTransactionSucessful(body, transaction).subscribe({
+                    profileViewModel.onPaytmTransactionSucessful(body, transaction).subscribe({
                         Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
                         Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
 
@@ -244,7 +244,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                     },{
                         Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
                         Toast.makeText(context, "Unable to complete Transaction. Contact a DVM Official", Toast.LENGTH_LONG).show()
-                    })*/
+                    })
                 }
             }
         } catch (e: Exception) {

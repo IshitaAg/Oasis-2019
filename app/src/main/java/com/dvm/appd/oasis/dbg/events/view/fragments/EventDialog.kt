@@ -29,11 +29,14 @@ class EventDialog: DialogFragment(){
             view.about.text = about
         }
 
+        // view.about.text = about
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             view.rules.text = Html.fromHtml(rules, FROM_HTML_MODE_LEGACY)
         }else{
             view.rules.text = rules
         }
+
+        // view.rules.text = rules
 
         return view
     }

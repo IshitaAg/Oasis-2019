@@ -30,10 +30,10 @@ class ReferralDialog : DialogFragment() {
             rootView.shareReferral.setOnClickListener {
                 var shareBody = /*"Referral Code = $code \n"+*/
                 "Join me on Official Oasis'19 App, a secure app with in-built wallet," +
-                        " live event tracking etc and experience this Oasis like never before.\n" +
-                        "Enter my code $code  and earn cashback upto Rs 100.\n" +
-                        "Android app link: https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home\n" +
-                        "iOS app link: https://apps.apple.com/us/app/oasis-2019/id1483415633?ls=1"
+                        " live event tracking etc and experience this Oasis like never before.\n\n" +
+                        "Android app link: https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home\n\n" +
+                        "iOS app link: https://apps.apple.com/us/app/oasis-2019/id1483415633?ls=1\n\n" +
+                        "Enter my code $code and earn cashback upto Rs 100 on your first order."
                 Log.d("Profile Frag", "Message Body = ${shareBody}")
                 var sharingIntent = Intent(Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"

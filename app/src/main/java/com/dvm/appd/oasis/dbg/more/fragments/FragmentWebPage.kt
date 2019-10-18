@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.core.view.isVisible
@@ -45,6 +46,7 @@ class FragmentWebPage : Fragment() {
         }
         text_commonWebView_title.text = title
         webView_commonWebView_webPage.webViewClient = CustomWebViewClient()
+        webView_commonWebView_webPage.settings.cacheMode = WebSettings.LOAD_DEFAULT
         webView_commonWebView_webPage.loadUrl(link)
     }
 
@@ -56,7 +58,7 @@ class FragmentWebPage : Fragment() {
 
         override fun onPageFinished(view: WebView?, url: String?) {
             try {
-                progress_commonWebView.visibility = View.INVISIBLE
+                // progress_commonWebView.visibility = View.INVISIBLE
             } catch (e: Exception) {
                 Log.e("WebPage", "An Error Occoured")
             }

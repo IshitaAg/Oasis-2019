@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -38,6 +39,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     private val profileViewModel by lazy {
         ViewModelProviders.of(this, ProfileViewModelFactory())[ProfileViewModel::class.java]
     }
+    var dialog: AddMoneyDialog? = null
 
     //use prodPgService when production level
     private val stagingPgService = PaytmPGService.getStagingService()
@@ -110,7 +112,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
         rootView.AddBtn.isClickable = true
         rootView.AddBtn.setOnClickListener {
             rootView.AddBtn.isClickable = false
-            AddMoneyDialog().show(childFragmentManager,"ADD_MONEY_DIALOG")
+            dialog = AddMoneyDialog()
+            dialog!!.show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
 
         rootView.sendBtn.isClickable = true
@@ -190,6 +193,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     @SuppressLint("CheckResult")
     override fun onTransactionResponse(bundle: Bundle?) {
         try {
+            dialog!!.dismiss()
             progress_profile.visibility = View.VISIBLE
             Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
             if (!(bundle!!.isEmpty)) {
@@ -248,6 +252,10 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                         Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
                         Toast.makeText(context, "Unable to complete Transaction. Contact a DVM Official", Toast.LENGTH_LONG).show()
                     })
+                } else {
+                    Log.d("PayTm", "Entered else for response")
+                    progress_profile.visibility = View.INVISIBLE
+                    Toast.makeText(context, "Transaction Failure. PayTm is currently dissabled. Try later", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {

@@ -147,7 +147,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
         var locations: Map<String, Pair<String, String>> = mapOf("gymg" to Pair("28.3591263","75.5902106"),
             "6164" to Pair("28.3621648","75.5871217"),
-            "main audi" to Pair("28.3638282", "75.5869983"),
+            "cisco audi" to Pair("28.3638282", "75.5869983"),
             "sac amphi" to Pair("28.3601677", "75.5851640"),
             "sac entrance" to Pair("28.3607649", "75.5856723"),
             "2204" to Pair("28.3637981", "75.5878352"),
@@ -158,7 +158,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             "old sac entrance" to Pair("28.3602176", "75.5856824"),
             "nab audi" to Pair("28.3622769", "75.5874429"),
             "6101" to Pair("28.3631204", "75.5872437"),
-            "rotunda" to Pair("28.3633546", "75.5871163"),
+            "realme rotunda" to Pair("28.3633546", "75.5871163"),
             "sr grounds" to Pair("28.3659745", "75.5880608"),
             "m lawns" to Pair("28.3634765", "75.5884400"),
             "fd i" to Pair("28.3642811", "75.5888698"),

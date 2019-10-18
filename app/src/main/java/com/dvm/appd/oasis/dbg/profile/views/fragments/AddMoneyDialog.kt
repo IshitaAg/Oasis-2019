@@ -104,7 +104,7 @@ class AddMoneyDialog : DialogFragment() {
                     fragment.progress_profile.visibility = View.VISIBLE
                     addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, money)
                 }
-                dialog!!.dismiss()
+                // dialog!!.dismiss()
             }
         }
 

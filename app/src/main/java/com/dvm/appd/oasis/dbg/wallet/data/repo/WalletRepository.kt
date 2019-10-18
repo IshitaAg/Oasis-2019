@@ -1186,7 +1186,7 @@ class WalletRepository(
                         WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         Donot remove this variable x. Paytm sdk will break.
                         Just let it be here*/
-                        val x = PaytmPGService.getStagingService()
+                        val x = PaytmPGService.getProductionService()
                         x.enableLog(fragment.context)
                         x.initialize(order, null)
 
@@ -1200,7 +1200,7 @@ class WalletRepository(
                         var errorBody: String?
                         try {
                             errorBody = response.errorBody()?.string()
-
+                            Log.d("WalletRepo", "Recived Error body = $errorBody")
                         } catch (e: Exception) {
                             throw Exception("${response.code()}: Something went wrong!!!")
                         }

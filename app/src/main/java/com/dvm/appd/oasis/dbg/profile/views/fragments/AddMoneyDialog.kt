@@ -21,6 +21,7 @@ import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.dia_wallet_add_money.*
 import kotlinx.android.synthetic.main.dia_wallet_add_money.view.*
+import kotlinx.android.synthetic.main.fra_profile.*
 import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
@@ -83,11 +84,16 @@ class AddMoneyDialog : DialogFragment() {
             } else {
                 if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
                     AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
+                        try {
+                            (parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.VISIBLE
+                        } catch (e: Exception) {
+
+                        }
                         addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
+                        addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
                         dialog.dismiss()
                     }.show()
                 }
-                addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
                 dialog!!.dismiss()
             }
         }

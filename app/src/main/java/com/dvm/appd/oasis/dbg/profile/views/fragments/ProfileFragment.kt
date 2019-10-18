@@ -1,5 +1,4 @@
 package com.dvm.appd.oasis.dbg.profile.views.fragments
-
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -232,16 +231,20 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                     profileViewModel.onPaytmTransactionSucessful(body, transaction).subscribe({
                         Log.d("PayTm", "Payment Confirmation Code = ${it.code()}")
                         Log.d("PayTm", "Payment Confirmation Body = ${it.body().toString()}")
-
+                        progress_profile.visibility = View.INVISIBLE
                         when(it.code()) {
                             200 -> {
-                                progress_profile.visibility = View.INVISIBLE
                                 Toast.makeText(context, "Transaction Successful. Balance will be reflected shortly", Toast.LENGTH_LONG).show()
                             } else -> {
                                 Toast.makeText(context, "Unable to Verify transaction. Please contact a DVM Official", Toast.LENGTH_LONG).show()
                             }
                         }
                     },{
+                        try {
+                            progress_profile.visibility = View.INVISIBLE
+                        } catch (e: Exception) {
+
+                        }
                         Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
                         Toast.makeText(context, "Unable to complete Transaction. Contact a DVM Official", Toast.LENGTH_LONG).show()
                     })
@@ -253,30 +256,37 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     }
 
     override fun clientAuthenticationFailed(p0: String?) {
+        progress_profile.visibility = View.INVISIBLE
         Toast.makeText(context, "PayTm was unable to verify your credentials. Please try again", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Client authentication failed ${p0}")
     }
 
     override fun someUIErrorOccurred(p0: String?) {
+        progress_profile.visibility = View.INVISIBLE
+        Toast.makeText(context, "Unable to complete transaction", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Some UI error occoured $p0")
     }
 
     override fun onTransactionCancel(p0: String?, p1: Bundle?) {
+        progress_profile.visibility = View.INVISIBLE
         Toast.makeText(context, "The transaction was cancelled", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Transaction cancled $p0 \n $p1")
     }
 
     override fun networkNotAvailable() {
+        progress_profile.visibility = View.INVISIBLE
         Toast.makeText(context, "Please check your internet connection and try again", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Network not available")
     }
 
     override fun onErrorLoadingWebPage(p0: Int, p1: String?, p2: String?) {
+        progress_profile.visibility = View.INVISIBLE
         Toast.makeText(context, "Unable to reach PayTm. Please try after some time", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Error in loading the webpage $p0\n $p1\n $p2")
     }
 
     override fun onBackPressedCancelTransaction() {
+        progress_profile.visibility = View.INVISIBLE
         Toast.makeText(context, "Transaction Cancelled", Toast.LENGTH_LONG).show()
         Log.d("PayTm", "Transaction was cancelled because of back pressed")
     }

@@ -35,7 +35,7 @@ class DevelopersAdapter : RecyclerView.Adapter<DevelopersAdapter.DeveloperVHolde
 
         Glide.with(holder.itemView.context!!)
             .load(developers[position].imageLink)
-            .placeholder(R.drawable.ic_outline_profile_identity_24px).circleCrop()
+            .placeholder(R.drawable.ic_person_placeholder).circleCrop()
             .into(holder.picIMG)
         holder.nameLBL.text = developer.name
         holder.roleLBL.text = developer.role

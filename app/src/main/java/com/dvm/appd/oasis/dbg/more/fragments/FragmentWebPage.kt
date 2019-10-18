@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.more.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -34,9 +35,11 @@ class FragmentWebPage : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_fragment_web_page, container, false)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text_commonWebView_title.text = title
@@ -46,7 +49,9 @@ class FragmentWebPage : Fragment() {
         text_commonWebView_title.text = title
         webView_commonWebView_webPage.webViewClient = CustomWebViewClient()
         webView_commonWebView_webPage.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+        webView_commonWebView_webPage.settings.javaScriptEnabled = true
         webView_commonWebView_webPage.loadUrl(link)
+        Log.d("check",link)
 
     }
 

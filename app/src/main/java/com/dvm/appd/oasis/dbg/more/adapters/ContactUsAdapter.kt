@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.row_contact_us.view.*
 
 class ContactUsAdapter : RecyclerView.Adapter<ContactUsAdapter.ContactVHolder>() {
 
-    private val baseImageLink = "https://www.bits-bosm.org/"
+    private val baseImageLink = "https://www.bits-oasis.org/"
 
     private val contacts = listOf(
         Contact("Medical Emergency", "+91-8427878749", "+91-9717548752", "+91-9811695294", ""),

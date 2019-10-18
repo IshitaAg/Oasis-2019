@@ -496,6 +496,13 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun hideCustomToolbarForLevel2Fragments() {
+
+
+
+
+
+
+
         bottom_navigation_bar.isVisible = false
     }
 

@@ -42,10 +42,10 @@ interface EventsDao {
     @Query("DELETE FROM fav_data WHERE event_id = :eventId")
     fun deleteFavEvent(eventId: Int): Completable
 
-    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date ORDER BY events_data.event_id, events_data.time")
+    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue, COALESCE(events_data.contact, 'NA') as contact,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date ORDER BY events_data.event_id, events_data.time")
     fun getAllEventsByDate(date: String): Flowable<List<ModifiedEventsData>>
 
-    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date AND event_categories.filtered = 1 ORDER BY events_data.event_id")
+    @Query("SELECT events_data.event_id AS eventId, events_data.name AS name, events_data.about AS about, events_data.rules AS rules, events_data.time AS time, events_data.date AS date, events_data.details AS details, events_data.venue AS venue, COALESCE(events_data.contact, 'NA') as contact,  COALESCE(fav_data.is_fav, 0) AS isFav FROM events_data LEFT JOIN event_categories ON events_data.event_id = event_categories.event_id LEFT JOIN fav_data ON events_data.event_id = fav_data.event_id WHERE events_data.date = :date AND event_categories.filtered = 1 ORDER BY events_data.event_id")
     fun getEventsByCategory(date: String): Flowable<List<ModifiedEventsData>>
 
     @Query("SELECT DISTINCT date FROM events_data ORDER BY date")

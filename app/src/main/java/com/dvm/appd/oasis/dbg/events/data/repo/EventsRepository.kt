@@ -104,9 +104,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     private fun EventItemPojo.toEventData(): EventData{
 
         return if (timing == "TBA" || dateTime == "TBA")
-            EventData(eventId = id,name =  name, about = about, rules = rules, time = timing, date = dateTime, details = details, venues = venue)
+            EventData(eventId = id,name =  name, about = about, rules = rules, time = timing, date = dateTime, details = details, venues = venue, contact = contact.ifBlank { "NA" })
         else
-            EventData(eventId = id,name =  name, about = about, rules = rules, time = timing, date = dateTime.substring(0, 10), details = details, venues = venue)
+            EventData(eventId = id,name =  name, about = about, rules = rules, time = timing, date = dateTime.substring(0, 10), details = details, venues = venue, contact = contact.ifBlank { "NA" })
     }
 
     private fun EventItemPojo.toCategoryData(): List<CategoryData>{
@@ -133,6 +133,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     fun getEventsDayData(date: String): Flowable<List<ModifiedEventsData>>{
 
         return eventsDao.getAllEventsByDate(date).subscribeOn(Schedulers.io())
+            .switchMap {
+                return@switchMap Flowable.just(it.sortedBy { data -> data.time })
+            }
     }
 
     fun getEventsDayCategoryData(date: String): Flowable<List<ModifiedEventsData>>{

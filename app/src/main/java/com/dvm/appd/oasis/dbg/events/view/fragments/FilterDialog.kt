@@ -27,7 +27,6 @@ class FilterDialog: DialogFragment(), FilterAdapter.DialogItemTouch{
         activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
         val view = inflater.inflate(R.layout.dia_filter_events, container, false)
-        val day = arguments?.getString("day", "2019-10-19")
         eventsViewModel = ViewModelProviders.of(parentFragment!!, EventsViewModelFactory())[EventsViewModel::class.java]
 
         view.filterRecycler.adapter = FilterAdapter(this)

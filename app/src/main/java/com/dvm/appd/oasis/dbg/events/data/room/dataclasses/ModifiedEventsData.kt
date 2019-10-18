@@ -18,5 +18,7 @@ data class ModifiedEventsData(
 
     val venue: String,
 
-    val isFav: Int
+    val isFav: Int,
+
+    val contact: String
 )

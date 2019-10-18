@@ -29,5 +29,8 @@ data class EventItemPojo(
     val venue: String,
 
     @SerializedName("details")
-    val details: String
+    val details: String,
+
+    @SerializedName("contact")
+    val contact: String
 )

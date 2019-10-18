@@ -1,10 +1,13 @@
 package com.dvm.appd.oasis.dbg.events.view.adapters
 
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
@@ -18,7 +21,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
     interface OnMarkFavouriteClicked{
         //fun updateIsFavourite(eventId: Int, favouriteMark: Int)
         fun getDirections(venue: String)
-        fun showAboutRules(about: String, rules: String, description: String)
+        fun showAboutRules(details: String, name: String, contact: String)
     }
 
     inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -45,7 +48,13 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
         holder.event.text = events[position].name
         holder.event.isSelected = true
-        holder.description.text = events[position].details
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            holder.description.text = Html.fromHtml(events[position].details, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        }else{
+            holder.description.text = events[position].details
+        }
+        //holder.description.text = events[position].details
         holder.time.text = events[position].time
         holder.venue.text = events[position].venue
 
@@ -70,7 +79,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         }
 
         holder.view.setOnClickListener {
-            listener.showAboutRules(events[position].about, events[position].rules, events[position].details)
+            listener.showAboutRules(events[position].details, events[position].name, events[position].contact)
         }
     }
 

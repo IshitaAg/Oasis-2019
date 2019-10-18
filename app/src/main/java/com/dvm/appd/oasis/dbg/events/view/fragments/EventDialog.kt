@@ -21,29 +21,41 @@ class EventDialog: DialogFragment(){
 
         activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
 
-        val about = arguments!!.getString("about")
-        val rules = arguments!!.getString("rules")
-        val description = arguments!!.getString("description")
+        val detail = arguments!!.getString("details")
+        val name = arguments!!.getString("name")
+        val contact = arguments!!.getString("contact")
 
         val view = inflater.inflate(R.layout.dia_event_data, container, false)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            view.about.text = Html.fromHtml(about, FROM_HTML_MODE_LEGACY)
-        }else{
-            view.about.text = about
-        }
+        view.heading.text = name
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            view.rules.text = Html.fromHtml(rules, FROM_HTML_MODE_LEGACY)
+            view.description.text = Html.fromHtml(detail, FROM_HTML_MODE_LEGACY)
         }else{
-            view.rules.text = rules
+            view.description.text = detail
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            view.description.text = Html.fromHtml(description, FROM_HTML_MODE_LEGACY)
-        }else{
-            view.description.text = description
+
+        if (contact != "NA"){
+            view.textView9.visibility = View.VISIBLE
+            view.rules.visibility = View.VISIBLE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                view.rules.text = Html.fromHtml(contact, FROM_HTML_MODE_LEGACY)
+            }else{
+                view.rules.text = contact
+            }
         }
+        else{
+            view.textView9.visibility = View.INVISIBLE
+            view.rules.visibility = View.INVISIBLE
+        }
+
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            view.description.text = Html.fromHtml(description, FROM_HTML_MODE_LEGACY)
+//        }else{
+//            view.description.text = description
+//        }
 
         return view
     }

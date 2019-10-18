@@ -132,9 +132,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
 
         view.filter.setOnClickListener {
-            FilterDialog().also {
-                it.arguments = bundleOf(("day" to (eventsViewModel.daySelected.value)))
-            }.show(childFragmentManager, "FILTER")
+            FilterDialog().show(childFragmentManager, "FILTER")
         }
 
         return view
@@ -163,19 +161,30 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
             "rotunda" to Pair("28.3633546", "75.5871163"),
             "sr grounds" to Pair("28.3659745", "75.5880608"),
             "m lawns" to Pair("28.3634765", "75.5884400"),
-            "fd2 qt" to Pair("28.3641294", "75.5879015"),
-            "fd3 qt" to Pair("28.3639471", "75.5860257"),
+            "fd i" to Pair("28.3642811", "75.5888698"),
+            "fd ii qt" to Pair("28.3641294", "75.5879015"),
+            "fd iii qt" to Pair("28.3639471", "75.5860257"),
             "ltc" to Pair("28.3650947","75.5898673"))
 
         var venueLocation: Pair<String, String> = Pair("28.3633546", "75.5871163")
         venueLocation = when{
             locations.containsKey(venue.toLowerCase()) -> locations[venue.toLowerCase()]!!
-            venue.contains("fd2", true) -> locations["fd2 qt"]!!
-            venue.contains("fd3", true) -> locations["fd3 qt"]!!
-            venue.contains("lawns", true) -> locations["m lawns"]!!
-            venue.contains("sr", true) -> locations["sr grounds"]!!
-            venue.contains("fd", true) -> locations["ltc"]!!
-            venue.contains("audi", true) -> locations["main audi"]!!
+            venue.toLowerCase().contains(Regex("1[0-9][0-9][0-9]")) -> locations["fd i"]!!
+            venue.toLowerCase().contains("fd ii", true) -> locations["fd2 qt"]!!
+            venue.toLowerCase().contains(Regex("2[0-9][0-9][0-9]")) -> locations["2204"]!!
+            venue.toLowerCase().contains("fd iii", true) -> locations["fd3 qt"]!!
+            venue.toLowerCase().contains(Regex("3[0-9][0-9][0-9]")) -> locations["fd3 qt"]!!
+            venue.toLowerCase().contains(Regex("5[0-9][0-9][0-9]")) -> locations["ltc"]!!
+            venue.toLowerCase().contains(Regex("6[0-9][0-9][0-9]")) -> locations["6101"]!!
+            venue.toLowerCase().contains("lawns", true) -> locations["m lawns"]!!
+            venue.toLowerCase().contains("stalls", true) -> locations["m lawns"]!!
+            venue.toLowerCase().contains("sr", true) -> locations["sr grounds"]!!
+            venue.toLowerCase().contains("fd", true) -> locations["ltc"]!!
+            venue.toLowerCase().contains("nab", true) -> locations["nab audi"]!!
+            venue.toLowerCase().contains("audi", true) -> locations["main audi"]!!
+            venue.toLowerCase().contains("old") -> locations["old sac entrance"]!!
+            venue.toLowerCase().contains("sac") -> locations["sac entrance"]!!
+            venue.toLowerCase().contains("ltc") -> locations["ltc"]!!
             else -> locations["rotunda"]!!
         }
 
@@ -193,9 +202,9 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
 
     }
 
-    override fun showAboutRules(about: String, rules: String, description: String) {
+    override fun showAboutRules(details: String, name: String, contact: String) {
         activity!!.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-        val bundle = bundleOf("about" to about, "rules" to rules, "description" to description)
+        val bundle = bundleOf("details" to details, "name" to name, "contact" to contact)
         view!!.findNavController().navigate(R.id.action_action_events_to_event_data, bundle)
     }
 

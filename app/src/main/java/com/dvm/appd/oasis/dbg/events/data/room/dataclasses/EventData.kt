@@ -30,5 +30,8 @@ data class EventData(
     val details: String,
 
     @ColumnInfo(name = "venue")
-    val venues: String
+    val venues: String,
+
+    @ColumnInfo(name = "contact")
+    val contact: String?
 )

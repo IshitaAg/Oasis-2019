@@ -18,7 +18,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
     interface OnMarkFavouriteClicked{
         //fun updateIsFavourite(eventId: Int, favouriteMark: Int)
         fun getDirections(venue: String)
-        fun showAboutRules(about: String, rules: String)
+        fun showAboutRules(about: String, rules: String, description: String)
     }
 
     inner class EventsViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -45,10 +45,10 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 
         holder.event.text = events[position].name
         holder.event.isSelected = true
-        // holder.description.text = events[position].details
-        holder.description.visibility = View.GONE
+        holder.description.text = events[position].details
         holder.time.text = events[position].time
         holder.venue.text = events[position].venue
+
 //        if (events[position].isFav == 1){
 //            holder.markFav.setBackgroundResource(R.drawable.ic_is_favourite)
 //        }else if (events[position].isFav == 0){
@@ -70,7 +70,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         }
 
         holder.view.setOnClickListener {
-            listener.showAboutRules(events[position].about, events[position].rules)
+            listener.showAboutRules(events[position].about, events[position].rules, events[position].details)
         }
     }
 

@@ -14,6 +14,22 @@
         android:layout_height="match_parent"
         android:background="#242947">
 
+    <TextView
+            android:id="@+id/noEvent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="No Event Found"
+            android:textAlignment="center"
+            android:textColor="#CCFFFFFF"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/miscView" />
+
     <View
             android:id="@+id/miscView"
             android:layout_width="0dp"

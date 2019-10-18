@@ -21,7 +21,7 @@ class ReferralEnterDialog: DialogFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.dia_login_referral, container, false)
-        authViewModel = ViewModelProviders.of(parentFragment!!, AuthViewModelFactory())[AuthViewModel::class.java]
+        authViewModel = ViewModelProviders.of(activity!!, AuthViewModelFactory())[AuthViewModel::class.java]
 
         (authViewModel.referralState as MutableLiveData).value = false
 

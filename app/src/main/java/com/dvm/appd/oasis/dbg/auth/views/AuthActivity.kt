@@ -59,10 +59,7 @@ class AuthActivity : AppCompatActivity() {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
-                    if (referCode.text.isEmpty())
-                        code = ""
-                    else
-                        code = referCode.text.toString()
+                    code = authViewModel.authRepository.sharedPreferences.getString("REFERRED_BY", "")!!
                     authViewModel.login(username.text.toString(), password.text.toString(),code)
                     outsteeLogin.setBackgroundColor(Color.parseColor("#00000000"))
                     showLoadingState()
@@ -119,16 +116,16 @@ class AuthActivity : AppCompatActivity() {
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
-
+        authViewModel.referralState.observe(this, Observer {
+            if (it){
+                ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
+            }
+        })
     }
 
 //    override fun onStart() {
 //        super.onStart()
-//        authViewModel.referralState.observe(this, Observer {
-//            if (it){
-//                ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
-//            }
-//        })
+//
 //    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

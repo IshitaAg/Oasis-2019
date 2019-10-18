@@ -2,7 +2,9 @@ package com.dvm.appd.oasis.dbg.auth.views
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.AttributeSet
@@ -18,26 +20,30 @@ import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.MainActivity
+import com.dvm.appd.oasis.dbg.NetworkChangeNotifier
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModel
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModelFactory
+import com.dvm.appd.oasis.dbg.shared.NetworkChangeReciver
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.password
 import kotlinx.android.synthetic.main.activity_auth.username
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_picture.*
 
-
-class AuthActivity : AppCompatActivity() {
-
+class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     private lateinit var authViewModel: AuthViewModel
     private var code: String = ""
-
+    private var receiver: NetworkChangeReciver? = null
     private var doubleBackToExitPressedOnce = false
+    private lateinit var rootView:View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Hide the status bar.
@@ -46,6 +52,7 @@ class AuthActivity : AppCompatActivity() {
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
         setContentView(R.layout.activity_auth)
+
         val gso = GoogleSignIn.getClient(
             this, GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("1005380465971-dku54t11d22mnk06pkcs6jjilnjfe2sd.apps.googleusercontent.com")
@@ -53,7 +60,11 @@ class AuthActivity : AppCompatActivity() {
                 .requestProfile()
                 .build()
         )
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        receiver = NetworkChangeReciver(this)
+        this.registerReceiver(receiver, filter)
         authViewModel = ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
+
 
         outsteeLogin.setOnClickListener {
             when {
@@ -182,6 +193,23 @@ class AuthActivity : AppCompatActivity() {
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
     }
-
+    override fun onNetworkStatusScahnged(isConnected: Boolean) {
+        Log.d("check","called")
+        if (isConnected) {
+            outsteeLogin.isEnabled=true
+            bitsianLogin.isEnabled =true
+            val snackbar = Snackbar.make(this.coordinator_auth, "Back Online", Snackbar.LENGTH_SHORT)
+            snackbar.view.setBackgroundColor(resources.getColor(R.color.colorGreen))
+            snackbar.show()
+        } else {
+            outsteeLogin.isEnabled = false
+            bitsianLogin.isEnabled = false
+            Snackbar.make(this.coordinator_auth, "Not Connected to the internet", Snackbar.LENGTH_INDEFINITE).setBehavior(object : BaseTransientBottomBar.Behavior(){
+                override fun canSwipeDismissView(child: View): Boolean {
+                    return false
+                }
+            }).show()
+        }
+    }
 
 }

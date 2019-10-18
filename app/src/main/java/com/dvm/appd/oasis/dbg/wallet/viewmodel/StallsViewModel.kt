@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallData
 import com.dvm.appd.oasis.dbg.wallet.views.StallResult
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class StallsViewModel(val walletRepository: WalletRepository):ViewModel() {
 
@@ -35,8 +37,12 @@ class StallsViewModel(val walletRepository: WalletRepository):ViewModel() {
         walletRepository.fetchAllStalls().subscribe({
             (result as MutableLiveData).postValue(StallResult.Success)
         },{
-            (error as MutableLiveData).postValue(it.message)
-            (result as MutableLiveData).postValue(StallResult.Success)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
+
+            (result as MutableLiveData).postValue(StallResult.Failure)
         })
     }
 }

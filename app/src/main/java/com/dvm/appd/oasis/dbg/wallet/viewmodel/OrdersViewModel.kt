@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedOrdersData
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
 
@@ -27,7 +29,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
                 (error as MutableLiveData).postValue(null)
             },{
                 Log.e("OrdersVM","Error",it)
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
 
         walletRepository.getAllModifiedCartItems()
@@ -36,7 +41,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
                 (cartItems as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
 
     }
@@ -47,7 +55,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
             (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
             })
     }
 
@@ -57,7 +68,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
             (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -68,7 +82,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
             (error as MutableLiveData).postValue("Order placed successful")
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -76,7 +93,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.deleteCartItem(itemId).subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -84,7 +104,10 @@ class OrdersViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.updateCartItems(itemId, quantity).subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 

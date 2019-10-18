@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedTicketsData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.TicketsCart
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 @SuppressLint("CheckResult")
 class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
@@ -26,7 +28,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
             (error as MutableLiveData).postValue(null)
         }, {
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
 
     }
@@ -40,7 +45,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         },{
             Log.d("Wallet Repo", "Errror in Api call = ${it}")
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -48,7 +56,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.insertTicketsCart(ticket).subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -56,7 +67,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.deleteTicektsCartItem(id).subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -64,7 +78,10 @@ class TicketViewModel(val walletRepository: WalletRepository): ViewModel(){
         walletRepository.updateTicketsCart(quantity, id).subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 }

@@ -18,6 +18,8 @@ import com.google.gson.JsonObject
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import retrofit2.Response
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 
 @SuppressLint("CheckResult")
@@ -40,27 +42,39 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
               (error as MutableLiveData).postValue(null)
           },{
               Log.d("check",it.toString())
-              (error as MutableLiveData).postValue(it.message)
+              if (it is UnknownHostException || it is SocketTimeoutException)
+                  (error as MutableLiveData).postValue("Poor Internet Connection")
+              else
+                  (error as MutableLiveData).postValue(it.message)
           })
 
         walletRepository.getBalance().subscribe({
             (balance as MutableLiveData).postValue(it.toString())
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
 
         walletRepository.getTockens().subscribe({
             tokens.asMut().postValue(it.toString())
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
 
         walletRepository.getTicketInfo().subscribe({
             (error as MutableLiveData).postValue(null)
         },{
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
 
         walletRepository.getAllUserShows()
@@ -68,7 +82,10 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
                 (userTickets as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
 
     }
@@ -82,7 +99,10 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
             (error as MutableLiveData).postValue(null)
         },{
             Log.d("checkl",it.toString())
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -92,7 +112,10 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
             (error as MutableLiveData).postValue(null)
         },{
             (order as MutableLiveData).postValue(UiState.ShowIdle)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -102,7 +125,10 @@ class ProfileViewModel(val authRepository: AuthRepository,val walletRepository: 
             (error as MutableLiveData).postValue(null)
         },{
             (order as MutableLiveData).postValue(UiState.ShowIdle)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 

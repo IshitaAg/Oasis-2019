@@ -32,7 +32,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(3, TimeUnit.HOURS).setConstraints(constraints).build()
 
-        WorkManager.getInstance(application.applicationContext).enqueue(request)
+        WorkManager.getInstance(application.applicationContext).enqueueUniquePeriodicWork("PeriodicWorkManager",ExistingPeriodicWorkPolicy.REPLACE, request)
 
     }
 
@@ -66,7 +66,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
 
                     500 ->
                     {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -74,21 +74,21 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error Occurred")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("${response.code()}" + json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }

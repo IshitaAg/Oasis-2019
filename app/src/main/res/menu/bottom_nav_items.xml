@@ -11,7 +11,7 @@
     <item
             android:id="@+id/action_order_history"
             android:enabled="true"
-            android:icon="@drawable/ic_orders"
+            android:icon="@drawable/ic_orders_cart"
             android:iconTint="@color/nav_orders_color"
             android:title="@string/action_order_history"
             app:showAsAction="ifRoom" />

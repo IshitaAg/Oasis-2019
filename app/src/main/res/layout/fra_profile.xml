@@ -32,15 +32,32 @@
 
     <ImageView
             android:id="@+id/qrCode"
-            android:layout_width="92dp"
-            android:layout_height="92dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:elevation="1dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/view8"
             app:layout_constraintEnd_toEndOf="@+id/view8"
             app:layout_constraintTop_toTopOf="@+id/view8"
             app:srcCompat="@color/colour_profile_card" />
+
+    <TextView
+            android:id="@+id/refer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:text="Refer"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:elevation="1dp"
+            android:background="@drawable/add_button"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/view8"
+            app:layout_constraintEnd_toEndOf="@+id/qrCode"
+            app:layout_constraintStart_toStartOf="@+id/qrCode"
+            app:layout_constraintTop_toBottomOf="@+id/qrCode" />
 
     <View
             android:id="@+id/view7"
@@ -354,17 +371,17 @@
             app:layout_constraintStart_toEndOf="@+id/balance"
             app:layout_constraintTop_toTopOf="@+id/balance" />
 
-    <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="48dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:scaleType="centerInside"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/logout"
-            app:layout_constraintEnd_toStartOf="@+id/logout"
-            app:layout_constraintTop_toTopOf="@+id/logout"
-            app:srcCompat="@drawable/ic_share" />
+<!--    <ImageView-->
+<!--            android:id="@+id/imageView7"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:scaleType="centerInside"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/logout"-->
+<!--            app:layout_constraintEnd_toStartOf="@+id/logout"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/logout"-->
+<!--            app:srcCompat="@drawable/ic_share" />-->
 
     <TextView
             android:id="@+id/textView25"

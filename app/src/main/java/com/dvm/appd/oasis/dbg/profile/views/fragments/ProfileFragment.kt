@@ -79,7 +79,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             }
         })
 
-        rootView.imageView7.setOnClickListener {
+        rootView.refer.setOnClickListener {
             /*var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
             if(code != "") {
                 FirebaseDynamicLinks.getInstance().createDynamicLink()

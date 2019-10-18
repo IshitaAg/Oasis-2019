@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import kotlinx.android.synthetic.main.dia_wallet_referral.view.*
+import kotlinx.android.synthetic.main.fra_profile.*
 
 class ReferralDialog : DialogFragment() {
 
@@ -27,6 +28,7 @@ class ReferralDialog : DialogFragment() {
             rootView.referralCode.setText(code)
             rootView.referralCode.isEnabled = false
             rootView.shareReferral.setOnClickListener {
+                (parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.VISIBLE
                 var shareBody = "Referral Code = $code"
                 Log.d("Profile Frag", "Message Body = ${shareBody}")
                 var sharingIntent = Intent(Intent.ACTION_SEND)
@@ -34,6 +36,7 @@ class ReferralDialog : DialogFragment() {
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Referral Code for the Official Oasis App")
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
                 startActivity(Intent.createChooser(sharingIntent, "Share"))
+                (parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.INVISIBLE
                 dialog!!.dismiss()
             }
         } else {

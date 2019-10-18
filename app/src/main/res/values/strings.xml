@@ -32,6 +32,9 @@
         ordered
     </string>
     <string name="notification_content_general_notification">Some random text to be changed</string>
+    <string name="channel_name_cashback_notifications">Cashback</string>
+    <string name="channel_desc_cashback_notifications">Information about various cashbacks received</string>
+    <string name="channel_id_cashback_notifications">Cashback</string>
 
     <string name="elas_fragment_heading">ELAS - QUIZ</string>
     <string name="elas_fragment_category">Category :</string>

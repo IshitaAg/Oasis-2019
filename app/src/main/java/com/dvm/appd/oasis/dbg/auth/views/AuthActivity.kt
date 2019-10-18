@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 
 import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.MainActivity
+import com.dvm.appd.oasis.dbg.NetworkChangeNotifier
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModel
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModelFactory
@@ -25,14 +26,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.password
 import kotlinx.android.synthetic.main.activity_auth.username
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_picture.*
 
-
-class AuthActivity : AppCompatActivity() {
-
+class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     private lateinit var authViewModel: AuthViewModel
     private var code: String = ""
 
@@ -181,6 +183,18 @@ class AuthActivity : AppCompatActivity() {
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
     }
-
+    override fun onNetworkStatusScahnged(isConnected: Boolean) {
+        if (isConnected) {
+            val snackbar = Snackbar.make(this.coordinator_auth, "Back Online", Snackbar.LENGTH_SHORT)
+            snackbar.view.setBackgroundColor(resources.getColor(R.color.colorGreen))
+            snackbar.show()
+        } else {
+            Snackbar.make(this.coordinator_auth, "Not Connected to the internet", Snackbar.LENGTH_INDEFINITE).setBehavior(object : BaseTransientBottomBar.Behavior(){
+                override fun canSwipeDismissView(child: View): Boolean {
+                    return false
+                }
+            }).show()
+        }
+    }
 
 }

@@ -42,7 +42,7 @@ class StallsViewModel(val walletRepository: WalletRepository):ViewModel() {
             else
                 (error as MutableLiveData).postValue(it.message)
 
-            (result as MutableLiveData).postValue(StallResult.Success)
+            (result as MutableLiveData).postValue(StallResult.Failure)
         })
     }
 }

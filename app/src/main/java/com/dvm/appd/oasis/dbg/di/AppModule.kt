@@ -95,8 +95,6 @@ class AppModule(private val application: Application) {
             .build()
     }
 
-    // https://wallet.bits-oasis.org/
-    // http://testapp.bits-dvm.org:9090/
     @Provides
     @Singleton
     fun providesRetrofit(): Retrofit {

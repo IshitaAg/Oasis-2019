@@ -258,6 +258,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 getString(R.string.channel_id_quiz),
                 NotificationManager.IMPORTANCE_HIGH
             )
+
+            val cashBackChannel = NotificationChannel(
+                getString(R.string.channel_desc_cashback_notifications),
+                "Cash Backs",
+                NotificationManager.IMPORTANCE_HIGH
+            )
             quizChannel.description = "Inform about the latest developments in the quiz game"
             quizChannel.canBypassDnd()
 
@@ -490,6 +496,13 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun hideCustomToolbarForLevel2Fragments() {
+
+
+
+
+
+
+
         bottom_navigation_bar.isVisible = false
     }
 

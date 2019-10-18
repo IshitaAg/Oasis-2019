@@ -41,6 +41,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         view.orderRecycler.adapter = OrdersAdapter(this)
         ordersViewModel.orders.observe(this, Observer {
 
+            view.noOrders.isVisible = it.isEmpty()
             (view.orderRecycler.adapter as OrdersAdapter).orderItems = it
             (view.orderRecycler.adapter as OrdersAdapter).notifyDataSetChanged()
         })
@@ -49,6 +50,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         ordersViewModel.cartItems.observe(this, Observer {
 
             Log.d("CartPassed", it.toString())
+            view.noCart.isVisible = it.isEmpty()
             (view.cartItemRecycler.adapter as CartAdapter).cartItems = it
             (view.cartItemRecycler.adapter as CartAdapter).price = it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.currentPrice }}
             (view.cartItemRecycler.adapter as CartAdapter).notifyDataSetChanged()
@@ -89,7 +91,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
             else if (it == 1){
                 view.progressBar.visibility = View.GONE
-                // view.swipeOrder.isRefreshing = false
                 activity!!.window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             }
         })
@@ -101,10 +102,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
         })
 
-        /*view.swipeOrder.setOnRefreshListener {
+        view.refresh.setOnClickListener {
             (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
             ordersViewModel.refreshData()
-        }*/
+        }
 
         return view
     }

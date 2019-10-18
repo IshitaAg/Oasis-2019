@@ -11,6 +11,8 @@ import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.CategoryData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.FilterData
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
 import io.reactivex.disposables.Disposable
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 @SuppressLint("CheckResult")
 class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
@@ -29,7 +31,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
                 (eventDays as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
     }
 
@@ -55,7 +60,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
                 (error as MutableLiveData).postValue(null)
             },{
                 Log.d("Categories", it.message)
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
 
     }
@@ -67,7 +75,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
             getEventData(daySelected.value.toString())
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -77,7 +88,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
             (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 
@@ -87,7 +101,10 @@ class EventsViewModel(val eventsRepository: EventsRepository): ViewModel() {
             (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 

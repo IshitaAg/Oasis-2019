@@ -78,29 +78,29 @@ class WalletRepository(
 
                     }
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         try {
                             var errorBody = response.errorBody()?.string()
                             if (errorBody.isNullOrBlank()) {
-                                throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                throw Exception("Code: (${response.code()} Unknown Error Occurred")
                             }
 
                             else {
                                 val json = JSONObject(errorBody)
                                 when {
                                     json.has("display_message") -> {
-                                        throw Exception("Code" + response.code() + json.getString("display_message"))
+                                        throw Exception("${response.code()}: " + json.getString("display_message"))
                                     }
-                                    json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                    json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                    else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                    else -> throw Exception("${response.code()}: Unknown error occurred")
                                 }
 
                             }
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                     }
                 }
@@ -222,7 +222,7 @@ class WalletRepository(
                          throw Exception("Server error")
                      }*/
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -230,22 +230,22 @@ class WalletRepository(
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception(" $e Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
 
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error Occurred")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("${response.code()}: "+ json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }
@@ -492,7 +492,7 @@ class WalletRepository(
                              }*/
 
                             500 -> {
-                                throw Exception("Error occured!!! Contact DVM official")
+                                throw Exception("Error occurred!!! Contact DVM official")
                             }
                             else -> {
                                 var errorBody: String?
@@ -500,21 +500,21 @@ class WalletRepository(
                                      errorBody = response.errorBody()?.string()
 
                                 } catch (e: Exception) {
-                                    throw Exception("Code:${response.code()} Something went wrong!!!")
+                                    throw Exception("${response.code()}: Something went wrong!!!")
                                 }
                                 if (errorBody.isNullOrBlank()) {
-                                    throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                    throw Exception("${response.code()} Unknown Error Occurred")
                                 }
 
                                 else {
                                     val json = JSONObject(errorBody)
                                     when {
                                         json.has("display_message") -> {
-                                            throw Exception("Code" + response.code() + json.getString("display_message"))
+                                            throw Exception("${response.code()}: " + json.getString("display_message"))
                                         }
-                                        json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                        json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                        else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                        else -> throw Exception("${response.code()}: Unknown error occurred")
                                     }
 
                                 }
@@ -585,7 +585,7 @@ class WalletRepository(
                      }*/
 
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -593,21 +593,21 @@ class WalletRepository(
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error occurred")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("${response.code()}: " + json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }
@@ -641,28 +641,28 @@ class WalletRepository(
                     when (response.code()) {
                         200 -> TransactionResult.Success
                         /*in 400..499 -> TransactionResult.Failure(response.errorBody()!!.string())*/
-                        500 -> TransactionResult.Failure("Error occured!!! Contact DVM official")
+                        500 -> TransactionResult.Failure("Error occurred!!! Contact DVM official")
                         else -> /*TransactionResult.Failure("Something went wrong!!")*/{
                             var errorBody: String?
                             try {
                                 errorBody = response.errorBody()?.string()
 
                             } catch (e: Exception) {
-                                throw Exception("Code:${response.code()} Something went wrong!!!")
+                                throw Exception("${response.code()}: Something went wrong!!!")
                             }
                             if (errorBody.isNullOrBlank()) {
-                                throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                throw Exception("${response.code()} Unknown Error Occurred")
                             }
 
                             else {
                                 val json = JSONObject(errorBody)
                                 when {
                                     json.has("display_message") -> {
-                                        throw Exception("Code" + response.code() + json.getString("display_message"))
+                                        throw Exception("${response.code()}: " + json.getString("display_message"))
                                     }
-                                    json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                    json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                    else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                    else -> throw Exception("${response.code()}: Unknown error occurred")
                                 }
 
                             }
@@ -706,28 +706,28 @@ class WalletRepository(
                         200 -> TransactionResult.Success
                        /* in 400..499 -> TransactionResult.Failure(response.errorBody()!!.string())
                         else -> TransactionResult.Failure("Something went wrong!!")*/
-                        500 -> TransactionResult.Failure("Error occured!!! Contact DVM official")
+                        500 -> TransactionResult.Failure("Error occurred!!! Contact DVM official")
                         else -> /*TransactionResult.Failure("Something went wrong!!")*/{
                             var errorBody: String?
                             try {
                                 errorBody = response.errorBody()?.string()
 
                             } catch (e: Exception) {
-                                throw Exception("Code:${response.code()} Something went wrong!!!")
+                                throw Exception("${response.code()}: Something went wrong!!!")
                             }
                             if (errorBody.isNullOrBlank()) {
-                                throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                throw Exception("${response.code()}: Unknown Error occurred")
                             }
 
                             else {
                                 val json = JSONObject(errorBody)
                                 when {
                                     json.has("display_message") -> {
-                                        throw Exception("Code" + response.code() + json.getString("display_message"))
+                                        throw Exception(" ${response.code()}: " + json.getString("display_message"))
                                     }
-                                    json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                    json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                    else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                    else -> throw Exception("${response.code()}: Unknown error occurred")
                                 }
 
                             }
@@ -772,7 +772,7 @@ class WalletRepository(
                      }*/
 
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -780,21 +780,21 @@ class WalletRepository(
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error occured")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("${response.code()}: " + json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }
@@ -847,7 +847,7 @@ class WalletRepository(
                     }*/
 
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -855,21 +855,21 @@ class WalletRepository(
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error occurred")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("" + response.code()+": " + json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }
@@ -932,18 +932,18 @@ class WalletRepository(
                                 throw Exception("Code:${response.code()} Something went wrong!!!")
                             }
                             if (errorBody.isNullOrBlank()) {
-                                throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                throw Exception("${response.code()}: Unknown Error Occurred")
                             }
 
                             else {
                                 val json = JSONObject(errorBody)
                                 when {
                                     json.has("display_message") -> {
-                                        throw Exception("Code" + response.code() + json.getString("display_message"))
+                                        throw Exception("${response.code()}: " + json.getString("display_message"))
                                     }
-                                    json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                    json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                    else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                    else -> throw Exception("${response.code()}: Unknown error occurred")
                                 }
 
                             }
@@ -1047,7 +1047,7 @@ class WalletRepository(
                             }
  */
                             500 -> {
-                                throw Exception("Error occured!!! Contact DVM official")
+                                throw Exception("Error occurred!!! Contact DVM official")
                             }
                             else -> {
                                 var errorBody: String?
@@ -1055,21 +1055,21 @@ class WalletRepository(
                                     errorBody = response.errorBody()?.string()
 
                                 } catch (e: Exception) {
-                                    throw Exception("Code:${response.code()} Something went wrong!!!")
+                                    throw Exception("${response.code()}: Something went wrong!!!")
                                 }
                                 if (errorBody.isNullOrBlank()) {
-                                    throw Exception("Code: (${response.code()} Unknown Error Occured")
+                                    throw Exception("${response.code()}: Unknown Error Occurred")
                                 }
 
                                 else {
                                     val json = JSONObject(errorBody)
                                     when {
                                         json.has("display_message") -> {
-                                            throw Exception("Code" + response.code() + json.getString("display_message"))
+                                            throw Exception( "${response.code()}: ${json.getString("display_message")}")
                                         }
-                                        json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                        json.has("detail") -> throw Exception("${response.code()}: " + json.getString("detail"))
 
-                                        else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                        else -> throw Exception("${response.code()}: Unknown error occurred")
                                     }
 
                                 }
@@ -1194,7 +1194,7 @@ class WalletRepository(
                         x.startPaymentTransaction(fragment.activity!!, true, true, fragment)
                     }
                     500 -> {
-                        throw Exception("Error occured!!! Contact DVM official")
+                        throw Exception("Error occurred!!! Contact DVM official")
                     }
                     else -> {
                         var errorBody: String?
@@ -1202,21 +1202,21 @@ class WalletRepository(
                             errorBody = response.errorBody()?.string()
 
                         } catch (e: Exception) {
-                            throw Exception("Code:${response.code()} Something went wrong!!!")
+                            throw Exception("${response.code()}: Something went wrong!!!")
                         }
                         if (errorBody.isNullOrBlank()) {
-                            throw Exception("Code: (${response.code()} Unknown Error Occured")
+                            throw Exception("${response.code()}: Unknown Error Occurred")
                         }
 
                         else {
                             val json = JSONObject(errorBody)
                             when {
                                 json.has("display_message") -> {
-                                    throw Exception("Code" + response.code() + json.getString("display_message"))
+                                    throw Exception("${response.code()}" + json.getString("display_message"))
                                 }
-                                json.has("detail") -> throw Exception("Code" + json.getString("detail"))
+                                json.has("detail") -> throw Exception("${response.code()}"+ json.getString("detail"))
 
-                                else -> throw Exception("Code: ${response.code()}: Unknown error occurred")
+                                else -> throw Exception("${response.code()}: Unknown error occurred")
                             }
 
                         }
@@ -1232,7 +1232,7 @@ class WalletRepository(
         walletDao.insertPaytmTransaction(transaction).subscribeOn(Schedulers.io()).subscribe({
             Log.d("Wallet Reop", "Transacrtion insertion sucessful")
         },{
-            Log.e("Wallet Repo", "Failed to insert transaction = ${it.toString()}")
+            Log.e("Wallet Repo", "Failed to insert transaction = ${it}")
         })
         return walletService.confirmPaytmPayment(jwt.blockingGet(), body).subscribeOn(Schedulers.io())
     }
@@ -1267,7 +1267,35 @@ class WalletRepository(
 
                   // walletDao.deleteAndInsertKindItems(kindItems)
               }
-             else -> Log.d("check",it.errorBody()!!.string())
+               500 -> {
+                   throw Exception("Error occured!!! Contact DVM official")
+               }
+               else -> {
+                   var errorBody: String?
+                   try {
+                       errorBody = it.errorBody()?.string()
+
+                   } catch (e: Exception) {
+                       throw Exception("${it.code()}: Something went wrong!!!")
+                   }
+                   if (errorBody.isNullOrBlank()) {
+                       throw Exception("${it.code()}: Unknown Error Occurred")
+                   }
+
+                   else {
+                       val json = JSONObject(errorBody)
+                       when {
+                           json.has("display_message") -> {
+                               throw Exception("${it.code()}: "+  json.getString("display_message"))
+                           }
+                           json.has("detail") -> throw Exception("${it.code()}: " + json.getString("detail"))
+
+                           else -> throw Exception("${it.code()}: Unknown error occurred")
+                       }
+
+                   }
+               }
+
 
            }
        }.ignoreElement().doOnError {

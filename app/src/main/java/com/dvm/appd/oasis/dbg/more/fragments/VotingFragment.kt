@@ -34,7 +34,7 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         }
         rootView.votingRecycler.adapter = ComediansAdapter(this)
         rootView.voteBtn.setOnClickListener {
-            rootView.progressBar3.visibility = View.VISIBLE
+            //rootView.progressBar3.visibility = View.VISIBLE
             rootView.voteBtn.isClickable=false
             votingViewModel.vote(comedianName)
         }

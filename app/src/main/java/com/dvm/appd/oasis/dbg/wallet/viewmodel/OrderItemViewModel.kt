@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedOrdersData
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: Int): ViewModel() {
 
@@ -21,7 +23,10 @@ class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: In
                 (order as MutableLiveData).postValue(it)
                 (error as MutableLiveData).postValue(null)
             },{
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
 
     }
@@ -33,7 +38,10 @@ class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: In
                 (error as MutableLiveData).postValue(null)
             },{
                 (progressBarMark as MutableLiveData).postValue(1)
-                (error as MutableLiveData).postValue(it.message)
+                if (it is UnknownHostException || it is SocketTimeoutException)
+                    (error as MutableLiveData).postValue("Poor Internet Connection")
+                else
+                    (error as MutableLiveData).postValue(it.message)
             })
     }
 
@@ -43,7 +51,10 @@ class OrderItemViewModel(val walletRepository: WalletRepository, val orderId: In
             (error as MutableLiveData).postValue(null)
         },{
             (progressBarMark as MutableLiveData).postValue(1)
-            (error as MutableLiveData).postValue(it.message)
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                (error as MutableLiveData).postValue("Poor Internet Connection")
+            else
+                (error as MutableLiveData).postValue(it.message)
         })
     }
 

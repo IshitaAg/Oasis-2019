@@ -7,6 +7,8 @@ import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
 import com.dvm.appd.oasis.dbg.shared.util.asMut
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class VotingViewModel(val eventsRepository: EventsRepository,val authRepository: AuthRepository):ViewModel() {
 
@@ -38,6 +40,10 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
             }
         },{
             toast.asMut().postValue(it.toString())
+            if (it is UnknownHostException || it is SocketTimeoutException)
+                toast.asMut().postValue("Poor Internet Connection")
+            else
+                toast.asMut().postValue(it.toString())
         })
     }
 
@@ -45,7 +51,10 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
        eventsRepository.voteForComedian(name).subscribe({
             voteState.asMut().postValue("Voted")
        },{
-           toast.asMut().postValue(it.toString())
+           if (it is UnknownHostException || it is SocketTimeoutException)
+               toast.asMut().postValue("Poor Internet Connection")
+           else
+               toast.asMut().postValue(it.toString())
        })
    }
 }

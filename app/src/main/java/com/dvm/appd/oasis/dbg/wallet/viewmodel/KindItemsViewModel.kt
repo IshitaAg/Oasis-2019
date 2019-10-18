@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.shared.util.asMut
 import com.dvm.appd.oasis.dbg.wallet.data.repo.WalletRepository
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.KindItems
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 class KindItemsViewModel(val walletRepository: WalletRepository):ViewModel() {
 
@@ -19,7 +21,12 @@ class KindItemsViewModel(val walletRepository: WalletRepository):ViewModel() {
                 items.asMut().postValue(it)
             }
         },{
-            toast.asMut().postValue(it.toString())
+            if(it is SocketTimeoutException|| it is UnknownHostException)
+            {
+                toast.asMut().postValue("No internet Connection Found")
+            }
+            else
+                toast.asMut().postValue(it.toString())
         })
     }
 

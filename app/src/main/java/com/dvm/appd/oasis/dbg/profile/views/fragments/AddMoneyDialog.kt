@@ -78,21 +78,31 @@ class AddMoneyDialog : DialogFragment() {
                 Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
-                if(context!=null)
+                if(context!=null)6
                 Toast.makeText(context!!, "Please enter a positive amount", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else {
+                val money = rootView.amount.text.toString()
+                val fragment = this.parentFragment as ProfileFragment
                 if(!addMoneyViewModel.authRepository.sharedPreferences.getBoolean(AuthRepository.Keys.payTmDisclaimerShown, false)) {
-                    AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
+                    val alertDialogBox = AlertDialog.Builder(context).setTitle("Disclaimer").setMessage("Please note that the amount add via Paytm to the wallet is non-refundable and non-transferable").setNegativeButton("OK") {dialog, which ->
                         try {
                             (parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.VISIBLE
                         } catch (e: Exception) {
 
                         }
                         addMoneyViewModel.authRepository.sharedPreferences.edit().putBoolean(AuthRepository.Keys.payTmDisclaimerShown, true).apply()
-                        addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, rootView.amount.text.toString())
-                        dialog.dismiss()
-                    }.show()
+                        // dialog.dismiss()
+                    }
+                    alertDialogBox.setOnDismissListener {
+                        Log.d("PayTm", "Entered onDismiss Listenere")
+                        fragment.progress_profile.visibility = View.VISIBLE
+                        addMoneyViewModel.getCheckSum(fragment, money)
+                    }
+                    alertDialogBox.show()
+                } else {
+                    fragment.progress_profile.visibility = View.VISIBLE
+                    addMoneyViewModel.getCheckSum(this.parentFragment as ProfileFragment, money)
                 }
                 dialog!!.dismiss()
             }

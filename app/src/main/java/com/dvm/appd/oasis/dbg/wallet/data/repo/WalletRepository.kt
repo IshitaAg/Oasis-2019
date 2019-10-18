@@ -1186,7 +1186,7 @@ class WalletRepository(
                         WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                         Donot remove this variable x. Paytm sdk will break.
                         Just let it be here*/
-                        val x = PaytmPGService.getProductionService()
+                        val x = PaytmPGService.getStagingService()
                         x.enableLog(fragment.context)
                         x.initialize(order, null)
 

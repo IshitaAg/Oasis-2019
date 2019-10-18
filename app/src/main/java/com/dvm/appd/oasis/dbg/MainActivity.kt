@@ -258,17 +258,18 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 getString(R.string.channel_id_quiz),
                 NotificationManager.IMPORTANCE_HIGH
             )
-
-            val cashBackChannel = NotificationChannel(
-                getString(R.string.channel_desc_cashback_notifications),
-                "Cash Backs",
-                NotificationManager.IMPORTANCE_HIGH
-            )
             quizChannel.description = "Inform about the latest developments in the quiz game"
             quizChannel.canBypassDnd()
 
+            val cashBackChannel = NotificationChannel(
+                getString(R.string.channel_id_cashback_notifications),
+                "Cashback",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            cashBackChannel.description = getString(R.string.channel_desc_cashback_notifications)
+            cashBackChannel.canBypassDnd()
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannels(listOf(generalChannel, ratingsChannel, statusChangeChannel, eventsChannel, quizChannel))
+            notificationManager.createNotificationChannels(listOf(generalChannel, ratingsChannel, statusChangeChannel, eventsChannel, quizChannel, cashBackChannel))
         }
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             Log.d("Main Activity", "Recived New Token = ${it.token}}")

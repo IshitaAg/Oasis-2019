@@ -30,25 +30,24 @@ class ReferralDialog : DialogFragment() {
             rootView.referralCode.setText(code)
             rootView.referralCode.isEnabled = false
             rootView.shareReferral.setOnClickListener {
+                (parentFragment!!.swipeProfile).progress_profile.visibility = View.VISIBLE
+                var shareBody ="Join me on Official Oasis'19 App, a secure app with in-built wallet," +
+                        " live event tracking etc and experience this Oasis like never before.\n\n" +
+                        "Android app link: https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home\n\n" +
+                        "iOS app link: https://apps.apple.com/us/app/oasis-2019/id1483415633?ls=1\n\n" +
+                        "Enter my code $code and earn cashback upto Rs 100 on your first order."
+
+                Log.d("Profile Frag", "Message Body = ${shareBody}")
+                var sharingIntent = Intent(Intent.ACTION_SEND)
+                sharingIntent.type = "text/plain"
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Referral Code for the Official Oasis App")
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                startActivity(Intent.createChooser(sharingIntent, "Share"))
+                //(parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.INVISIBLE
+                (parentFragment!!.swipeProfile).progress_profile.visibility = View.INVISIBLE
+                dialog!!.dismiss()
             }
            // (parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.VISIBLE
-            (parentFragment!!.swipeProfile).progress_profile.visibility = View.VISIBLE
-
-            var shareBody ="Join me on Official Oasis'19 App, a secure app with in-built wallet," +
-            " live event tracking etc and experience this Oasis like never before.\n\n" +
-                    "Android app link: https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home\n\n" +
-                    "iOS app link: https://apps.apple.com/us/app/oasis-2019/id1483415633?ls=1\n\n" +
-                    "Enter my code $code and earn cashback upto Rs 100 on your first order."
-
-            Log.d("Profile Frag", "Message Body = ${shareBody}")
-            var sharingIntent = Intent(Intent.ACTION_SEND)
-            sharingIntent.type = "text/plain"
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Referral Code for the Official Oasis App")
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody)
-            startActivity(Intent.createChooser(sharingIntent, "Share"))
-            //(parentFragment!!.view as ProfileFragment).progress_profile.visibility = View.INVISIBLE
-            (parentFragment!!.swipeProfile).progress_profile.visibility = View.INVISIBLE
-            dialog!!.dismiss()
         } else {
             Toast.makeText(context, "Unable to fetch Referral Code. Try again Later", Toast.LENGTH_LONG).show()
             dialog!!.dismiss()

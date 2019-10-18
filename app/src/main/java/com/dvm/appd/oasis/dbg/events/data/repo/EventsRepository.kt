@@ -32,7 +32,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         val constraints = Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
         val request = PeriodicWorkRequestBuilder<EventsSyncWorker>(3, TimeUnit.HOURS).setConstraints(constraints).build()
 
-        WorkManager.getInstance(application.applicationContext).enqueue(request)
+        WorkManager.getInstance(application.applicationContext).enqueueUniquePeriodicWork("PeriodicWorkManager",ExistingPeriodicWorkPolicy.REPLACE, request)
 
     }
 

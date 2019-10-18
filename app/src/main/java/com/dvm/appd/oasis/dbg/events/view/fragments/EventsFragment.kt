@@ -89,6 +89,7 @@ class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsD
         view.miscEventRecycler.adapter = EventsAdapter(this)
         eventsViewModel.events.observe(this, Observer {
             Log.d("MiscEventsFrag", "Observed")
+            view.noEvent.isVisible = it.isEmpty()
             (view.miscEventRecycler.adapter as EventsAdapter).events = it
             (view.miscEventRecycler.adapter as EventsAdapter).notifyDataSetChanged()
             val index = it.indexOfFirst { eventsData -> eventsData.time < compareTime }

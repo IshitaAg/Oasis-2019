@@ -138,7 +138,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
     fun getEventsDayCategoryData(date: String): Flowable<List<ModifiedEventsData>>{
 
         return eventsDao.getEventsByCategory(date).subscribeOn(Schedulers.io())
-            .flatMap {
+            .switchMap {
 
                 var events: MutableList<ModifiedEventsData> = arrayListOf()
 
@@ -150,7 +150,9 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
                         events.add(item)
                 }
 
-                return@flatMap Flowable.just(events)
+                events.sortBy { data -> data.time }
+
+                return@switchMap Flowable.just(events)
             }
     }
 
@@ -170,7 +172,7 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.removeFilters().subscribeOn(Schedulers.io())
     }
 
-   fun isVotingEnabled(): Flowable<Boolean> {
+    fun isVotingEnabled(): Flowable<Boolean> {
         return comediansVoting.getStatus()
     }
 
@@ -184,9 +186,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         }.doOnError {
             Log.d("checke",it.toString())
         }
-
-
-
     }
 }
 

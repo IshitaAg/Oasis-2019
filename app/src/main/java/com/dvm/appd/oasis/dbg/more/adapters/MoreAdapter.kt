@@ -15,7 +15,10 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.os.Handler
+import android.util.Log
 import androidx.core.os.postDelayed
+import com.jakewharton.rxbinding.view.RxView
+import java.util.concurrent.TimeUnit
 
 
 class MoreAdapter(private val listener: onMoreItemClicked) : RecyclerView.Adapter<MoreAdapter.moreViewHolder>() {
@@ -39,15 +42,24 @@ class MoreAdapter(private val listener: onMoreItemClicked) : RecyclerView.Adapte
     @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: moreViewHolder, position: Int) {
         holder.title.text = moreItems[position]
-        holder.parent.setOnClickListener {
+        /*holder.parent.setOnClickListener {
             it.isClickable = false
             listener.moreButtonClicked(position)
-        }
-        holder.imgBttn.setOnClickListener {
+        }*/
+        RxView.clicks(holder.parent).debounce(500,TimeUnit.MILLISECONDS).subscribe({
+            listener.moreButtonClicked(position)},{
+            Log.d("checke",it.toString())
+        })
+        RxView.clicks(holder.imgBttn).debounce(500,TimeUnit.MILLISECONDS).subscribe({
+            listener.moreButtonClicked(position)
+        },{
+            Log.d("checke",it.toString())
+        })
+        /*holder.imgBttn.setOnClickListener {
             it.isClickable = false
             holder.parent.isClickable = false
-            listener.moreButtonClicked(position)
-        }
+
+        }*/
         if (position == 1) {
             var isLongPress = false
             val longClickDuration: Long = 3000

@@ -6,15 +6,15 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#747474</color>
-   <color name="colorGreen">#4ABE65</color>
+    <color name="colorGreen">#4ABE65</color>
     <color name="colorBlue">#4293FF</color>
     <color name="pending">#E83C3C</color>
     <color name="colourPurple">#8D61F2</color>
     <color name="orderFood">#12CB60</color>
     <color name="buyTickets">#5B3BDB</color>
-   <color name="games">#EF28DB</color>
+    <color name="games">#EF28DB</color>
     <color name="trackEvents">#5B7DEC</color>
-<color name="OnBoarding_colour">#242947</color>
+    <color name="OnBoarding_colour">#242947</color>
     <color name="status_bar_events">#724CFD</color>
     <color name="status_bar_orders">#42BAFF</color>
     <color name="status_bar_elas">#EF28DB</color>
@@ -26,9 +26,7 @@
     <color name="status_bar_auth">#5F86F0</color>
     <color name="text_color">#9B15C2</color>
     <color name="colour_profile_card">#31365E</color>
-
     <color name="line_filled">#FFFFFF</color>
     <color name="line_faded">#66FFFFFF</color>
-
     <color name="filter_not">#31365E</color>
 </resources>

@@ -71,8 +71,9 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setStatusBarColor(R.color.colorBlack)
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
@@ -435,11 +436,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     override fun onResume() {
         super.onResume()
+        setStatusBarColor(R.color.colorBlack)
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-        actionBar?.hide()
+       // actionBar?.hide()
 
         val activityManager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val listOfRunnigAppProcesses = activityManager.runningAppProcesses
@@ -493,6 +495,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun showCustomToolbar() {
+
         bottom_navigation_bar.isVisible = true
     }
 
@@ -508,19 +511,20 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     fun setStatusBarColor(color: Int) {
-       /* Log.d("MainActivity", "Entered function to change color")
+        Log.d("MainActivity", "Entered function to change color")
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this,color))*/
+        window.setStatusBarColor(ContextCompat.getColor(this,color))
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+        setStatusBarColor(R.color.colorBlack)
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-        actionBar?.hide()
+       // actionBar?.hide()
     }
 
     override fun onNetworkStatusScahnged(isConnected: Boolean) {

@@ -94,7 +94,7 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
 
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_stalls)
+        (activity!! as MainActivity).setStatusBarColor(R.color.colorBlack)
         super.onResume()
     }
 

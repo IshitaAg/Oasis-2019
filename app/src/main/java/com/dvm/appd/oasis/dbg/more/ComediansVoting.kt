@@ -32,6 +32,7 @@ class ComediansVoting {
                        }
                }
 
+               comediansSubject.onNext(comedians)
                votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
            }
        }

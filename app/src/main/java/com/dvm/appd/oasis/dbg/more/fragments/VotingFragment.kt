@@ -37,6 +37,7 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         rootView.back.setOnClickListener {
             view!!.findNavController().popBackStack()
         }
+        votingViewModel.getVotingData()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             rootView.view17.background = ContextCompat.getDrawable(context!!, R.drawable.ic_stalls_background)
         }

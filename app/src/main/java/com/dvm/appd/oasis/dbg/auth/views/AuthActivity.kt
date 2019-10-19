@@ -46,7 +46,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     private lateinit var rootView:View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
@@ -119,7 +119,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     }
     override fun onResume() {
         super.onResume()
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
 /*
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
@@ -195,7 +195,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
         //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the

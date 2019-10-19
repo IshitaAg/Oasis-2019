@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
@@ -436,7 +436,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     override fun onResume() {
         super.onResume()
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
@@ -519,7 +519,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        setStatusBarColor(R.color.colorBlack)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the

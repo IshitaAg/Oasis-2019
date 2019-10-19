@@ -175,21 +175,6 @@ class EventsRepository(val eventsDao: EventsDao, val eventsService: EventsServic
         return eventsDao.removeFilters().subscribeOn(Schedulers.io())
     }
 
-    fun isVotingEnabled(): Flowable<Boolean> {
-        return comediansVoting.getStatus()
-    }
-
-    fun getComedians():Flowable<List<Comedian>>{
-        return comediansVoting.getComedians()
-    }
-
-    fun voteForComedian(name:String):Completable{
-        return comediansVoting.vote(name).doOnComplete {
-            sharedPreferences.edit().putBoolean(AuthRepository.Keys.voted,true).apply()
-        }.doOnError {
-            Log.d("checke",it.toString())
-        }
-    }
 }
 
 

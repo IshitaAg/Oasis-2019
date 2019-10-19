@@ -6,13 +6,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
+import com.dvm.appd.oasis.dbg.di.more.MoreModule
 import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
+import com.dvm.appd.oasis.dbg.more.data.MoreRepository
 import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
 import com.dvm.appd.oasis.dbg.shared.util.asMut
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-class VotingViewModel(val eventsRepository: EventsRepository,val authRepository: AuthRepository):ViewModel() {
+class VotingViewModel(val moreRepository: MoreRepository,val authRepository: AuthRepository):ViewModel() {
 
     val comedians: LiveData<List<Comedian>> = MutableLiveData()
     var voteState:LiveData<String> = MutableLiveData()
@@ -29,9 +31,9 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
                     voteState.asMut().postValue("Voted")
                 }
                 false ->{
-                    eventsRepository.isVotingEnabled().subscribe {enabled ->
+                    moreRepository.isVotingEnabled().subscribe {enabled ->
                         Log.d("check",enabled!!.toString())
-                        eventsRepository.getComedians().subscribe{comedianNames->
+                        moreRepository.getComedians().subscribe{comedianNames->
                             when(enabled){
                                 true -> {
                                     comedians.asMut().postValue(comedianNames)
@@ -56,7 +58,7 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
     }
 
    fun vote(name:String){
-       eventsRepository.voteForComedian(name).subscribe({
+       moreRepository.voteForComedian(name).subscribe({
             voteState.asMut().postValue("Voted")
        },{
            if (it is UnknownHostException || it is SocketTimeoutException)

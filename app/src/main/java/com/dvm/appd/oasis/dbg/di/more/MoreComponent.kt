@@ -7,4 +7,5 @@ import dagger.Subcomponent
 interface MoreComponent {
 
     fun inject(factory:VotingViewModelFactory)
+
 }

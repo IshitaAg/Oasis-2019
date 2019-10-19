@@ -17,7 +17,7 @@
                     android:id="@+id/view5"
                     android:layout_width="0dp"
                     android:layout_height="240dp"
-                    android:background="@drawable/ic_stalls_background"
+                    android:background="#242947"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

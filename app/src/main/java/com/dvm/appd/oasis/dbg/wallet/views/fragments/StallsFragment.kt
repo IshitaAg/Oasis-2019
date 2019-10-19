@@ -1,6 +1,7 @@
 package com.dvm.appd.oasis.dbg.wallet.views.fragments
 
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fra_wallet_stalls.view.*
 import android.view.*
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.labo.kaji.fragmentanimations.FlipAnimation
 import com.labo.kaji.fragmentanimations.MoveAnimation
@@ -50,6 +52,10 @@ class StallsFragment : Fragment(), StallsAdapter.OnStallSelectedListener {
         val rootview = inflater.inflate(R.layout.fra_wallet_stalls, container, false)
         //activity!!.my_toolbar.setBackgroundResource(R.drawable.gradient_stalls_toolbar)
         rootview.stalls_recycler.adapter = StallsAdapter(this)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            rootview.view5.background = ContextCompat.getDrawable(context!!,R.drawable.ic_stalls_background)
+        }
 
         stallsViewModel.stalls.observe(this, Observer {
             rootview.progressBar.visibility = View.GONE

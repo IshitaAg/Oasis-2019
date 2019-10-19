@@ -32,6 +32,7 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         rootView.back.setOnClickListener {
             it.findNavController().popBackStack()
         }
+        votingViewModel.getVotingData()
         rootView.votingRecycler.adapter = ComediansAdapter(this)
         rootView.voteBtn.setOnClickListener {
             //rootView.progressBar3.visibility = View.VISIBLE

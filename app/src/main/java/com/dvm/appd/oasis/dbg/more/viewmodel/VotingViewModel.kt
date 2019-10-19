@@ -1,5 +1,7 @@
 package com.dvm.appd.oasis.dbg.more.viewmodel
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,26 +18,32 @@ class VotingViewModel(val eventsRepository: EventsRepository,val authRepository:
     var voteState:LiveData<String> = MutableLiveData()
     var toast:LiveData<String> = MutableLiveData()
     init {
+       getVotingData()
+    }
+
+    @SuppressLint("CheckResult")
+    fun getVotingData(){
         authRepository.getUser().subscribe({user->
             when(user.voted!!){
                 true->{
-                        voteState.asMut().postValue("Voted")
+                    voteState.asMut().postValue("Voted")
                 }
                 false ->{
-                   eventsRepository.isVotingEnabled().subscribe {enabled ->
-                       eventsRepository.getComedians().subscribe{comedianNames->
-                           when(enabled!!){
-                               true -> {
-                                   comedians.asMut().postValue(comedianNames)
-                                   voteState.asMut().postValue("Enabled")
-                               }
-                               false -> {
-                                   comedians.asMut().postValue(listOf())
-                                   voteState.asMut().postValue("Closed")
-                               }
-                           }
-                       }
-                   }
+                    eventsRepository.isVotingEnabled().subscribe {enabled ->
+                        Log.d("check",enabled!!.toString())
+                        eventsRepository.getComedians().subscribe{comedianNames->
+                            when(enabled){
+                                true -> {
+                                    comedians.asMut().postValue(comedianNames)
+                                    voteState.asMut().postValue("Enabled")
+                                }
+                                false -> {
+                                    comedians.asMut().postValue(listOf())
+                                    voteState.asMut().postValue("Closed")
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },{

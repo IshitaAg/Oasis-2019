@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.elas.model.dataClasses.CombinedQuestionOptionDataClass
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.card_recycler_elas_frag_questions.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class ElasQuestionsAdapter(val listener: onQuestionButtonClicked) : RecyclerView.Adapter<ElasQuestionsAdapter.ElasQuestionsViewHolder>() {
 
@@ -30,12 +33,11 @@ class ElasQuestionsAdapter(val listener: onQuestionButtonClicked) : RecyclerView
     override fun onBindViewHolder(holder: ElasQuestionsViewHolder, position: Int) {
         holder.textQuestionNumber.text = "Question ${questionsList.toList()[position].second.first().questionId}"
         holder.textQuestion.text = questionsList.toList()[position].second.first().question
-        holder.buttonRules.setOnClickListener {
-            // Toast.makeText(holder.itemView.context!!,"To be announced",Toast.LENGTH_SHORT).show()
+        RxView.clicks(holder.buttonRules).debounce(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             Log.d("QuesAdapter", "Entered onClick Listener with ${questionsList.toList()[position].second.first().category}")
             listener.viewRules(questionsList.toList()[position].second.first().category)
         }
-        holder.parent.setOnClickListener {
+        RxView.clicks(holder.parent).debounce(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             listener.answerQuestion(questionsList.toList()[position].second.first().questionId)
         }
     }

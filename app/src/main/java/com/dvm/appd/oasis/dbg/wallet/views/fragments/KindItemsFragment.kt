@@ -13,10 +13,12 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.KindItemsViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.KindItemsViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.KindItemsAdapter
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.fra_kind_items.view.*
 import kotlinx.android.synthetic.main.fra_wallet_stall_items.view.*
 import kotlinx.android.synthetic.main.fra_wallet_stall_items.view.backBtn
 import kotlinx.android.synthetic.main.fra_wallet_stall_items.view.stallName
+import java.util.concurrent.TimeUnit
 
 
 class KindItemsFragment:Fragment() {
@@ -30,8 +32,9 @@ class KindItemsFragment:Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fra_kind_items,container,false)
         rootView.stallName.text = "Kind Store"
-        rootView.backBtn.setOnClickListener {
-            it.findNavController().popBackStack()
+        rootView.setOnClickListener {
+            view!!.findNavController().popBackStack()
+
         }
         kindItemsViewModel.toast.observe(this, Observer {
             Toast.makeText(context!!,it!!,Toast.LENGTH_SHORT).show()

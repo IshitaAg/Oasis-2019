@@ -17,7 +17,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.viewmodel.PictureActivityViewModel
 import com.dvm.appd.oasis.dbg.auth.viewmodel.PictureActivityViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_picture.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class PictureActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
@@ -43,13 +46,12 @@ class PictureActivity : AppCompatActivity() {
             )
         }
         picBt = picBtn
-        picBtn.setOnClickListener {
+        RxView.clicks(picBtn).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
                 takePictureIntent.resolveActivity(packageManager)?.also {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
             }
-
         }
 
         pictureActivityViewModel.state.observe(this, Observer {

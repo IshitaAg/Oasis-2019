@@ -11,8 +11,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModel
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_login_referral.*
 import kotlinx.android.synthetic.main.dia_login_referral.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class ReferralEnterDialog: DialogFragment(){
 

@@ -11,7 +11,10 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_misc_day.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapter<EventsDayAdapter.EventsDayViewHolder>(){
 
@@ -50,8 +53,9 @@ class EventsDayAdapter(private val listener: OnDaySelected): RecyclerView.Adapte
             holder.underline.isVisible = false
         }
 
-        holder.day.setOnClickListener {
-            listener.daySelected(days[position], position)
-        }
+         holder.day.setOnClickListener {
+             listener.daySelected(days[position], position)
+         }
+
     }
 }

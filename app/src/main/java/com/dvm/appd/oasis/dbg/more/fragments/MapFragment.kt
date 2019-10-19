@@ -16,8 +16,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_map.*
+import java.util.concurrent.TimeUnit
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -38,6 +40,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         backBtn.setOnClickListener {
             view.findNavController().popBackStack()
         }

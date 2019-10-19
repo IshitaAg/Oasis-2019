@@ -7,7 +7,10 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_comedians.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class ComediansAdapter(val listener: onVoteBtnClicked) :
     RecyclerView.Adapter<ComediansAdapter.ComediansViewHolder>() {
@@ -29,7 +32,8 @@ class ComediansAdapter(val listener: onVoteBtnClicked) :
     override fun onBindViewHolder(holder: ComediansAdapter.ComediansViewHolder, position: Int) {
         holder.comName.text = comedians[position].name
         holder.voteBtn.isClickable=false
-        holder.parent.setOnClickListener{
+        RxView.clicks(holder.parent).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+            AndroidSchedulers.mainThread()).subscribe {
             holder.voteBtn.isChecked=true
             if(lastChecked!=null){
                 lastChecked!!.isChecked = false

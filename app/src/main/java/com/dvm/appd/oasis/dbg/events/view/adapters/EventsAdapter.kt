@@ -11,8 +11,12 @@ import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.ModifiedEventsData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_misc_events.view.*
+import org.jsoup.Jsoup
+import rx.android.schedulers.AndroidSchedulers
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.Adapter<EventsAdapter.EventsViewHolder>(){
 
@@ -52,7 +56,7 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             holder.description.text = Html.fromHtml(events[position].details, HtmlCompat.FROM_HTML_MODE_LEGACY)
         }else{
-            holder.description.text = events[position].details
+            holder.description.text = Jsoup.parse(events[position].details).text()
         }
         //holder.description.text = events[position].details
         holder.time.text = events[position].time
@@ -74,13 +78,15 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 //            }
 //        }
 
-        holder.directions.setOnClickListener {
+        RxView.clicks(holder.directions).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+            AndroidSchedulers.mainThread()).subscribe {
             listener.getDirections(events[position].venue)
         }
 
-        holder.view.setOnClickListener {
+        RxView.clicks(holder.view).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             listener.showAboutRules(events[position].details, events[position].name, events[position].contact)
         }
+
     }
 
 }

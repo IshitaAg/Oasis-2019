@@ -16,9 +16,12 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_wallet_referral.view.*
 import kotlinx.android.synthetic.main.fra_profile.*
 import kotlinx.android.synthetic.main.fra_profile.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class ReferralDialog : DialogFragment() {
 
@@ -29,7 +32,8 @@ class ReferralDialog : DialogFragment() {
         if (code != "") {
             rootView.referralCode.setText(code)
             rootView.referralCode.isEnabled = false
-            rootView.shareReferral.setOnClickListener {
+            RxView.clicks(rootView.shareReferral).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+                AndroidSchedulers.mainThread()).subscribe {
                 (parentFragment!!.swipeProfile).progress_profile.visibility = View.VISIBLE
                 var shareBody ="Join me on Official Oasis'19 App, a secure app with in-built wallet," +
                         " live event tracking etc and experience this Oasis like never before.\n\n" +

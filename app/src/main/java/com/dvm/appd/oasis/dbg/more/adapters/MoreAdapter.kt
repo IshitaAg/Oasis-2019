@@ -46,11 +46,11 @@ class MoreAdapter(private val listener: onMoreItemClicked) : RecyclerView.Adapte
             it.isClickable = false
             listener.moreButtonClicked(position)
         }*/
-        RxView.clicks(holder.parent).debounce(500,TimeUnit.MILLISECONDS).subscribe({
+        RxView.clicks(holder.parent).debounce(200,TimeUnit.MILLISECONDS).subscribe({
             listener.moreButtonClicked(position)},{
             Log.d("checke",it.toString())
         })
-        RxView.clicks(holder.imgBttn).debounce(500,TimeUnit.MILLISECONDS).subscribe({
+        RxView.clicks(holder.imgBttn).debounce(200,TimeUnit.MILLISECONDS).subscribe({
             listener.moreButtonClicked(position)
         },{
             Log.d("checke",it.toString())

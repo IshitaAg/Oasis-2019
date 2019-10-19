@@ -24,10 +24,13 @@ import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrdersViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.CartChildAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrdersAdapter
+import com.jakewharton.rxbinding.view.RxView
 import com.labo.kaji.fragmentanimations.FlipAnimation
 import com.labo.kaji.fragmentanimations.MoveAnimation
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.*
 import kotlinx.android.synthetic.main.fra_wallet_orders.view.progressBar
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapter.OnButtonClicked {
 
@@ -66,8 +69,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
             })
 
-        view.order.setOnClickListener {
-
+        RxView.clicks(view.order).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             val alertDialogBuilder = AlertDialog.Builder(context)
             alertDialogBuilder.setMessage("Place Order?")
                 .setPositiveButton("OK") { _, _ ->
@@ -80,7 +82,6 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
 
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
-
         }
 
         ordersViewModel.progressBarMark.observe(this, Observer {
@@ -103,11 +104,10 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
             }
         })
 
-        view.refresh.setOnClickListener {
+        RxView.clicks(view.refresh).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             (ordersViewModel.progressBarMark as MutableLiveData).postValue(0)
             ordersViewModel.refreshData()
         }
-
         return view
     }
 

@@ -18,7 +18,7 @@ import retrofit2.http.HEAD
     OrderData::class, CartData::class, QuestionData::class, OptionData::class,
     Notification::class, FavEvents::class, TicketsData::class, UserShows::class,
     TicketsCart::class, PlayerRankingResponse::class, EventData::class,
-    CategoryData::class,KindItems::class,PaytmRoom::class],version = 2)
+    CategoryData::class,KindItems::class,PaytmRoom::class],version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun walletDao(): WalletDao

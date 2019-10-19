@@ -18,7 +18,10 @@ import com.dvm.appd.oasis.dbg.profile.viewmodel.TicketViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.TicketViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.TicketsAdapter
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.TicketsCart
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_tickets.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
@@ -68,8 +71,7 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         //Add progress bar
 
-        view.button.setOnClickListener {
-
+        RxView.clicks(view.button).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             val alertDialogBuilder = AlertDialog.Builder(context)
             alertDialogBuilder.setMessage("Buy Ticket(s)?")
                 .setPositiveButton("OK") { _, _ ->
@@ -82,7 +84,6 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
             val alertDialog = alertDialogBuilder.create()
             alertDialog.show()
-
         }
 
         ticketsViewModel.redirect.observe(this, Observer {

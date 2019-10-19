@@ -4,7 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_immidiate_update.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class ImmidiateUpdateActivity : AppCompatActivity() {
 
@@ -12,7 +15,7 @@ class ImmidiateUpdateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_immidiate_update)
 
-        bttn_update.setOnClickListener {
+        RxView.clicks(bttn_update).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             try {
                 val intent = Intent(Intent.ACTION_VIEW).apply {
                     data = Uri.parse("https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home")

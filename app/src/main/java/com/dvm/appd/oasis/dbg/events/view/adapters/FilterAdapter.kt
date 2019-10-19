@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.events.data.room.dataclasses.FilterData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_filter_item.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class FilterAdapter(private val listener: DialogItemTouch): RecyclerView.Adapter<FilterAdapter.FilterViewHolder>(){
 
@@ -38,7 +41,8 @@ class FilterAdapter(private val listener: DialogItemTouch): RecyclerView.Adapter
             holder.filter.setTextColor(holder.itemView.context.resources.getColor(R.color.colorWhite))
         }
 
-        holder.filter.setOnClickListener {
+        RxView.clicks(holder.filter).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+            AndroidSchedulers.mainThread()).subscribe {
             listener.updateFilter(categories[position].category, !categories[position].filtered)
         }
     }

@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedTicketsData
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.TicketsCart
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_tickets.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class TicketsAdapter(private val listener: TicketCartActions): RecyclerView.Adapter<TicketsAdapter.TicketsViewHolder>(){
 
@@ -43,12 +46,12 @@ class TicketsAdapter(private val listener: TicketCartActions): RecyclerView.Adap
 
             p0.quantity.text = tickets[p1].quantity.toString()
 
-            p0.plus.setOnClickListener {
+            RxView.clicks(p0.plus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
                 listener.updateTicketCart(tickets[p1].quantity + 1, tickets[p1].cartId)
+
             }
 
-            p0.minus.setOnClickListener {
-
+            RxView.clicks(p0.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
                 if (tickets[p1].quantity > 1){
                     listener.updateTicketCart(tickets[p1].quantity - 1, tickets[p1].cartId)
                 }
@@ -63,7 +66,7 @@ class TicketsAdapter(private val listener: TicketCartActions): RecyclerView.Adap
             p0.plus.isVisible = false
             p0.quantity.isVisible = false
 
-            p0.add.setOnClickListener {
+            RxView.clicks(p0.add).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
                 listener.insertTicketCart(TicketsCart(tickets[p1].ticketId, 1, tickets[p1].type, 0))
             }
         }

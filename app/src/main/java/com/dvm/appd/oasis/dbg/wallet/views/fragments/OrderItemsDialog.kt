@@ -16,8 +16,11 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrderItemViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.OrderItemViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.OrderDialogAdapter
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_order_details.view.*
 import kotlinx.android.synthetic.main.dia_order_details.view.progressBar
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class OrderItemsDialog: DialogFragment() {
 
@@ -118,7 +121,8 @@ class OrderItemsDialog: DialogFragment() {
             }
             else{
                 view.otp.text = "????"
-                view.otp.setOnClickListener {
+                RxView.clicks(view.otp).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+                    AndroidSchedulers.mainThread()).subscribe {
                     if (order.status == 2){
                         (orderItemViewModel.progressBarMark as MutableLiveData).postValue(0)
                         orderItemViewModel.updateOtpSeen(order.orderId)
@@ -196,7 +200,7 @@ class OrderItemsDialog: DialogFragment() {
             }
         })
 
-        view.rating1.setOnClickListener {
+        RxView.clicks(view.rating1).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.rating1.setImageResource(R.drawable.ic_star_full)
             view.rating2.setImageResource(R.drawable.ic_star)
             view.rating3.setImageResource(R.drawable.ic_star)
@@ -207,7 +211,7 @@ class OrderItemsDialog: DialogFragment() {
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 1)
         }
 
-        view.rating2.setOnClickListener {
+        RxView.clicks(view.rating2).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.rating1.setImageResource(R.drawable.ic_star_full)
             view.rating2.setImageResource(R.drawable.ic_star_full)
             view.rating3.setImageResource(R.drawable.ic_star)
@@ -218,7 +222,7 @@ class OrderItemsDialog: DialogFragment() {
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 2)
         }
 
-        view.rating3.setOnClickListener {
+        RxView.clicks(view.rating3).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.rating1.setImageResource(R.drawable.ic_star_full)
             view.rating2.setImageResource(R.drawable.ic_star_full)
             view.rating3.setImageResource(R.drawable.ic_star_full)
@@ -229,7 +233,7 @@ class OrderItemsDialog: DialogFragment() {
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 3)
         }
 
-        view.rating4.setOnClickListener {
+        RxView.clicks(view.rating4).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.rating1.setImageResource(R.drawable.ic_star_full)
             view.rating2.setImageResource(R.drawable.ic_star_full)
             view.rating3.setImageResource(R.drawable.ic_star_full)
@@ -240,7 +244,7 @@ class OrderItemsDialog: DialogFragment() {
             orderItemViewModel.rateOrder(orderItemViewModel.order.value!!.shell, 4)
         }
 
-        view.rating5.setOnClickListener {
+        RxView.clicks(view.rating5).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             view.rating1.setImageResource(R.drawable.ic_star_full)
             view.rating2.setImageResource(R.drawable.ic_star_full)
             view.rating3.setImageResource(R.drawable.ic_star_full)

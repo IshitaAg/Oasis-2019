@@ -26,11 +26,14 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.EventsDayAdapter
 import com.dvm.appd.oasis.dbg.events.view.adapters.EventsAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_filter_item.view.*
 import kotlinx.android.synthetic.main.fra_misc_events.view.*
+import rx.android.schedulers.AndroidSchedulers
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class EventsFragment : Fragment()   , EventsAdapter.OnMarkFavouriteClicked, EventsDayAdapter.OnDaySelected {
 
@@ -137,8 +140,7 @@ class EventsFragment : Fragment()   , EventsAdapter.OnMarkFavouriteClicked, Even
         }
 
 
-
-        view.filter.setOnClickListener {
+        RxView.clicks(view.filter).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             FilterDialog().show(childFragmentManager, "FILTER")
         }
 

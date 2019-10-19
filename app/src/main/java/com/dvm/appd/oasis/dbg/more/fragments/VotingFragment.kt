@@ -16,7 +16,10 @@ import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.more.adapters.ComediansAdapter
 import com.dvm.appd.oasis.dbg.more.viewmodel.VotingViewModel
 import com.dvm.appd.oasis.dbg.more.viewmodel.VotingViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.fra_voting.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
 
@@ -32,14 +35,14 @@ class VotingFragment : Fragment(), ComediansAdapter.onVoteBtnClicked {
         val rootView = inflater.inflate(R.layout.fra_voting, container, false)
         (activity!! as MainActivity).hideCustomToolbarForLevel2Fragments()
         rootView.back.setOnClickListener {
-            it.findNavController().popBackStack()
+            view!!.findNavController().popBackStack()
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             rootView.view17.background = ContextCompat.getDrawable(context!!, R.drawable.ic_stalls_background)
         }
         rootView.votingRecycler.adapter = ComediansAdapter(this)
-        rootView.voteBtn.setOnClickListener {
-            //rootView.progressBar3.visibility = View.VISIBLE
+        RxView.clicks(rootView.voteBtn).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+            AndroidSchedulers.mainThread()).subscribe {
             rootView.voteBtn.isClickable=false
             votingViewModel.vote(comedianName)
         }

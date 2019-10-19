@@ -18,8 +18,8 @@ android {
         applicationId "v2015.oasis.pilani.bits.com.home"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 22
-        versionName "2.0.1"
+        versionCode 23
+        versionName "2.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -141,5 +141,6 @@ dependencies {
     implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
 
+    implementation 'org.jsoup:jsoup:1.12.1'
 
 }

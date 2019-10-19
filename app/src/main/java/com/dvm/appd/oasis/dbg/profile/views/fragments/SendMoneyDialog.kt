@@ -15,8 +15,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.profile.viewmodel.SendMoneyViewModel
 import com.dvm.appd.oasis.dbg.profile.viewmodel.SendMoneyViewModelFactory
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_wallet_send_money.view.*
+import rx.android.schedulers.AndroidSchedulers
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 
 class SendMoneyDialog : DialogFragment() {
@@ -32,10 +35,11 @@ class SendMoneyDialog : DialogFragment() {
         sendMoneyViewModel =
             ViewModelProviders.of(this, SendMoneyViewModelFactory())[SendMoneyViewModel::class.java]
         rootView.SendBtn.isClickable = true
-        rootView.SendBtn.setOnClickListener {
+
+        RxView.clicks(rootView.SendBtn).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             if (rootView.Amount.text.toString().isBlank() || rootView.userId.text.toString().isBlank()) {
                 if(context!=null)
-                Toast.makeText(context!!, "Please fill all the required fields!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context!!, "Please fill all the required fields!", Toast.LENGTH_SHORT).show()
             } else {
                 rootView.loadingPBR.visibility = View.VISIBLE
                 rootView.SendBtn.isClickable =false

@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
+import com.jakewharton.rxbinding.view.RxView
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
@@ -33,6 +34,7 @@ import kotlinx.android.synthetic.main.fra_profile.view.*
 import kotlinx.android.synthetic.main.fra_profile.view.userId
 import kotlinx.android.synthetic.main.fra_profile.view.username
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterView.OnItemSelectedListener*/ {
 
@@ -53,7 +55,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     ): View? {
 
         val rootView = inflater.inflate(R.layout.fra_profile, container, false)
-        rootView.logout.setOnClickListener {
+        RxView.clicks(rootView.logout).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             profileViewModel.logout()
         }
 
@@ -81,7 +83,10 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             }
         })
 
-        rootView.refer.setOnClickListener {
+        RxView.clicks(rootView.refer).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
+            ReferralDialog().show(childFragmentManager, "REFERRAL_DIALOG")
+        }
+
             /*var code = profileViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referralCode, "")
             if(code != "") {
                 FirebaseDynamicLinks.getInstance().createDynamicLink()
@@ -103,32 +108,32 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             } else {
                 Toast.makeText(context, "Unable to get referral Link. Try again Later", Toast.LENGTH_LONG).show()
             }*/
-            ReferralDialog().show(childFragmentManager, "REFERRAL_DIALOG")
-        }
-        rootView.qrCode.setOnClickListener {
+
+        RxView.clicks(rootView.qrCode).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
             QrDialog().show(childFragmentManager,"QR_DIALOG")
         }
 
         rootView.AddBtn.isClickable = true
-        rootView.AddBtn.setOnClickListener {
+
+        RxView.clicks(rootView.AddBtn).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
             rootView.AddBtn.isClickable = false
             dialog = AddMoneyDialog()
             dialog!!.show(childFragmentManager,"ADD_MONEY_DIALOG")
         }
 
         rootView.sendBtn.isClickable = true
-        rootView.sendBtn.setOnClickListener {
+
+        RxView.clicks(rootView.sendBtn).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
             rootView.sendBtn.isClickable =false
             SendMoneyDialog().show(childFragmentManager,"SEND_MONEY_DIALOG")
         }
 
         rootView.buyTicket.isClickable = true
-        rootView.buyTicket.setOnClickListener {
+
+        RxView.clicks(rootView.buyTicket).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
             rootView.buyTicket.isClickable = false
             TicketDialog().show(childFragmentManager,"TICKETS_DIALOG")
-
         }
-
 
         profileViewModel.order.observe(this, Observer {
             when (it!!) {

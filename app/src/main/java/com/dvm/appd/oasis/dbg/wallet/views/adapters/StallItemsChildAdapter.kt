@@ -12,7 +12,10 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedStallItemsData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_wallet_stall_items_child.view.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class StallItemsChildAdapter(private val listener:OnAddClickedListener) : RecyclerView.Adapter<StallItemsChildAdapter.ChildItemsViewHolder>() {
 
@@ -72,13 +75,12 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
             holder.add.isVisible = false
             holder.quantity.text = stallItems[position].quantity.toString()
 
-            holder.plus.setOnClickListener {
-
+            RxView.clicks(holder.plus).debounce(200, TimeUnit.MILLISECONDS).observeOn(
+                AndroidSchedulers.mainThread()).subscribe {
                 listener.addButtonClicked(stallItems[position], stallItems[position].quantity + 1)
             }
 
-            holder.minus.setOnClickListener {
-
+            RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
                 if (stallItems[position].quantity > 1){
 
                     listener.addButtonClicked(stallItems[position], stallItems[position].quantity - 1)
@@ -101,8 +103,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
             holder.add.isEnabled = true
             holder.add.isVisible = true
 
-            holder.add.setOnClickListener {
-
+            RxView.clicks(holder.add).debounce(200, TimeUnit.MILLISECONDS).subscribe {
                 listener.addButtonClicked(stallItems[position], 1)
             }
         }

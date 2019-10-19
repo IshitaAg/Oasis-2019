@@ -21,8 +21,10 @@ import com.dvm.appd.oasis.dbg.elas.view.adapter.ElasOptionsAdapter
 import com.dvm.appd.oasis.dbg.elas.viewModel.ElasQuestionViewModel
 import com.dvm.appd.oasis.dbg.elas.viewModel.ElasQuestionViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_elasquestion.*
+import java.util.concurrent.TimeUnit
 
 class ELASQuestionFragment : Fragment(), ElasOptionsAdapter.OnOptionSelected {
 
@@ -88,14 +90,14 @@ class ELASQuestionFragment : Fragment(), ElasOptionsAdapter.OnOptionSelected {
             view.findNavController().popBackStack()
         }
 
-        bttn_elasfraQuestions_submitAnswer.setOnClickListener {
-            // Toast.makeText(context!!,"Quiz not started yet!",Toast.LENGTH_SHORT).show()
+        RxView.clicks(bttn_elasfraQuestions_submitAnswer).debounce(500, TimeUnit.MILLISECONDS).subscribe {
             if (selectedOptionId == (-1).toLong()) {
                 Toast.makeText(view.context, "Please select an option", Toast.LENGTH_LONG).show()
             } else {
                 elasQuestionViewModel.submitAnswer(questionId, selectedOptionId)
             }
         }
+
     }
 
     override fun optionSelected(position: Long) {

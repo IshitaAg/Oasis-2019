@@ -32,11 +32,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_auth.*
 import kotlinx.android.synthetic.main.activity_auth.password
 import kotlinx.android.synthetic.main.activity_auth.username
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_picture.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     private lateinit var authViewModel: AuthViewModel
@@ -66,8 +69,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
         this.registerReceiver(receiver, filter)
         authViewModel = ViewModelProviders.of(this, AuthViewModelFactory())[AuthViewModel::class.java]
 
-
-        outsteeLogin.setOnClickListener {
+        RxView.clicks(outsteeLogin).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             when {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
@@ -81,8 +83,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
                 }
             }
         }
-
-        bitsianLogin.setOnClickListener {
+        RxView.clicks(bitsianLogin).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
             gso.signOut().addOnCompleteListener {
                 startActivityForResult(gso.signInIntent, 108)
             }
@@ -160,6 +161,11 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
                 Toast.makeText(this, "{${e.statusCode}: Sign in Failure!", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        this.unregisterReceiver(receiver)
+        super.onDestroy()
     }
 
     override fun onBackPressed() {

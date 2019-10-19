@@ -12,7 +12,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedCartData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_cart_item_child.view.*
+import java.util.concurrent.TimeUnit
 
 class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adapter<CartChildAdapter.CartViewHolder>(){
 
@@ -73,13 +75,11 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
             holder.isVeg.setImageResource(R.drawable.ic_non_veg)
         }
 
-        holder.plus.setOnClickListener {
-
+        RxView.clicks(holder.plus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             listener.plusButtonClicked(cartChildItems[position], cartChildItems[position].quantity + 1)
         }
 
-        holder.minus.setOnClickListener {
-
+        RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             if (cartChildItems[position].quantity > 1) {
 
                 listener.plusButtonClicked(cartChildItems[position], cartChildItems[position].quantity - 1)

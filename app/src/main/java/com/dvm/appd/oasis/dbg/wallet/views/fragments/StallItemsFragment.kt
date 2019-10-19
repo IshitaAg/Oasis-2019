@@ -20,8 +20,10 @@ import com.dvm.appd.oasis.dbg.wallet.viewmodel.StallItemsViewModel
 import com.dvm.appd.oasis.dbg.wallet.viewmodel.StallItemsViewModelFactory
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.StallItemsAdapter
 import com.dvm.appd.oasis.dbg.wallet.views.adapters.StallItemsChildAdapter
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fra_wallet_stall_items.view.*
+import java.util.concurrent.TimeUnit
 
 class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListener {
 
@@ -78,7 +80,7 @@ class StallItemsFragment : Fragment(), StallItemsChildAdapter.OnAddClickedListen
         }
 
         rootView.backBtn.setOnClickListener {
-            it.findNavController().popBackStack()
+            rootView.backBtn.findNavController().popBackStack()
         }
         return rootView
     }

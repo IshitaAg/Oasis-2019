@@ -9,7 +9,9 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.StallData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_wallet_stalls.view.*
+import java.util.concurrent.TimeUnit
 
 class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView.Adapter<StallsAdapter.StallsViewHolder>() {
 
@@ -32,7 +34,7 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
 
             Glide.with(holder.itemView.context!!).load(stallImgs[position]).circleCrop().placeholder(R.color.zxing_transparent).circleCrop().into(holder.stallImg)
 
-        holder.parent.setOnClickListener {
+        RxView.clicks(holder.parent).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             listener.stallSelected(stalls[position])
         }
     }

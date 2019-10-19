@@ -46,7 +46,7 @@ class AddMoneyDialog : DialogFragment() {
         })
         rootView.addBtn.isClickable = true
 
-        RxView.clicks(rootView.addBtn).debounce(500,TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe({
+        RxView.clicks(rootView.addBtn).debounce(200,TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe({
             if (rootView.amount.text.toString().isBlank())
             { if(context!=null)
                 Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()}
@@ -68,14 +68,14 @@ class AddMoneyDialog : DialogFragment() {
             Log.d("checkview",it.toString())
         })
 
-        rootView.addPaytm.setOnClickListener {
+        RxView.clicks(rootView.addPaytm).debounce(200, TimeUnit.MILLISECONDS).observeOn(rx.android.schedulers.AndroidSchedulers.mainThread()).subscribe {
             if(rootView.amount.text.toString().isBlank()){
                 if(context!=null)
-                Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context!!, "Please fill amount", Toast.LENGTH_SHORT).show()
             }
             else if(try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } > 10000) {
                 if(context!=null)
-                Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context!!, "You can add max 10,000 at a time", Toast.LENGTH_SHORT).show()
                 rootView.amount.text.clear()
             } else if (try{ rootView.amount.text.toString().toInt() } catch (e: Exception) { 10000000 } < 0) {
                 if(context!=null)6

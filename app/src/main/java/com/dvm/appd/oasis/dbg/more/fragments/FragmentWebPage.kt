@@ -14,10 +14,12 @@ import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dia_event_data.*
 import kotlinx.android.synthetic.main.fragment_fragment_web_page.*
 import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 class FragmentWebPage : Fragment() {
 
@@ -43,6 +45,7 @@ class FragmentWebPage : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text_commonWebView_title.text = title
+
         backBtn.setOnClickListener {
             view.findNavController().popBackStack()
         }

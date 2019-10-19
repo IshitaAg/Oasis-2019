@@ -14,8 +14,10 @@ import com.dvm.appd.oasis.dbg.more.adapters.ContactUsAdapter
 import com.dvm.appd.oasis.dbg.more.adapters.CreditsAdapter
 import com.dvm.appd.oasis.dbg.more.adapters.DevelopersAdapter
 import com.dvm.appd.oasis.dbg.more.dataClasses.Developer
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_fragment_recycler_view.*
+import java.util.concurrent.TimeUnit
 
 class FragmentRecyclerView : Fragment() {
 
@@ -54,6 +56,7 @@ class FragmentRecyclerView : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text_commonRecyclerView_title.text = title
+
         backBtn.setOnClickListener {
             view.findNavController().popBackStack()
         }

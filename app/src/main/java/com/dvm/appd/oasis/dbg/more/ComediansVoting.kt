@@ -1,5 +1,6 @@
 package com.dvm.appd.oasis.dbg.more
 
+import android.util.Log
 import com.dvm.appd.oasis.dbg.more.dataClasses.Comedian
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,17 +17,22 @@ class ComediansVoting {
     init{
        database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
            if(documentSnapshot!=null){
+               Log.d("N2O Voteing", "Recived Document = $documentSnapshot")
                val comedians = ArrayList<Comedian>()
                if(documentSnapshot.getBoolean("enabled")==true) {
+                   Log.d("N2O Voteing", "Entered True statement")
                    database.collection("voting").document("info").collection("comedians").get()
                        .addOnSuccessListener { docs ->
+                           Log.d("N2O Voteing", "Document = $docs")
                            for (doc in docs) {
+                               Log.d("N2O Voteing", "EDoc = $doc")
                                comedians.add(Comedian(doc.id))
+                               comediansSubject.onNext(comedians)
                            }
                        }
                }
-               comediansSubject.onNext(comedians)
-               // votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
+
+               votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
            }
        }
 
@@ -36,7 +42,11 @@ class ComediansVoting {
     fun getStatus()=votingStatus.toFlowable(BackpressureStrategy.LATEST)
     fun vote(comedianName:String):Completable{
        return Completable.fromAction{
-           database.collection("voting").document("info").collection("comedians").document(comedianName).update("votes",FieldValue.increment(1))
+           database.collection("voting").document("info").collection("comedians").document(comedianName).update("votes",FieldValue.increment(1)).addOnSuccessListener {
+               Log.d("N2O Voteing", "Entered Success statement")
+           }.addOnFailureListener {
+               throw it
+           }
        }
     }
 }

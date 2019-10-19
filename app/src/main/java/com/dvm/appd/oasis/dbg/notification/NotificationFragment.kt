@@ -14,8 +14,10 @@ import androidx.navigation.findNavController
 import com.dvm.appd.oasis.dbg.MainActivity
 
 import com.dvm.appd.oasis.dbg.R
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notification.*
+import java.util.concurrent.TimeUnit
 
 /**
  * A simple [Fragment] subclass.
@@ -61,7 +63,7 @@ class NotificationFragment : Fragment() {
         })
 
         backBtn.setOnClickListener {
-            it.findNavController().popBackStack()
+            view.findNavController().popBackStack()
         }
     }
 

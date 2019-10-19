@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.dia_event_data.view.*
 import android.text.SpannableString
 import android.text.Spanned
 import android.R
-
+import com.dvm.appd.oasis.dbg.shared.util.MyTagHandler
 
 
 class EventDialog: DialogFragment(){
@@ -38,7 +38,7 @@ class EventDialog: DialogFragment(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             view.description.text = Html.fromHtml(detail, FROM_HTML_MODE_LEGACY)
         }else{
-            view.description.text = detail
+            view.description.text = Html.fromHtml(detail,null,MyTagHandler())
         }
 
 
@@ -49,7 +49,7 @@ class EventDialog: DialogFragment(){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 view.rules.text = Html.fromHtml(contact, FROM_HTML_MODE_LEGACY)
             }else{
-                view.rules.text = contact
+                view.rules.text = Html.fromHtml(contact,null,MyTagHandler())
             }
         }
         else{

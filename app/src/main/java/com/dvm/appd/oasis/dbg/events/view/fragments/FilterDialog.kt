@@ -16,7 +16,9 @@ import com.dvm.appd.oasis.dbg.events.view.adapters.FilterAdapter
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModel
 import com.dvm.appd.oasis.dbg.events.viewmodel.EventsViewModelFactory
 import com.dvm.appd.oasis.dbg.shared.util.asMut
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.dia_filter_events.view.*
+import java.util.concurrent.TimeUnit
 
 class FilterDialog: DialogFragment(), FilterAdapter.DialogItemTouch{
 
@@ -37,7 +39,7 @@ class FilterDialog: DialogFragment(), FilterAdapter.DialogItemTouch{
             //(eventsViewModel.daySelected as MutableLiveData).postValue(day)
         })
 
-        view.removeFilters.setOnClickListener {
+        RxView.clicks(view.removeFilters).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             eventsViewModel.removeFilters()
         }
 

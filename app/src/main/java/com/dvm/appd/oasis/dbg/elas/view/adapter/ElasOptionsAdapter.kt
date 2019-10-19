@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.elas.model.dataClasses.CombinedQuestionOptionDataClass
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.card_elas__question_fragment_options.view.*
+import java.util.concurrent.TimeUnit
 
 class ElasOptionsAdapter(val listener: OnOptionSelected): RecyclerView.Adapter<ElasOptionsAdapter.ElasOptionViewHolder>() {
 
@@ -39,7 +41,7 @@ class ElasOptionsAdapter(val listener: OnOptionSelected): RecyclerView.Adapter<E
         }
         holder.optionNumber.text = "${(65+position).toChar()}.\t"
         holder.option.text = optionsList[position].option
-        holder.parent.setOnClickListener {
+        RxView.clicks(holder.parent).debounce(500, TimeUnit.MILLISECONDS).subscribe {
             Log.d("Elas Option Adapter", "Enetered OnClick Listener")
             if (optionSelected == position) {
                 optionSelected = -1

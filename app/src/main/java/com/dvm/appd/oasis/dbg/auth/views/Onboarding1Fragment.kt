@@ -8,7 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.dvm.appd.oasis.dbg.R
+import com.google.android.play.core.internal.x
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.fragment_onboarding1.*
+import rx.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 interface onboardingFragmentButtonClickListener {
     fun onSkipButtonPressed()
@@ -29,12 +33,12 @@ class Onboarding1Fragment(val listener: onboardingFragmentButtonClickListener, v
         text_onBoarding_heading.text = heading
         parent.setBackgroundColor(background)
         text_onBoarding_content.text = body
-        text_bttn_skip.setOnClickListener {
-            it.isClickable = false
+        RxView.clicks(text_bttn_skip).debounce(200, TimeUnit.MILLISECONDS).subscribe {
+            text_bttn_skip.isClickable = false
             listener.onSkipButtonPressed()
         }
-        bttn_next_onBoarding.setOnClickListener {
-            it.isClickable = false
+        RxView.clicks(bttn_next_onBoarding).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
+            bttn_next_onBoarding.isClickable = false
             listener.onNextButtonClicked()
         }
         super.onViewCreated(view, savedInstanceState)

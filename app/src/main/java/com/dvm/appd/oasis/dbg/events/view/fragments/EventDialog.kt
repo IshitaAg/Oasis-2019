@@ -10,10 +10,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.fragment.app.DialogFragment
-import com.dvm.appd.oasis.dbg.R
 import kotlinx.android.synthetic.main.dia_event_data.view.*
+import android.text.SpannableString
+import android.text.Spanned
+import android.R
+
+
 
 class EventDialog: DialogFragment(){
 
@@ -25,25 +30,26 @@ class EventDialog: DialogFragment(){
         val name = arguments!!.getString("name")
         val contact = arguments!!.getString("contact")
 
-        val view = inflater.inflate(R.layout.dia_event_data, container, false)
+        val view = inflater.inflate(com.dvm.appd.oasis.dbg.R.layout.dia_event_data, container, false)
 
         view.heading.text = name
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        view.description.text = fromHtml(detail).toString()
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             view.description.text = Html.fromHtml(detail, FROM_HTML_MODE_LEGACY)
         }else{
             view.description.text = detail
-        }
+        }*/
 
 
         if (contact != "NA"){
             view.textView9.visibility = View.VISIBLE
             view.rules.visibility = View.VISIBLE
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                view.rules.text = Html.fromHtml(contact, FROM_HTML_MODE_LEGACY)
+            view.rules.text = fromHtml(contact!!).toString()
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             }else{
                 view.rules.text = contact
-            }
+            }*/
         }
         else{
             view.textView9.visibility = View.INVISIBLE
@@ -58,6 +64,19 @@ class EventDialog: DialogFragment(){
 //        }
 
         return view
+    }
+
+    fun fromHtml(html: String?): Spanned {
+        return if (html == null) {
+            // return an empty spannable if the html is null
+            SpannableString("")
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // FROM_HTML_MODE_LEGACY is the behaviour that was used for versions below android N
+            // we are using this flag to give a consistent behaviour
+            Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            Html.fromHtml(html)
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

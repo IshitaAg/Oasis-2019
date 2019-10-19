@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
@@ -29,7 +30,7 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EventsFragment : Fragment(), EventsAdapter.OnMarkFavouriteClicked, EventsDayAdapter.OnDaySelected {
+class EventsFragment : Fragment()   , EventsAdapter.OnMarkFavouriteClicked, EventsDayAdapter.OnDaySelected {
 
     private lateinit var eventsViewModel: EventsViewModel
     private lateinit var compareTime: String

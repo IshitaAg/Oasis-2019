@@ -34,22 +34,23 @@ class EventDialog: DialogFragment(){
 
         view.heading.text = name
 
-        view.description.text = fromHtml(detail).toString()
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        // view.description.text = fromHtml(detail).toString()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             view.description.text = Html.fromHtml(detail, FROM_HTML_MODE_LEGACY)
         }else{
             view.description.text = detail
-        }*/
+        }
 
 
         if (contact != "NA"){
             view.textView9.visibility = View.VISIBLE
             view.rules.visibility = View.VISIBLE
-            view.rules.text = fromHtml(contact!!).toString()
-            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // view.rules.text = fromHtml(contact!!).toString()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                view.rules.text = Html.fromHtml(contact, FROM_HTML_MODE_LEGACY)
             }else{
                 view.rules.text = contact
-            }*/
+            }
         }
         else{
             view.textView9.visibility = View.INVISIBLE

@@ -34,7 +34,7 @@
             android:id="@+id/miscView"
             android:layout_width="0dp"
             android:layout_height="152dp"
-            android:background="@drawable/ic_event_back"
+            android:background="#242947"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

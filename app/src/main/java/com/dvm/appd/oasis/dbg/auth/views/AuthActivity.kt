@@ -46,11 +46,12 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     private lateinit var rootView:View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-        actionBar?.hide()
+       // actionBar?.hide()
         setContentView(R.layout.activity_auth)
 
         val gso = GoogleSignIn.getClient(
@@ -118,16 +119,17 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
     }
     override fun onResume() {
         super.onResume()
+        setStatusBarColor(R.color.OnBoarding_colour)
 /*
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_auth))
 */
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-        actionBar?.hide()
+       // actionBar?.hide()
         authViewModel.referralState.observe(this, Observer {
             if (it){
                 ReferralEnterDialog().show(supportFragmentManager, "ReferralStart")
@@ -172,6 +174,12 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
         Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 
+    fun setStatusBarColor(color: Int) {
+        Log.d("MainActivity", "Entered function to change color")
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.setStatusBarColor(ContextCompat.getColor(this,color))
+    }
 
     private fun showLoadingState(){
            window.setFlags(
@@ -187,11 +195,12 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+        setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        //window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-        actionBar?.hide()
+       // actionBar?.hide()
     }
     override fun onNetworkStatusScahnged(isConnected: Boolean) {
         Log.d("check","called")

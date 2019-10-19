@@ -43,6 +43,7 @@ class MoneyTracker(val authRepository: AuthRepository) {
                         Integer.MAX_VALUE
                     }
                     subject.onNext(balance)
+                    tokenSubject.onNext(tokens)
                 }
 
             }

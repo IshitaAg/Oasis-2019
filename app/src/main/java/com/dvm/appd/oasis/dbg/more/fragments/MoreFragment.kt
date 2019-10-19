@@ -121,7 +121,7 @@ class MoreFragment : Fragment(), MoreAdapter.onMoreItemClicked {
 
     override fun onResume() {
         (activity!! as MainActivity).showCustomToolbar()
-        (activity!! as MainActivity).setStatusBarColor(R.color.status_bar_more)
+        (activity!! as MainActivity).setStatusBarColor(R.color.OnBoarding_colour)
 
         super.onResume()
     }

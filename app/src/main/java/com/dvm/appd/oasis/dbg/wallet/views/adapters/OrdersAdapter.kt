@@ -1,11 +1,13 @@
 package com.dvm.appd.oasis.dbg.wallet.views.adapters
 
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
@@ -23,6 +25,9 @@ class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<O
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrdersViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_order_items, parent, false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            view.view.background = ContextCompat.getDrawable(parent.context, R.drawable.ic_order_back)
+        }
         return OrdersViewHolder(view)
     }
 

@@ -1200,7 +1200,7 @@ class WalletRepository(
                         var errorBody: String?
                         try {
                             errorBody = response.errorBody()?.string()
-
+                            Log.d("WalletRepo", "Recived Error body = $errorBody")
                         } catch (e: Exception) {
                             throw Exception("${response.code()}: Something went wrong!!!")
                         }

@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.dvm.appd.oasis.dbg.MainActivity
 import com.dvm.appd.oasis.dbg.NetworkChangeNotifier
 import com.dvm.appd.oasis.dbg.R
+import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModel
 import com.dvm.appd.oasis.dbg.auth.viewmodel.AuthViewModelFactory
 import com.dvm.appd.oasis.dbg.shared.NetworkChangeReciver
@@ -70,7 +71,7 @@ class AuthActivity : AppCompatActivity(),NetworkChangeNotifier {
                 username.text.toString().isBlank() || password.text.toString().isBlank() ->
                     Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
                 else -> {
-                    code = authViewModel.authRepository.sharedPreferences.getString("REFERRED_BY", "")!!
+                    code = authViewModel.authRepository.sharedPreferences.getString(AuthRepository.Keys.referredBy, "")!!
                     authViewModel.login(username.text.toString(), password.text.toString(),code)
                     outsteeLogin.setBackgroundColor(Color.parseColor("#00000000"))
                     showLoadingState()

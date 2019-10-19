@@ -18,8 +18,8 @@ android {
         applicationId "v2015.oasis.pilani.bits.com.home"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 21
-        versionName "2.0.2-beta"
+        versionCode 22
+        versionName "2.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

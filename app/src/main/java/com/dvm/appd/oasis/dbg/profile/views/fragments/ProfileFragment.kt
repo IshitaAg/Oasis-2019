@@ -22,6 +22,7 @@ import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.PaytmRoom
 import com.google.gson.JsonObject
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
+import com.jakewharton.rxbinding.view.RxView
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback

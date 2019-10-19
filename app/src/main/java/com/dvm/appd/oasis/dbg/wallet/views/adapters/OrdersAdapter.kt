@@ -12,7 +12,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.dvm.appd.oasis.dbg.R
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.ModifiedOrdersData
+import com.jakewharton.rxbinding.view.RxView
 import kotlinx.android.synthetic.main.adapter_order_items.view.*
+import java.util.concurrent.TimeUnit
 
 class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>(){
 
@@ -100,9 +102,14 @@ class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<O
             }
         }
 
-        holder.view.setOnClickListener {
+        RxView.clicks(holder.view).debounce(500,TimeUnit.MILLISECONDS).subscribe({
             listener.showOrderItemDialog(orderItems[position].orderId)
-        }
+        },{
+            Log.d("checke",it.toString())
+        })
+       /* holder.view.setOnClickListener {
+
+        }*/
     }
 
     override fun onViewRecycled(holder: OrdersViewHolder) {

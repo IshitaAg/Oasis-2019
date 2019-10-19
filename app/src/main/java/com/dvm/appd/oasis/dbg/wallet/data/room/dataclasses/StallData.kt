@@ -10,5 +10,7 @@ data class StallData (
 
     val stallName:String,
 
-    val closed:Boolean
+    val closed:Boolean,
+
+    val imageUrl: String
 )

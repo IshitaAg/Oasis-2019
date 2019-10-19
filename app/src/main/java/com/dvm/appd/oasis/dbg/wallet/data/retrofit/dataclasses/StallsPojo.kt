@@ -14,5 +14,8 @@ data class StallsPojo(
     val closed: Boolean,
 
     @SerializedName("menu")
-    val items : List<StallItemsPojo>
+    val items : List<StallItemsPojo>,
+
+    @SerializedName("image_url")
+    val imageUrl: String
 )

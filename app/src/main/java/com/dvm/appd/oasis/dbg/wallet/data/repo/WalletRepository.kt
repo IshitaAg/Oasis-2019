@@ -159,7 +159,7 @@ class WalletRepository(
     }
 
     private fun StallsPojo.toStallData(): StallData {
-        return StallData(stallId, stallName, closed)
+        return StallData(stallId, stallName, closed, imageUrl)
     }
 
     private fun StallsPojo.toStallItemsData(): List<StallItemsData> {

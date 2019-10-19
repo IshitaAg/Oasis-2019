@@ -9,6 +9,7 @@ import com.dvm.appd.oasis.dbg.auth.data.repo.AuthRepository
 import com.dvm.appd.oasis.dbg.auth.views.LoginState
 import com.dvm.appd.oasis.dbg.shared.util.asMut
 import com.google.firebase.iid.FirebaseInstanceId
+import java.lang.Exception
 
 @SuppressLint("CheckResult")
 class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
@@ -74,8 +75,12 @@ class AuthViewModel(val authRepository: AuthRepository):ViewModel() {
                             (state as MutableLiveData).postValue(LoginState.MoveToOnBoarding)
                             authRepository.disableOnBoardingForUser()
                         }
-                        else
+
+                        else {
+                            // throw Exception("Random Error Occoures")
                             (state as MutableLiveData).postValue(LoginState.MoveToMainApp)
+
+                        }
                     }
                 }
                 is LoginState.Failure -> {(state as MutableLiveData).postValue(it)}

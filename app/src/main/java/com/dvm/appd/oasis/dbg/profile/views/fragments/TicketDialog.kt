@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -19,6 +20,7 @@ import com.dvm.appd.oasis.dbg.profile.viewmodel.TicketViewModelFactory
 import com.dvm.appd.oasis.dbg.profile.views.adapters.TicketsAdapter
 import com.dvm.appd.oasis.dbg.wallet.data.room.dataclasses.TicketsCart
 import com.jakewharton.rxbinding.view.RxView
+import kotlinx.android.synthetic.main.dia_tickets.*
 import kotlinx.android.synthetic.main.dia_tickets.view.*
 import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -45,6 +47,7 @@ class TicketDialog : DialogFragment(), TicketsAdapter.TicketCartActions{
 
         ticketsViewModel.tickets.observe(this, Observer {
             Log.d("FUCK","₹${it.sumBy {item -> item.price * item.quantity}}")
+            textView26.isVisible = it.isEmpty()
             view.tPrice.text = "₹${it.sumBy {item -> item.price * item.quantity}}"
             (view.ticketsList.adapter as TicketsAdapter).tickets = it
             (view.ticketsList.adapter as TicketsAdapter).notifyDataSetChanged()

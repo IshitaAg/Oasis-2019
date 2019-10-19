@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView.Adapter<StallsAdapter.StallsViewHolder>() {
 
     var stalls: List<StallData> = emptyList()
-    var stallImgs:List<String> = emptyList()
+    /*var stallImgs:List<String> = emptyList()*/
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StallsAdapter.StallsViewHolder {
 
@@ -32,7 +32,7 @@ class StallsAdapter (private val listener:OnStallSelectedListener): RecyclerView
     override fun onBindViewHolder(holder: StallsViewHolder, position: Int) {
         holder.stallName.text = stalls[position].stallName
 
-            Glide.with(holder.itemView.context!!).load(stallImgs[position]).circleCrop().placeholder(R.color.zxing_transparent).circleCrop().into(holder.stallImg)
+            Glide.with(holder.itemView.context!!).load(stalls[position].imageUrl).circleCrop().placeholder(R.color.zxing_transparent).circleCrop().into(holder.stallImg)
 
         RxView.clicks(holder.parent).debounce(200, TimeUnit.MILLISECONDS).subscribe {
             listener.stallSelected(stalls[position])

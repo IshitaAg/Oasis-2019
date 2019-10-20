@@ -18,6 +18,7 @@ class ComediansVoting {
        database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
            if(documentSnapshot!=null){
                Log.d("N2O Voteing", "Recived Document = $documentSnapshot")
+               votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
                val comedians = ArrayList<Comedian>()
                if(documentSnapshot.getBoolean("enabled")==true) {
                    Log.d("N2O Voteing", "Entered True statement")
@@ -33,7 +34,6 @@ class ComediansVoting {
                }
 
                comediansSubject.onNext(comedians)
-               votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
            }
        }
 

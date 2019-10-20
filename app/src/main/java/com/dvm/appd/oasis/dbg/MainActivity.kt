@@ -88,6 +88,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 }
         }
 
+     /*   try {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } catch (e: java.lang.Exception) {
+            sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
+        }*/
         remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
@@ -443,6 +449,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 // status bar is hidden, so hide that too if necessary.
        // actionBar?.hide()
 
+        /*try {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } catch (e: java.lang.Exception) {
+            sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
+        }*/
         val activityManager = this.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val listOfRunnigAppProcesses = activityManager.runningAppProcesses
         if (listOfRunnigAppProcesses != null) {
@@ -520,6 +532,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         setStatusBarColor(R.color.OnBoarding_colour)
+        /*try {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        } catch (e: java.lang.Exception) {
+            sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
+        }*/
         // Hide the status bar.
        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the

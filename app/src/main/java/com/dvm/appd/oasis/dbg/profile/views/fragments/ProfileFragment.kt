@@ -142,7 +142,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                     startActivity(Intent(context!!, AuthActivity::class.java))
                 }
                 UiState.ShowIdle -> {
-                    rootView.swipeProfile.isRefreshing = false
+                    // rootView.swipeProfile.isRefreshing = false
                     rootView.progress_profile.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
@@ -181,11 +181,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             }
         })
 
-        rootView.swipeProfile.setOnRefreshListener {
+        rootView.bttn_refresh.setOnClickListener {
             (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
             profileViewModel.refreshTicketsData()
             profileViewModel.refreshUserShows()
         }
+
+        /*rootView.swipeProfile.setOnRefreshListener {
+            (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
+            profileViewModel.refreshTicketsData()
+            profileViewModel.refreshUserShows()
+        }*/
 
         return rootView
     }

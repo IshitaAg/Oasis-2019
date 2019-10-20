@@ -13,6 +13,7 @@ import com.dvm.appd.oasis.dbg.events.data.repo.EventsRepository
 import com.dvm.appd.oasis.dbg.events.data.retrofit.EventsService
 import com.dvm.appd.oasis.dbg.events.data.room.EventsDao
 import com.dvm.appd.oasis.dbg.more.ComediansVoting
+import com.dvm.appd.oasis.dbg.more.data.MoreRepository
 import com.dvm.appd.oasis.dbg.shared.AppDatabase
 import com.dvm.appd.oasis.dbg.shared.BaseInterceptor
 import com.dvm.appd.oasis.dbg.shared.MoneyTracker
@@ -140,5 +141,11 @@ class AppModule(private val application: Application) {
     @Singleton
     fun provideEventsService(retrofit: Retrofit): EventsService {
         return retrofit.create(EventsService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesMoreRepository(sharedPreferences: SharedPreferences,comediansVoting: ComediansVoting):MoreRepository{
+       return MoreRepository(sharedPreferences,comediansVoting)
     }
 }

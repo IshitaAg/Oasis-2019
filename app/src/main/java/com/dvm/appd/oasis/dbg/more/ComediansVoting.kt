@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Completable
 import io.reactivex.subjects.BehaviorSubject
+import java.lang.Exception
 
 class ComediansVoting {
 
@@ -18,7 +19,13 @@ class ComediansVoting {
        database.collection("voting").document("info").addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
            if(documentSnapshot!=null){
                Log.d("N2O Voteing", "Recived Document = $documentSnapshot")
-               votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
+               try {
+                   votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)
+               }catch (e:Exception){
+                   Log.d("checke",e.toString())
+               }
+              /* votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)*/
+
                val comedians = ArrayList<Comedian>()
                if(documentSnapshot.getBoolean("enabled")==true) {
                    Log.d("N2O Voteing", "Entered True statement")

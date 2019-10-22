@@ -18,8 +18,8 @@ android {
         applicationId "v2015.oasis.pilani.bits.com.home"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 24
-        versionName "2.1.2"
+        versionCode 27
+        versionName "2.2.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

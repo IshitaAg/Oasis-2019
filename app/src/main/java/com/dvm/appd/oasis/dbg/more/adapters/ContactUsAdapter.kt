@@ -18,7 +18,7 @@ class ContactUsAdapter : RecyclerView.Adapter<ContactUsAdapter.ContactVHolder>()
     private val baseImageLink = "https://www.bits-oasis.org/"
 
     private val contacts = listOf(
-        Contact("Medical Emergency", "+91-8427878749", "+91-9717548752", "+91-9811695294", ""),
+        Contact("Medical Emergency", "+91-8427878749", "+91-9717548752", "+91-9811695394", ""),
         Contact("Tushar Goel", "Website, App & Online Payments", "webmaster@bits-oasis.org", "+91-9694345679", "${baseImageLink}images/contacts/DVM.png"),
         Contact("Parth Kashikar", "Logistics and Operations", "controls@bits-oasis.org", "+91-9686011770", "${baseImageLink}images/contacts/Parth.jpg"),
         Contact("Adit Chandra", "Sponsorship and Marketing", "sponsorship@bits-oasis.org", "+91-8290801301", "${baseImageLink}images/contacts/adit.png"),

@@ -74,12 +74,15 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         }
         Log.d("Notifidcation", "Recived id = $id")
         val title = json["title"]
+        Log.d("Notification", "Title = ${title}")
         val body = json["body"]
+        Log.d("Notification", "Body = ${body}")
         val channel = try {
             json["channel"]
         } catch (e: Exception) {
             resources.getString(R.string.chanel_id_general_notifications)
         }
+        Log.d("Notification", "Channel = ${channel}")
         val sportsName = try {
             json["event_name"]!!
         } catch (e: Exception) {
@@ -136,6 +139,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setContentTitle(message.title)
             .setContentText(message.body)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(message.body))
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
             .build()
@@ -163,6 +167,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                             .setSmallIcon(R.drawable.ic_launcher_background)
                             .setContentTitle(message.title)
                             .setContentText(message.body)
+                            .setStyle(NotificationCompat.BigTextStyle().bigText(message.body))
                             .setSound(defaultSoundUri)
                             .setContentIntent(pendingIntent)
                             .build()
@@ -190,6 +195,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle(message.title)
                 .setContentText(message.body)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message.body))
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
                 .build()
@@ -204,6 +210,7 @@ class FirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(R.drawable.ic_launcher_background)
                 .setContentTitle(message.title)
                 .setContentText(message.body)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(message.body))
                 .setSound(defaultSoundUri)
                 .addAction(NotificationCompat.Action(R.drawable.ic_action_event_24px, "View Otp", pendingIntent))
                 .build()

@@ -25,6 +25,7 @@ class ComediansVoting {
                    Log.d("checke",e.toString())
                }
               /* votingStatus.onNext(documentSnapshot.getBoolean("enabled")!!)*/
+
                val comedians = ArrayList<Comedian>()
                if(documentSnapshot.getBoolean("enabled")==true) {
                    Log.d("N2O Voteing", "Entered True statement")
@@ -40,7 +41,6 @@ class ComediansVoting {
                }
 
                comediansSubject.onNext(comedians)
-
            }
        }
 

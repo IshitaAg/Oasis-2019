@@ -142,7 +142,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                     startActivity(Intent(context!!, AuthActivity::class.java))
                 }
                 UiState.ShowIdle -> {
-                    rootView.swipeProfile.isRefreshing = false
+                    // rootView.swipeProfile.isRefreshing = false
                     rootView.progress_profile.visibility = View.GONE
                 }
                 UiState.ShowLoading -> {
@@ -181,11 +181,17 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
             }
         })
 
-        rootView.swipeProfile.setOnRefreshListener {
+        rootView.bttn_refresh.setOnClickListener {
             (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
             profileViewModel.refreshTicketsData()
             profileViewModel.refreshUserShows()
         }
+
+        /*rootView.swipeProfile.setOnRefreshListener {
+            (profileViewModel.order as MutableLiveData).postValue(UiState.ShowLoading)
+            profileViewModel.refreshTicketsData()
+            profileViewModel.refreshUserShows()
+        }*/
 
         return rootView
     }
@@ -198,8 +204,8 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
     @SuppressLint("CheckResult")
     override fun onTransactionResponse(bundle: Bundle?) {
         try {
-            dialog!!.dismiss()
-            progress_profile.visibility = View.VISIBLE
+            // dialog!!.dismiss()
+            // progress_profile.visibility = View.VISIBLE
             Log.d("PayTm", "on Transaction Response ${bundle.toString()}")
             if (!(bundle!!.isEmpty)) {
                 if(bundle["STATUS"].toString() == "TXN_SUCCESS") {
@@ -252,7 +258,7 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                         try {
                             progress_profile.visibility = View.INVISIBLE
                         } catch (e: Exception) {
-
+                            Log.d("PayTm", "Entered inner catch with exception $e")
                         }
                         Log.d("PayTm", "Error while communicating with back about transaction = ${it.toString()}")
                         Toast.makeText(context, "Unable to complete Transaction. Contact a DVM Official", Toast.LENGTH_LONG).show()
@@ -260,10 +266,11 @@ class ProfileFragment : Fragment(), PaytmPaymentTransactionCallback/*,AdapterVie
                 } else {
                     Log.d("PayTm", "Entered else for response")
                     progress_profile.visibility = View.INVISIBLE
-                    Toast.makeText(context, "Transaction Failure. PayTm is currently dissabled. Try later", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Transaction Failed. Please Try again", Toast.LENGTH_LONG).show()
                 }
             }
         } catch (e: Exception) {
+            Log.d("PayTm", "Entered catch block with exception ${e.stackTrace}")
             Toast.makeText(context, "An Error occurred during the Transaction. Please contact a DVM Official", Toast.LENGTH_LONG).show()
         }
     }

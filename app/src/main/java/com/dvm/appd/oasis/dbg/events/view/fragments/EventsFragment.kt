@@ -179,10 +179,10 @@ class EventsFragment : Fragment()   , EventsAdapter.OnMarkFavouriteClicked, Even
         venueLocation = when{
             locations.containsKey(venue.toLowerCase()) -> locations[venue.toLowerCase()]!!
             venue.toLowerCase().contains(Regex("1[0-9][0-9][0-9]")) -> locations["fd i"]!!
-            venue.toLowerCase().contains("fd ii", true) -> locations["fd2 qt"]!!
+            venue.toLowerCase().contains("fd ii", true) -> locations["fd ii qt"]!!
             venue.toLowerCase().contains(Regex("2[0-9][0-9][0-9]")) -> locations["2204"]!!
-            venue.toLowerCase().contains("fd iii", true) -> locations["fd3 qt"]!!
-            venue.toLowerCase().contains(Regex("3[0-9][0-9][0-9]")) -> locations["fd3 qt"]!!
+            venue.toLowerCase().contains("fd iii", true) -> locations["fd iii qt"]!!
+            venue.toLowerCase().contains(Regex("3[0-9][0-9][0-9]")) -> locations["fd iii qt"]!!
             venue.toLowerCase().contains(Regex("5[0-9][0-9][0-9]")) -> locations["ltc"]!!
             venue.toLowerCase().contains(Regex("6[0-9][0-9][0-9]")) -> locations["6101"]!!
             venue.toLowerCase().contains("lawns", true) -> locations["m lawns"]!!

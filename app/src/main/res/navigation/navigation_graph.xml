@@ -5,9 +5,11 @@
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/navigation_graph"
 >
-    <fragment android:id="@+id/action_events"
-              android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
-              android:label="fra_events_fragment" tools:layout="@layout/fra_misc_events">
+    <fragment
+            android:id="@+id/action_events"
+            android:name="com.dvm.appd.oasis.dbg.events.view.fragments.EventsFragment"
+            android:label="fra_events_fragment"
+            tools:layout="@layout/fra_misc_events">
         <action
                 android:id="@+id/action_action_events_to_action_profile"
                 app:destination="@id/action_profile"
@@ -37,10 +39,10 @@
                 app:exitAnim="@anim/fade_in" />
         <action
                 android:id="@+id/action_action_events_to_event_data"
-                app:destination="@id/eventDataDialog"/>
+                app:destination="@id/eventDataDialog" />
         <action
                 android:id="@+id/action_action_events_to_filter"
-                app:destination="@id/eventFilterDialog"/>
+                app:destination="@id/eventFilterDialog" />
     </fragment>
 
     <fragment

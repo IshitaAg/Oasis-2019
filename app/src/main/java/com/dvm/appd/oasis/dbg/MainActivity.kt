@@ -223,7 +223,9 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
     /*This method is used for the initial setup of the notification channels
     If the notification chanel already exists, no action is taken, and hence it is safe to call this method every time the app starts*/
-    private fun setupNotificationChannel() {
+    private fun setupNotificationChannel() {try {
+
+
         startService(Intent(this, FirebaseMessagingService::class.java))
         // Notification Channels are only available for Oreo(Api Level 26) and onwards
         // Since support libraries don't have a library for setting up notification channels, this check is necessary
@@ -249,7 +251,8 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 getString(R.string.chanel_name_status_change_notifications),
                 NotificationManager.IMPORTANCE_HIGH
             )
-            statusChangeChannel.description = getString(R.string.chanel_desc_status_change_notifications)
+            statusChangeChannel.description =
+                getString(R.string.chanel_desc_status_change_notifications)
             statusChangeChannel.canBypassDnd()
 
             val eventsChannel = NotificationChannel(
@@ -276,7 +279,16 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             cashBackChannel.description = getString(R.string.channel_desc_cashback_notifications)
             cashBackChannel.canBypassDnd()
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannels(listOf(generalChannel, ratingsChannel, statusChangeChannel, eventsChannel, quizChannel, cashBackChannel))
+            notificationManager.createNotificationChannels(
+                listOf(
+                    generalChannel,
+                    ratingsChannel,
+                    statusChangeChannel,
+                    eventsChannel,
+                    quizChannel,
+                    cashBackChannel
+                )
+            )
         }
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
             Log.d("Main Activity", "Recived New Token = ${it.token}}")
@@ -285,6 +297,9 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             Log.e("Main Activity", "Failed to recive token")
             setupNotificationChannel()
         }
+    }catch (e:Exception){
+
+    }
     }
 
     private fun checkForUpdates() {

@@ -95,7 +95,7 @@ class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<O
         }
         else{
             RxView.clicks(holder.otp).debounce(200, TimeUnit.MILLISECONDS).observeOn(
-                AndroidSchedulers.mainThread()).subscribe {
+                AndroidSchedulers.mainThread()).subscribe ({
                 if (orderItems[position].status == 2){
                     listener.updateOtpSeen(orderItems[position].orderId)
                     Log.d("OTP", "Called")
@@ -103,7 +103,7 @@ class OrdersAdapter(private val listener:OrderCardClick): RecyclerView.Adapter<O
                 else{
                     Log.d("OTP", "Status not yet ready ${orderItems[position].status}")
                 }
-            }
+            },{})
         }
 
 

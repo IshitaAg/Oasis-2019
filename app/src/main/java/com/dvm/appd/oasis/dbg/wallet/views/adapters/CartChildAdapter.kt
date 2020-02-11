@@ -75,11 +75,11 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
             holder.isVeg.setImageResource(R.drawable.ic_non_veg)
         }
 
-        RxView.clicks(holder.plus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
+        RxView.clicks(holder.plus).debounce(200, TimeUnit.MILLISECONDS).subscribe ({
             listener.plusButtonClicked(cartChildItems[position], cartChildItems[position].quantity + 1)
-        }
+        },{})
 
-        RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
+        RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe ({
             if (cartChildItems[position].quantity > 1) {
 
                 listener.plusButtonClicked(cartChildItems[position], cartChildItems[position].quantity - 1)
@@ -87,6 +87,6 @@ class CartChildAdapter(private val listener: OnButtonClicked): RecyclerView.Adap
 
                 listener.deleteCartItemClicked(cartChildItems[position].itemId)
             }
-        }
+        },{})
     }
 }

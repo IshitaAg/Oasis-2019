@@ -76,11 +76,11 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
             holder.quantity.text = stallItems[position].quantity.toString()
 
             RxView.clicks(holder.plus).debounce(200, TimeUnit.MILLISECONDS).observeOn(
-                AndroidSchedulers.mainThread()).subscribe {
+                AndroidSchedulers.mainThread()).subscribe ({
                 listener.addButtonClicked(stallItems[position], stallItems[position].quantity + 1)
-            }
+            },{})
 
-            RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe {
+            RxView.clicks(holder.minus).debounce(200, TimeUnit.MILLISECONDS).subscribe({
                 if (stallItems[position].quantity > 1){
 
                     listener.addButtonClicked(stallItems[position], stallItems[position].quantity - 1)
@@ -89,7 +89,7 @@ class StallItemsChildAdapter(private val listener:OnAddClickedListener) : Recycl
 
                     listener.deleteCartItemClicked(stallItems[position].itemId)
                 }
-            }
+            },{})
 
         }
         else {

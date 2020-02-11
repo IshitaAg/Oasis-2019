@@ -263,8 +263,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                     getString(R.string.chanel_name_status_change_notifications),
                     NotificationManager.IMPORTANCE_HIGH
                 )
-                statusChangeChannel.description =
-                    getString(R.string.chanel_desc_status_change_notifications)
+                statusChangeChannel.description = getString(R.string.chanel_desc_status_change_notifications)
                 statusChangeChannel.canBypassDnd()
 
                 val eventsChannel = NotificationChannel(

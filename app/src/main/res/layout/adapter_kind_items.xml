@@ -9,7 +9,6 @@
         android:layout_marginBottom="2dp"
         android:orientation="vertical">
 
-
     <View
             android:id="@+id/stallImage"
             android:layout_width="match_parent"
@@ -38,7 +37,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/stallImage"
             app:layout_constraintEnd_toEndOf="@+id/stallImage"
-            app:layout_constraintStart_toEndOf="@+id/kImg"
+            app:layout_constraintStart_toEndOf="@+id/Stall_photo"
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
     <TextView
@@ -59,7 +58,7 @@
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
     <ImageView
-            android:id="@+id/kImg"
+            android:id="@+id/Stall_photo"
             android:layout_width="49dp"
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
@@ -71,7 +70,7 @@
             app:srcCompat="@drawable/ic_card_giftcard_black_24dp" />
 
     <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/Token_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -79,7 +78,7 @@
             android:layout_marginBottom="13dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:gravity="center"
-            android:text="Tokens"
+            android:text="@string/tokens"
             android:textColor="@color/colorWhite"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="@+id/stallImage"
@@ -87,5 +86,4 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/price"
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

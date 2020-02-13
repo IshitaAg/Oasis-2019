@@ -37,7 +37,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/stallImage"
             app:layout_constraintEnd_toEndOf="@+id/stallImage"
-            app:layout_constraintStart_toEndOf="@+id/Stall_photo"
+            app:layout_constraintStart_toEndOf="@+id/stall_photo"
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
     <TextView
@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="@+id/stallImage" />
 
     <ImageView
-            android:id="@+id/Stall_photo"
+            android:id="@+id/stall_photo"
             android:layout_width="49dp"
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
@@ -70,7 +70,7 @@
             app:srcCompat="@drawable/ic_card_giftcard_black_24dp" />
 
     <TextView
-            android:id="@+id/Token_Text"
+            android:id="@+id/token_Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"

@@ -37,6 +37,6 @@ class KindItemsAdapter() : RecyclerView.Adapter<KindItemsAdapter.KindViewHolder>
     inner class KindViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val itemName = view.ItemName
         val price = view.price
-        val kindImg = view.kImg
+        val kindImg = view.stall_photo
     }
 }

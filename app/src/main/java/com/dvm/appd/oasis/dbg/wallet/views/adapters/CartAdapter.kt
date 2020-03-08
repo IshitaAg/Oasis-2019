@@ -26,6 +26,13 @@ class CartAdapter(private val listener: CartChildAdapter.OnButtonClicked): Recyc
 
         Log.d("CartRecycler", "$cartItems")
         holder.vendor.text = cartItems[position].first
+
+        var price:Int=0
+        for (j:Int in 0..cartItems[position].second.size-1)
+        {
+            price=price+((cartItems[position].second[j].basePrice)*(cartItems[position].second[j].quantity))
+        }
+        holder.vendor_Price.text=(""+'\u20B9'+price.toString())
         holder.items.adapter = CartChildAdapter(listener).apply {
             this.cartChildItems = cartItems[position].second
         }
@@ -52,6 +59,7 @@ class CartAdapter(private val listener: CartChildAdapter.OnButtonClicked): Recyc
 
         val vendor: TextView = view.vendor
         val items: RecyclerView = view.itemsRecycler
+        val vendor_Price: TextView = view.per_vendor_price
 //        val price: TextView = view.price
 //        val order: TextView = view.order
     }

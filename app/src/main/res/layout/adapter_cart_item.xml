@@ -23,18 +23,16 @@
 
     <TextView
             android:id="@+id/vendor"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="282dp"
+            android:layout_height="31dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
             android:fontFamily="@font/shellypalmer_circular_std_book"
             android:text="Chaayos"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@+id/view10"
-            app:layout_constraintStart_toStartOf="@id/view10"
-            app:layout_constraintTop_toTopOf="@id/view10" />
+            app:layout_constraintStart_toStartOf="@+id/view10"
+            app:layout_constraintTop_toTopOf="@+id/view10" />
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsRecycler"
@@ -52,38 +50,52 @@
             tools:itemCount="2"
             tools:listitem="@layout/adapter_cart_item_child" />
 
-<!--    <TextView-->
-<!--            android:id="@+id/price"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="16dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:fontFamily="@font/shellypalmer_circular_std_book"-->
-<!--                android:text="500"-->
-<!--                android:textAlignment="textStart"-->
-<!--                android:textColor="#50A2F4"-->
-<!--                android:textSize="24sp"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/view10"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/view10"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/order" />-->
+    <TextView
+            android:id="@+id/per_vendor_price"
+            android:layout_width="81dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="303dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="11dp"
+            android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:textColor="@color/per_vendor_cart_price"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@+id/view10"
+            app:layout_constraintStart_toStartOf="@+id/view10"
+            app:layout_constraintTop_toTopOf="@+id/view10" />
 
-<!--    <TextView-->
-<!--            android:id="@+id/order"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:layout_marginBottom="15dp"-->
-<!--            android:background="@drawable/gradient_shape_rectangle_rounded_24dp"-->
-<!--                android:fontFamily="@font/shellypalmer_circular_std_book"-->
-<!--                android:paddingStart="8dp"-->
-<!--                android:paddingTop="4dp"-->
-<!--                android:paddingEnd="8dp"-->
-<!--                android:paddingBottom="4dp"-->
-<!--                android:text="Order"-->
-<!--                android:textAlignment="center"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="18sp"-->
-<!--                android:textStyle="bold"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/view10"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/view10" />-->
+    <!--    <TextView-->
+    <!--            android:id="@+id/price"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginStart="16dp"-->
+    <!--            android:layout_marginBottom="16dp"-->
+    <!--            android:fontFamily="@font/shellypalmer_circular_std_book"-->
+    <!--                android:text="500"-->
+    <!--                android:textAlignment="textStart"-->
+    <!--                android:textColor="#50A2F4"-->
+    <!--                android:textSize="24sp"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/view10"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/view10"-->
+    <!--            app:layout_constraintTop_toTopOf="@+id/order" />-->
+
+    <!--    <TextView-->
+    <!--            android:id="@+id/order"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginEnd="16dp"-->
+    <!--            android:layout_marginBottom="15dp"-->
+    <!--            android:background="@drawable/gradient_shape_rectangle_rounded_24dp"-->
+    <!--                android:fontFamily="@font/shellypalmer_circular_std_book"-->
+    <!--                android:paddingStart="8dp"-->
+    <!--                android:paddingTop="4dp"-->
+    <!--                android:paddingEnd="8dp"-->
+    <!--                android:paddingBottom="4dp"-->
+    <!--                android:text="Order"-->
+    <!--                android:textAlignment="center"-->
+    <!--                android:textColor="@color/white"-->
+    <!--                android:textSize="18sp"-->
+    <!--                android:textStyle="bold"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/view10"-->
+    <!--            app:layout_constraintEnd_toEndOf="@+id/view10" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

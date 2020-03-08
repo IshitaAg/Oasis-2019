@@ -29,4 +29,5 @@
     <color name="line_filled">#FFFFFF</color>
     <color name="line_faded">#66FFFFFF</color>
     <color name="filter_not">#31365E</color>
+    <color name="per_vendor_cart_price">#FBEE78</color>
 </resources>

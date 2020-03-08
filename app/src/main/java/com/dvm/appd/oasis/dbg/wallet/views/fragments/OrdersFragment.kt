@@ -54,6 +54,7 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
         ordersViewModel.cartItems.observe(this, Observer {
 
             Log.d("CartPassed", it.toString())
+
             view.noCart.isVisible = it.isEmpty()
             (view.cartItemRecycler.adapter as CartAdapter).cartItems = it
             (view.cartItemRecycler.adapter as CartAdapter).price = it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.currentPrice }}
@@ -61,6 +62,8 @@ class OrdersFragment : Fragment(), OrdersAdapter.OrderCardClick, CartChildAdapte
 
             if (it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.currentPrice  }} != 0) {
                 view.order.isVisible = true
+
+
                 view.cartPrice.text = "Total: ₹ ${it.sumBy { it1 -> it1.second.sumBy {it2 ->  it2.quantity * it2.currentPrice }}}"
             }
             else{

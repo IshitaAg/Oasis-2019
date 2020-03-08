@@ -23,11 +23,13 @@
 
     <TextView
             android:id="@+id/vendor"
-            android:layout_width="282dp"
-            android:layout_height="31dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:ellipsize="end"
             android:fontFamily="@font/shellypalmer_circular_std_book"
+            android:maxLines="1"
             android:text="Chaayos"
             android:textColor="@color/white"
             android:textSize="24sp"
@@ -52,7 +54,7 @@
 
     <TextView
             android:id="@+id/per_vendor_price"
-            android:layout_width="81dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="303dp"
             android:layout_marginTop="8dp"

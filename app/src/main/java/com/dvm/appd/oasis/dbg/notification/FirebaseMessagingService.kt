@@ -105,10 +105,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         }
             .subscribe({
                 Log.d("Notification", "Succesfully added data to table")
-                val bundle = Bundle()
+               /* val bundle = Bundle()
                 bundle.putString(FirebaseAnalytics.Param.ITEM_ID, notificatoin.id)
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, notificatoin.title)
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Book")
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "Book")*/
                 // TODO setup firbase analytic log
             },
                 {

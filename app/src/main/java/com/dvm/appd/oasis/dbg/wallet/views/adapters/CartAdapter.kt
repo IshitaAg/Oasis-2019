@@ -59,7 +59,7 @@ class CartAdapter(private val listener: CartChildAdapter.OnButtonClicked): Recyc
 
         val vendor: TextView = view.vendor
         val items: RecyclerView = view.itemsRecycler
-        val vendor_Price: TextView=view.per_vendor_price
+        val vendor_Price: TextView = view.per_vendor_price
 //        val price: TextView = view.price
 //        val order: TextView = view.order
     }

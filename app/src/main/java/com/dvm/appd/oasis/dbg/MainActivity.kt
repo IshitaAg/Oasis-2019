@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
 
         setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
-       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
         actionBar?.hide()
@@ -88,12 +88,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                 }
         }
 
-     /*   try {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-        } catch (e: java.lang.Exception) {
-            sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
-        }*/
+        /*   try {
+               window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+               window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+           } catch (e: java.lang.Exception) {
+               sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
+           }*/
         remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig.setDefaults(R.xml.remote_config_defaults)
         sharedPreferences = AppModule(application).providesSharedPreferences(application)
@@ -180,13 +180,22 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                         .setPositiveButton(
                             resources.getString(R.string.alert_notification_positive_button),
                             DialogInterface.OnClickListener { dialog, which ->
-                                sharedPreferences.edit().putBoolean("wantsNotification", false).apply()
+                                sharedPreferences.edit().putBoolean("wantsNotification", false)
+                                    .apply()
                                 try {
                                     startActivity(intent)
-                                }catch (e: ActivityNotFoundException){
-                                    Toast.makeText(applicationContext, "Error. Not supported in your phone", Toast.LENGTH_SHORT).show()
+                                } catch (e: ActivityNotFoundException) {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "Error. Not supported in your phone",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 } catch (e: Exception) {
-                                    Toast.makeText(this, "Your mobile doesn't support this feature", Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        this,
+                                        "Your mobile doesn't support this feature",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                                     dialog.cancel()
                                 }
                             })
@@ -210,8 +219,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             var deepLink: Uri? = null
             if (it != null) {
                 deepLink = it.link
-                Toast.makeText(this, deepLink.getQueryParameter("invitedBy"), Toast.LENGTH_LONG).show()
-                sharedPreferences.edit().putString(AuthRepository.Keys.referredBy, deepLink.getQueryParameter("invitedBy")).apply()
+                Toast.makeText(this, deepLink.getQueryParameter("invitedBy"), Toast.LENGTH_LONG)
+                    .show()
+                sharedPreferences.edit().putString(
+                    AuthRepository.Keys.referredBy,
+                    deepLink.getQueryParameter("invitedBy")
+                ).apply()
                 Log.d("Main Activity", "Deep link received = $deepLink")
             } else {
                 Log.e("Main Activity", "Empty link found")
@@ -224,72 +237,86 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     /*This method is used for the initial setup of the notification channels
     If the notification chanel already exists, no action is taken, and hence it is safe to call this method every time the app starts*/
     private fun setupNotificationChannel() {
-        startService(Intent(this, FirebaseMessagingService::class.java))
-        // Notification Channels are only available for Oreo(Api Level 26) and onwards
-        // Since support libraries don't have a library for setting up notification channels, this check is necessary
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val generalChannel = NotificationChannel(
-                getString(R.string.chanel_id_general_notifications),
-                getString(R.string.chanel_name_general_notifications),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            generalChannel.description = getString(R.string.chanel_desc_general_notifications)
-            generalChannel.canBypassDnd()
+        try {
+            startService(Intent(this, FirebaseMessagingService::class.java))
+            // Notification Channels are only available for Oreo(Api Level 26) and onwards
+            // Since support libraries don't have a library for setting up notification channels, this check is necessary
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val generalChannel = NotificationChannel(
+                    getString(R.string.chanel_id_general_notifications),
+                    getString(R.string.chanel_name_general_notifications),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                generalChannel.description = getString(R.string.chanel_desc_general_notifications)
+                generalChannel.canBypassDnd()
 
-            val ratingsChannel = NotificationChannel(
-                getString(R.string.chanel_id_rating_notifications),
-                getString(R.string.chanel_name_rating_notifications),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            ratingsChannel.description = getString(R.string.chanel_desc_rating_notifications)
-            ratingsChannel.canBypassDnd()
+                val ratingsChannel = NotificationChannel(
+                    getString(R.string.chanel_id_rating_notifications),
+                    getString(R.string.chanel_name_rating_notifications),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                ratingsChannel.description = getString(R.string.chanel_desc_rating_notifications)
+                ratingsChannel.canBypassDnd()
 
-            val statusChangeChannel = NotificationChannel(
-                getString(R.string.chanel_id_status_change_notifications),
-                getString(R.string.chanel_name_status_change_notifications),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            statusChangeChannel.description = getString(R.string.chanel_desc_status_change_notifications)
-            statusChangeChannel.canBypassDnd()
+                val statusChangeChannel = NotificationChannel(
+                    getString(R.string.chanel_id_status_change_notifications),
+                    getString(R.string.chanel_name_status_change_notifications),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                statusChangeChannel.description = getString(R.string.chanel_desc_status_change_notifications)
+                statusChangeChannel.canBypassDnd()
 
-            val eventsChannel = NotificationChannel(
-                getString(R.string.channel_id_rating_events),
-                "Favourite Events",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            eventsChannel.description = "Notify about your favourite events"
-            eventsChannel.canBypassDnd()
+                val eventsChannel = NotificationChannel(
+                    getString(R.string.channel_id_rating_events),
+                    "Favourite Events",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                eventsChannel.description = "Notify about your favourite events"
+                eventsChannel.canBypassDnd()
 
-            val quizChannel = NotificationChannel(
-                getString(R.string.channel_id_quiz),
-                getString(R.string.channel_id_quiz),
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            quizChannel.description = "Inform about the latest developments in the quiz game"
-            quizChannel.canBypassDnd()
+                val quizChannel = NotificationChannel(
+                    getString(R.string.channel_id_quiz),
+                    getString(R.string.channel_id_quiz),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                quizChannel.description = "Inform about the latest developments in the quiz game"
+                quizChannel.canBypassDnd()
 
-            val cashBackChannel = NotificationChannel(
-                getString(R.string.channel_id_cashback_notifications),
-                "Cashback",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            cashBackChannel.description = getString(R.string.channel_desc_cashback_notifications)
-            cashBackChannel.canBypassDnd()
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannels(listOf(generalChannel, ratingsChannel, statusChangeChannel, eventsChannel, quizChannel, cashBackChannel))
-        }
-        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
-            Log.d("Main Activity", "Recived New Token = ${it.token}}")
-            // TODO send the new token to the backend server
-        }.addOnFailureListener {
-            Log.e("Main Activity", "Failed to recive token")
-            setupNotificationChannel()
+                val cashBackChannel = NotificationChannel(
+                    getString(R.string.channel_id_cashback_notifications),
+                    "Cashback",
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                cashBackChannel.description =
+                    getString(R.string.channel_desc_cashback_notifications)
+                cashBackChannel.canBypassDnd()
+                val notificationManager =
+                    getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannels(
+                    listOf(
+                        generalChannel,
+                        ratingsChannel,
+                        statusChangeChannel,
+                        eventsChannel,
+                        quizChannel,
+                        cashBackChannel
+                    )
+                )
+            }
+            FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                Log.d("Main Activity", "Recived New Token = ${it.token}}")
+                // TODO send the new token to the backend server
+            }.addOnFailureListener {
+                Log.e("Main Activity", "Failed to recive token")
+                setupNotificationChannel()
+            }
+        } catch (e: Exception) {
         }
     }
 
     private fun checkForUpdates() {
         val updateManager = AppUpdateManagerFactory.create(this)
-        updateManager.appUpdateInfo.addOnSuccessListener {appUpdateInfo ->
+        updateManager.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
 
             /*remoteConfig.fetch().addOnCompleteListener {task ->
                 if (task.isSuccessful) {
@@ -356,13 +383,16 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
                 // Toast.makeText(this, "New Update Available", Toast.LENGTH_LONG).show()
                 Log.d("Main Activity", "NewUpdate Available")
-                remoteConfig.fetch().addOnCompleteListener {task ->
+                remoteConfig.fetch().addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // Toast.makeText(this, "Fetched Remote config variables successfully", Toast.LENGTH_LONG).show()
                         // Toast.makeText(this, "Result = ${task.result.toString()}", Toast.LENGTH_LONG).show()
                         // Toast.makeText(this, "Available Version = ${appUpdateInfo.availableVersionCode()}", Toast.LENGTH_LONG).show()
                         val versionNumber = remoteConfig.all["update_version"].toString()
-                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                        if (appUpdateInfo.availableVersionCode().toString() == versionNumber && appUpdateInfo.isUpdateTypeAllowed(
+                                AppUpdateType.IMMEDIATE
+                            )
+                        ) {
                             // Toast.makeText(this, "Entered flow for immidiate update", Toast.LENGTH_LONG).show()
                             /*updateManager.startUpdateFlowForResult(
                                 appUpdateInfo,
@@ -371,8 +401,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                                 REQUEST_CODE_UPDATE_IMMIDIATE
                             )*/
                             startActivity(Intent(this, ImmidiateUpdateActivity::class.java))
-                        }
-                        else {
+                        } else {
                             // Toast.makeText(this, "Entered flow for flexible update", Toast.LENGTH_LONG).show()
                             /*val updateListener =
                                 InstallStateUpdatedListener { updateState ->
@@ -384,8 +413,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                                     }
                                 }
                             updateManager.registerListener(updateListener)*/
-                            val snackbar = Snackbar.make(this.coordinator_parent, "A newer version of the app is  available", Snackbar.LENGTH_INDEFINITE)
-                            snackbar.setAction("UPDATE", object : View.OnClickListener{
+                            val snackbar = Snackbar.make(
+                                this.coordinator_parent,
+                                "A newer version of the app is  available",
+                                Snackbar.LENGTH_INDEFINITE
+                            )
+                            snackbar.setAction("UPDATE", object : View.OnClickListener {
                                 override fun onClick(v: View?) {
                                     /*updateManager.startUpdateFlowForResult(
                                         appUpdateInfo,
@@ -395,25 +428,30 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
                                     )*/
                                     try {
                                         val intent = Intent(Intent.ACTION_VIEW).apply {
-                                            data = Uri.parse("https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home")
+                                            data =
+                                                Uri.parse("https://play.google.com/store/apps/details?id=v2015.oasis.pilani.bits.com.home")
                                             // setPackage("v2015.oasis.pilani.bits.com.home")
                                         }
                                         startActivity(intent)
                                     } catch (e: Exception) {
-                                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=v2015.oasis.pilani.bits.com.home")))
+                                        startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("market://details?id=v2015.oasis.pilani.bits.com.home")
+                                            )
+                                        )
                                     }
                                     snackbar.dismiss()
                                 }
                             })
-                            snackbar.setBehavior(object : BaseTransientBottomBar.Behavior(){
+                            snackbar.setBehavior(object : BaseTransientBottomBar.Behavior() {
                                 override fun canSwipeDismissView(child: View): Boolean {
                                     return false
                                 }
                             })
                             snackbar.show()
                         }
-                    }
-                    else {
+                    } else {
                         // Toast.makeText(this, "Cannot recieve data from remote config", Toast.LENGTH_LONG).show()
                         Log.d("Main Activity", "Unable to fetch from remote config")
                     }
@@ -423,8 +461,12 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     }
 
     private fun showSnackBarToInstallUpdate(appUpdateManager: AppUpdateManager) {
-        val snackbar = Snackbar.make(coordinator_parent, "A new update has been downloaded and is ready to install", Snackbar.LENGTH_INDEFINITE)
-        snackbar.setBehavior(object : BaseTransientBottomBar.Behavior(){
+        val snackbar = Snackbar.make(
+            coordinator_parent,
+            "A new update has been downloaded and is ready to install",
+            Snackbar.LENGTH_INDEFINITE
+        )
+        snackbar.setBehavior(object : BaseTransientBottomBar.Behavior() {
             override fun canSwipeDismissView(child: View): Boolean {
                 return false
             }
@@ -444,10 +486,10 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         super.onResume()
         setStatusBarColor(R.color.OnBoarding_colour)
         // Hide the status bar.
-       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-       // actionBar?.hide()
+        // actionBar?.hide()
 
         /*try {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -514,11 +556,6 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
     fun hideCustomToolbarForLevel2Fragments() {
 
 
-
-
-
-
-
         bottom_navigation_bar.isVisible = false
     }
 
@@ -526,7 +563,7 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
         Log.d("MainActivity", "Entered function to change color")
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(ContextCompat.getColor(this,color))
+        window.setStatusBarColor(ContextCompat.getColor(this, color))
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -539,19 +576,24 @@ class MainActivity : AppCompatActivity(), NetworkChangeNotifier {
             sharedPreferences.edit().putBoolean("NAVIGATION DISABLED", false).apply()
         }*/
         // Hide the status bar.
-       // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        // window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 // Remember that you should never show the action bar if the
 // status bar is hidden, so hide that too if necessary.
-       // actionBar?.hide()
+        // actionBar?.hide()
     }
 
     override fun onNetworkStatusScahnged(isConnected: Boolean) {
         if (isConnected) {
-            val snackbar = Snackbar.make(this.coordinator_parent, "Back Online", Snackbar.LENGTH_SHORT)
+            val snackbar =
+                Snackbar.make(this.coordinator_parent, "Back Online", Snackbar.LENGTH_SHORT)
             snackbar.view.setBackgroundColor(resources.getColor(R.color.colorGreen))
             snackbar.show()
         } else {
-            Snackbar.make(this.coordinator_parent, "Not Connected to the internet", Snackbar.LENGTH_INDEFINITE).setBehavior(object : BaseTransientBottomBar.Behavior(){
+            Snackbar.make(
+                this.coordinator_parent,
+                "Not Connected to the internet",
+                Snackbar.LENGTH_INDEFINITE
+            ).setBehavior(object : BaseTransientBottomBar.Behavior() {
                 override fun canSwipeDismissView(child: View): Boolean {
                     return false
                 }

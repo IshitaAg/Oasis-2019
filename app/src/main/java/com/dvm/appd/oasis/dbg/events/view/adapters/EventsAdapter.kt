@@ -79,14 +79,12 @@ class EventsAdapter(private val listener: OnMarkFavouriteClicked): RecyclerView.
 //        }
 
         RxView.clicks(holder.directions).debounce(200, TimeUnit.MILLISECONDS).observeOn(
-            AndroidSchedulers.mainThread()).subscribe {
+            AndroidSchedulers.mainThread()).subscribe ({
             listener.getDirections(events[position].venue)
-        }
+        },{})
 
-        RxView.clicks(holder.view).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe {
-            listener.showAboutRules(events[position].details, events[position].name, events[position].contact)
-        }
-
+        RxView.clicks(holder.view).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe({
+            listener.showAboutRules(events[position].details, events[position].name, events[position].contact)},{})
     }
 
 }
